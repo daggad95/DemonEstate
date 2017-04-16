@@ -1,0 +1,147 @@
+package com.mygdx.demonestate.entity;
+
+import com.badlogic.gdx.controllers.Controller;
+import com.badlogic.gdx.controllers.Controllers;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.Polygon;
+import com.badlogic.gdx.math.Vector2;
+import com.mygdx.demonestate.MapHandler;
+import com.mygdx.demonestate.TextureHandler;
+import com.mygdx.demonestate.damagebox.DamageBox;
+
+import java.util.ArrayList;
+
+/**
+ * Created by David on 1/7/2017.
+ */
+public class EntityHandler {
+    private static ArrayList<Entity> players;
+    private static ArrayList<Entity> monsters;
+    private static ArrayList<PlayerController> playerControllers;
+    private static ArrayList<DamageBox> pDBoxes;
+    private static ArrayList<DamageBox> mDBoxes;
+
+
+    public static void init() {
+        TextureHandler.loadTextures();
+
+
+        //temp creation of players for testing
+        Vector2 position = new Vector2(10, 13);
+        Vector2 size = new Vector2(1, 1);
+        Player player = new Player(position, size, TextureHandler.getTexture("bob"));
+        //Player player2 = new Player(new Vector2(position).add(2, 2), new Vector2(size), TextureHandler.getTexture("bob"));
+
+        players = new ArrayList<Entity>();
+        players.add(player);
+        //players.add(player2);
+
+        //temp creation of player controller for testing
+        Controller c = Controllers.getControllers().get(0);
+        PlayerController pc = new PlayerController((Player) players.get(0), c);
+
+        playerControllers = new ArrayList<PlayerController>();
+        playerControllers.add(pc);
+
+
+        monsters = new ArrayList<Entity>();
+
+       /* for (int i = 0; i < 20; i++) {
+            Vector2 position2 = new Vector2((int) (Math.random() * 20), (int) (Math.random() * 20));
+            Vector2 size2 = new Vector2(1, 1);
+
+            if (!MapHandler.wallAt(position2, size2)) {
+                Zombie zombie = new Zombie(position2, size2);
+                monsters.add(zombie);
+            }
+        }
+
+        Vector2 position2 = new Vector2(2, 2);
+        Vector2 size2 = new Vector2(1f,  1f);
+        Eyebat bat = new Eyebat(position2, size2);
+        monsters.add(bat);*/
+
+        pDBoxes = new ArrayList<DamageBox>();
+        mDBoxes = new ArrayList<DamageBox>();
+    }
+
+    public static void update(SpriteBatch batch) {
+        updateDamageBoxes(pDBoxes, monsters, batch);
+        updateDamageBoxes(mDBoxes, players, batch);
+
+        for (Entity m : monsters) {
+            m.draw(batch);
+            m.update();
+        }
+
+        for (Entity p : players) {
+            p.draw(batch);
+            p.update();
+        }
+    }
+
+    public static void addPDamageBox(DamageBox db) {
+        pDBoxes.add(db);
+    }
+    public static void addMDamageBox(DamageBox db) {
+        mDBoxes.add(db);
+    }
+
+    public static void killMonster(Entity monster) {
+        monsters.remove(monster);
+    }
+
+    public static ArrayList<Entity> getPlayers() {
+        return players;
+    }
+
+    private static void updateDamageBoxes(ArrayList<DamageBox> dBoxes, ArrayList<Entity> entities, SpriteBatch batch) {
+        int idx = 0;
+        while (idx < dBoxes.size()) {
+            DamageBox db = dBoxes.get(idx);
+            if (db.dead()) {
+                dBoxes.remove(idx);
+            } else {
+                db.update();
+                db.draw(batch);
+
+                //checking for hits on entities
+                int idx2 = 0;
+                while (idx2 < entities.size()) {
+                    Entity entity = entities.get(idx2);
+                    if (intersects(entity.getHitbox(), db.getHitbox())) {
+                        db.applyDamage(entity);
+
+                        if (entity.dead()) {
+                            entity.die();
+                        } else {
+                            idx2++;
+                        }
+
+                        break;
+                    } else {
+                        idx2++;
+                    }
+                }
+                idx++;
+            }
+        }
+    }
+
+    //returns true if given entity intersects with
+    //any monster in the monster list.
+    public static boolean collideMonster(Entity entity, Vector2 newPos) {
+        for (Entity monster : monsters) {
+            if (monster.pos.epsilonEquals(newPos, 0.3f)
+                    && monster != entity) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean intersects(Polygon hitBox1, Polygon hitBox2) {
+        return Intersector.overlapConvexPolygons(hitBox1, hitBox2);
+    }
+}

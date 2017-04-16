@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" nextobjectid="1">
+ <tileset firstgid="1" name="DungeonCrawl_ProjectUtumnoTileset" tilewidth="32" tileheight="32" tilecount="3072">
+  <image source="DungeonCrawl_ProjectUtumnoTileset.png" width="2048" height="1536"/>
+ </tileset>
+ <layer name="Ground" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztz7kNgAAQA0Ek+i+Kvy2uBqJB2sCRk9ltXZZ9dszO2TW7Z89s+9GneeqwPHVYnjosTx2Wpw7LU4flqcPy1GF56rA8dVieOixPHZanDstTh+Wpw/LUYXnqsDx1WJ46LE8dlqcOy1OH5anD8tRheb5+L1N8lzA=
+  </data>
+ </layer>
+ <layer name="Walls" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJzt1EEKgDAQwMAe/P8//KUHEa/FUoghA3vtEgo7xus87rGoh83WUg+XraUeLmOPhfFv6uEytSRxeO7s7Ky+tbPDoA6WOljqYLF0JMlfWO5uHSx1sNTBUgdLHSx1sNTxbdcFm3kv/A==
+  </data>
+ </layer>
+</map>
