@@ -84,6 +84,14 @@ public class EntityHandler {
             p.draw(batch);
             p.update();
         }
+
+        //removing dead entities
+        for (int i = 0; i < monsters.size(); i++) {
+            if (monsters.get(i).dead() &&
+                    monsters.get(i).getDeathTimer() < 0) {
+                monsters.get(i).die();
+            }
+        }
     }
 
     public static void addPDamageBox(DamageBox db) {
@@ -118,14 +126,8 @@ public class EntityHandler {
                     if (intersects(entity.getHitbox(), db.getHitbox())) {
                         db.applyDamage(entity);
 
-                        if (entity.dead()) {
-                            entity.die();
-                        } else {
-                            idx2++;
-                        }
-                    } else {
-                        idx2++;
                     }
+                    idx2++;
                 }
                 idx++;
             }

@@ -42,11 +42,15 @@ public class Weapon {
     private WeaponType type;
     private boolean reloading;
     private boolean explosive;
+    private float burn_damage;
+    private float burnChance;
+    private float duration;
 
     public Weapon(Texture spriteSheet, Vector2 size, float attackDelay, WeaponType type, float spread, int clipSize, float reloadSpeed,
                   int damage, float range, Vector2 projectileSize, float projectileVel,
                   Texture projectileSpriteSheet, float projectileMultiHit, int projectileNum,
-                  Vector2 offset, float knockback, boolean explosive) {
+                  Vector2 offset, float knockback, boolean explosive, float burn_damage,
+                  float burnChance, float duration) {
         this.spriteSheet = spriteSheet;
         this.size = size;
         this.attackDelay = attackDelay;
@@ -64,6 +68,9 @@ public class Weapon {
         this.offset = offset;
         this.knockback = knockback;
         this.explosive = explosive;
+        this.burn_damage = burn_damage;
+        this.burnChance = burnChance;
+        this.duration = duration;
 
         clip = clipSize;
         attackTimer = 0;
@@ -112,7 +119,8 @@ public class Weapon {
 
                     EntityHandler.addPDamageBox(new DamageBox(damage, range, new Vector2(pos), new Vector2(projectileSize),
                             rotate, projectileVel + velVariance, projectileSpriteSheet,
-                            rotation, -1, projectileMultiHit, knockback, explosive));
+                            rotation, duration, projectileMultiHit, knockback, explosive,
+                            burn_damage, burnChance));
 
                     clip--;
                 }

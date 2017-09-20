@@ -61,10 +61,13 @@ public class WeaponFactory {
 
             boolean explosive = Boolean.parseBoolean(weaponStats.getChildByName(weaponName).get("explosive"));
 
+            float burn_damage = Float.parseFloat(weaponStats.getChildByName(weaponName).get("burnDamage"));
+            float burnChance = Float.parseFloat(weaponStats.getChildByName(weaponName).get("burn_chance"));
+            float duration = Float.parseFloat(weaponStats.getChildByName(weaponName).get("duration"));
 
             return new Weapon(spriteSheet, size, attackDelay, type, spread, clipSize, reloadSpeed,
                     damage, range, projectileSize, projectileVel, projectileSpriteSheet, projectileMultiHit,
-                    projectileNum, offset, knockback, explosive);
+                    projectileNum, offset, knockback, explosive, burn_damage, burnChance, duration);
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("weapon stats file not found");

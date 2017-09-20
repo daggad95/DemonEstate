@@ -109,7 +109,8 @@ public class Eyebat extends Entity {
 
         EntityHandler.addMDamageBox(new DamageBox(DEFAULT_DAMAGE, -1, center, dbSize,
                 new Vector2(0, 0), 0, TextureHandler.getTexture("laser"),
-                rotation, ATTACK_DURATION, -1, 0, false));
+                rotation, ATTACK_DURATION, -1, 0, false, 1,
+                0.2f));
     }
 
     private void animate() {

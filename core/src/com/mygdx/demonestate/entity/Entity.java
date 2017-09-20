@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.demonestate.MapHandler;
+import com.mygdx.demonestate.TextureHandler;
 
 import java.util.ArrayList;
 
@@ -20,6 +21,10 @@ public abstract class Entity {
     //Conversion between game units and sprite size
     public static final int SIZE_CONV = 64;
     public static final float KNOCKBACK_SPEED = 10;
+    public static final float BURN_DURATION = 1f;
+
+    //how long the body lasts after death
+    public static final float DEATH_LINGER = 0.1f;
 
     protected Vector2 pos;
     protected Vector2 size;
@@ -30,11 +35,14 @@ public abstract class Entity {
     protected TextureRegion currentTexture;
 
     protected float speed;
-    protected int health;
+    protected float health;
     protected float knockbackDistance;
     protected Vector2 knockbackDir;
     protected Vector2[][] pathMap;
     protected boolean flipped;
+    protected float deathTimer;
+    protected float burnTimer;
+    protected float burnDamage;
 
     //determines which way the entity will rotate
     //when handling collision
@@ -42,7 +50,7 @@ public abstract class Entity {
 
     public Entity() {}
 
-    public Entity(Vector2 pos, Vector2 size, Texture spriteSheet, float speed, int health) {
+    public Entity(Vector2 pos, Vector2 size, Texture spriteSheet, float speed, float health) {
         this.pos = pos;
         this.size = size;
         this.spriteSheet = spriteSheet;
@@ -56,12 +64,16 @@ public abstract class Entity {
         hitBox = new Polygon(new float[]{0, 0, size.x, 0, size.x, size.y, 0, size.y});
         hitBox.setOrigin(size.x / 2, size.y / 2);
         hitBox.setPosition(pos.x, pos.y);
+        deathTimer = DEATH_LINGER;
 
         if (Math.random() >= 0.5) {
             rotateRight = true;
         } else {
             rotateRight = false;
         }
+
+        burnTimer = 0;
+        burnDamage = 0;
     }
 
     public void update() {
@@ -76,7 +88,8 @@ public abstract class Entity {
             if (!MapHandler.wallAt(newPos, size)) {
                 if (collisions != null) {
                     for (Entity e : collisions) {
-                        e.inflictDamage(0, knockbackDistance / 2, knockbackDir);
+                        e.takeDamage(0, knockbackDistance / 2,
+                                knockbackDir, 0, 0);
                     }
                 }
                 pos.add(velVector);
@@ -84,9 +97,26 @@ public abstract class Entity {
             }
             knockbackDistance -= velVector.len();
         }
+
+        if (burnTimer > 0) {
+            health -= burnDamage * Gdx.graphics.getDeltaTime();
+            burnTimer -= Gdx.graphics.getDeltaTime();
+            System.out.println(health);
+        }
+
+        if (dead()) {
+            if (deathTimer >= 0) {
+                deathTimer -= Gdx.graphics.getDeltaTime();
+            }
+        }
     }
 
     public void draw(SpriteBatch batch) {
+        if (burnTimer > 0) {
+            batch.draw(TextureHandler.getTexture("fire"),
+                    pos.x, pos.y, size.x, size.y);
+        }
+
         batch.draw(currentTexture, pos.x, pos.y, size.x, size.y);
     }
 
@@ -112,16 +142,27 @@ public abstract class Entity {
     }
 
 
-    public void inflictDamage(int damage, float knockback, Vector2 knockbackDir) {
+    public void takeDamage(int damage, float knockback, Vector2 knockbackDir,
+                           float burnDamage, float burnChance) {
         health -= damage;
         if (knockbackDistance <= 0) {
             knockbackDistance += knockback;
             this.knockbackDir = knockbackDir;
+
+            if (burnDamage > 0 && Math.random() < burnChance) {
+                this.burnDamage = burnDamage;
+                this.burnTimer += BURN_DURATION;
+            }
+
         }
     }
 
     public void die() {
         //System.out.print("DEAD!");
+    }
+
+    public float getDeathTimer() {
+        return deathTimer;
     }
 
     public Vector2[][] getPathMap() {

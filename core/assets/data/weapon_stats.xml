@@ -9,6 +9,7 @@
         <projectileVel>15</projectileVel>
         <spread>20</spread>
         <range>5</range>
+        <duration>-1</duration>
         <clipSize>30</clipSize>
         <damage>5</damage>
         <knockback>0.25</knockback>
@@ -28,6 +29,8 @@
             <y>0.1</y>
         </projectileSize>
         <explosive>false</explosive>
+        <burnDamage>0</burnDamage>
+        <burn_chance>0</burn_chance>
     </SHOTGUN>
     <BASIC_PISTOL>
         <name>Pistol</name>
@@ -39,6 +42,7 @@
         <projectileVel>10</projectileVel>
         <spread>10</spread>
         <range>10</range>
+        <duration>-1</duration>
         <clipSize>10</clipSize>
         <damage>10</damage>
         <knockback>0</knockback>
@@ -58,6 +62,8 @@
             <y>0.075</y>
         </projectileSize>
         <explosive>false</explosive>
+        <burnDamage>0</burnDamage>
+        <burn_chance>0</burn_chance>
     </BASIC_PISTOL>
     <EXPLOSIVE_PISTOL>
         <name>Explosive Pistol</name>
@@ -69,6 +75,7 @@
         <projectileVel>10</projectileVel>
         <spread>10</spread>
         <range>10</range>
+        <duration>-1</duration>
         <clipSize>10</clipSize>
         <damage>20</damage>
         <knockback>1</knockback>
@@ -88,6 +95,8 @@
             <y>0.075</y>
         </projectileSize>
         <explosive>true</explosive>
+        <burnDamage>0</burnDamage>
+        <burn_chance>0</burn_chance>
     </EXPLOSIVE_PISTOL>
     <SHURIKEN>
         <name>Shuriken</name>
@@ -99,6 +108,7 @@
         <projectileVel>10</projectileVel>
         <spread>10</spread>
         <range>5</range>
+        <duration>-1</duration>
         <clipSize>3</clipSize>
         <damage>10</damage>
         <knockback>0</knockback>
@@ -118,6 +128,8 @@
             <y>0.2</y>
         </projectileSize>
         <explosive>false</explosive>
+        <burnDamage>5</burnDamage>
+        <burn_chance>0.5</burn_chance>
     </SHURIKEN>L>
     <RIFLE>
         <name>Rifle</name>
@@ -129,6 +141,7 @@
         <projectileVel>20</projectileVel>
         <spread>1</spread>
         <range>20</range>
+        <duration>-1</duration>
         <clipSize>1</clipSize>
         <damage>100</damage>
         <knockback>0</knockback>
@@ -148,6 +161,8 @@
             <y>0.05</y>
         </projectileSize>
         <explosive>false</explosive>
+        <burnDamage>0</burnDamage>
+        <burn_chance>0</burn_chance>
     </RIFLE>
     <ASSAULT_RIFLE>
         <name>Assault Rifle</name>
@@ -159,6 +174,7 @@
         <projectileVel>15</projectileVel>
         <spread>4</spread>
         <range>15</range>
+        <duration>-1</duration>
         <clipSize>24</clipSize>
         <damage>10</damage>
         <knockback>0.1</knockback>
@@ -178,6 +194,8 @@
             <y>0.05</y>
         </projectileSize>
         <explosive>false</explosive>
+        <burnDamage>0</burnDamage>
+        <burn_chance>0</burn_chance>
     </ASSAULT_RIFLE>
     <DB_SHOTGUN>
         <name>DB Shotgun</name>
@@ -189,6 +207,7 @@
         <projectileVel>15</projectileVel>
         <spread>10</spread>
         <range>15</range>
+        <duration>-1</duration>
         <clipSize>2</clipSize>
         <damage>25</damage>
         <knockback>0.4</knockback>
@@ -208,6 +227,8 @@
             <y>0.1</y>
         </projectileSize>
         <explosive>false</explosive>
+        <burnDamage>0</burnDamage>
+        <burn_chance>0</burn_chance>
     </DB_SHOTGUN>
     <RAILGUN>
         <name>Railgun</name>
@@ -219,6 +240,7 @@
         <projectileVel>30</projectileVel>
         <spread>4</spread>
         <range>20</range>
+        <duration>-1</duration>
         <clipSize>1</clipSize>
         <damage>50</damage>
         <knockback>5</knockback>
@@ -238,6 +260,8 @@
             <y>0.5</y>
         </projectileSize>
         <explosive>false</explosive>
+        <burnDamage>0</burnDamage>
+        <burn_chance>0</burn_chance>
     </RAILGUN>
     <ROCKET_LAUNCHER>
         <name>Rocket Launcher</name>
@@ -249,8 +273,9 @@
         <projectileVel>10</projectileVel>
         <spread>5</spread>
         <range>20</range>
+        <duration>-1</duration>
         <clipSize>100</clipSize>
-        <damage>40</damage>
+        <damage>100</damage>
         <knockback>2</knockback>
         <projectileNum>1</projectileNum>
         <spriteSheet>rocket_launcher</spriteSheet>
@@ -268,5 +293,7 @@
             <y>0.25</y>
         </projectileSize>
         <explosive>true</explosive>
+        <burnDamage>0</burnDamage>
+        <burn_chance>0</burn_chance>
     </ROCKET_LAUNCHER>
 </guns>
