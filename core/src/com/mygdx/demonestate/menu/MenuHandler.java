@@ -12,27 +12,27 @@ import java.util.ArrayList;
 public class MenuHandler {
     private static Stage stage;
     private static Skin skin;
-    private static ArrayList<Menu> menus;
+    private static ArrayList<WeaponMenu> weaponMenus;
 
     public static void init() {
-        menus = new ArrayList<>();
+        weaponMenus = new ArrayList<>();
         stage = new Stage();
         skin = new Skin(Gdx.files.internal("assets/skins/gdx-skins/" +
                 "commodore64/skin/uiskin.json"));
         Gdx.input.setInputProcessor(stage);
 
-        menus.add(new SideArmShopMenu(stage, skin));
+        weaponMenus.add(new WeaponMenu(stage, skin));
     }
 
     public static void renderMenus() {
-        for (Menu m : menus) {
+        for (WeaponMenu m : weaponMenus) {
             if (m.isActive()) {
                 m.render();
             }
         }
     }
 
-    public static Menu getMenu() {
-        return menus.get(0);
+    public static WeaponMenu getMenu() {
+        return weaponMenus.get(0);
     }
 }

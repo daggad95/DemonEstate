@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.demonestate.MapHandler;
+import com.mygdx.demonestate.TextureHandler;
 import com.mygdx.demonestate.entity.Entity;
 import com.mygdx.demonestate.entity.EntityHandler;
 
@@ -27,6 +28,11 @@ public class DamageBox {
     private float duration;
     private float range;
     private float vel;
+    private boolean explosive;
+    private boolean explosion;
+
+    //knockback in meters
+    private float knockback;
     private Vector2 pos;
     private Vector2 size;
     private Vector2 dir;
@@ -37,7 +43,9 @@ public class DamageBox {
     //entities that have been damaged by this box already
     private HashSet<Entity> hitSet;
 
-    public DamageBox(int damage, float range, Vector2 pos, Vector2 size, Vector2 dir, float vel, Texture spriteSheet, float rotation, float duration, float multiHitChance) {
+    public DamageBox(int damage, float range, Vector2 pos, Vector2 size, Vector2 dir,
+                     float vel, Texture spriteSheet, float rotation, float duration, float multiHitChance,
+                     float knockback, boolean explosive) {
         this.damage = damage;
         this.range = range;
         this.pos = pos;
@@ -48,8 +56,12 @@ public class DamageBox {
         this.rotation = rotation;
         this.duration = duration;
         this.multiHitChance = multiHitChance;
+        this.knockback = knockback;
+        this.explosive = explosive;
+        explosion = false;
 
         hitSet = new HashSet<Entity>();
+
 
         hitBox = new Polygon(new float[]{0, 0, size.x, 0, size.x, size.y, 0, size.y});
         hitBox.setOrigin(0, 0);
@@ -57,8 +69,20 @@ public class DamageBox {
         hitBox.setPosition(pos.x, pos.y);
 
         if (spriteSheet != null) {
-            currentTexture = new TextureRegion(spriteSheet, SIZE_CONV, SIZE_CONV);
+            float whratio = size.x / size.y;
+            currentTexture = new TextureRegion(spriteSheet,
+                    (int) (SIZE_CONV * whratio), SIZE_CONV);
         }
+    }
+
+    public DamageBox(int damage, float range, Vector2 pos, Vector2 size, Vector2 dir,
+                     float vel, Texture spriteSheet, float rotation, float duration, float multiHitChance,
+                     float knockback, boolean explosive, boolean explosion) {
+        this(damage, range, pos, size, dir,
+            vel, spriteSheet, rotation, duration, multiHitChance,
+            knockback, explosive);
+        this.explosion = explosion;
+
     }
 
     public void update() {
@@ -84,14 +108,38 @@ public class DamageBox {
 
     public void applyDamage(Entity entity) {
         if (!hitSet.contains(entity)) {
-            entity.inflictDamage(damage);
+            if (explosive) {
+                //creating explosion box
+
+                //size damage conversion
+                float sdc = 0.1f;
+
+                EntityHandler.addPDamageBox(new DamageBox(damage, -1,
+                        new Vector2(pos).add(-damage * sdc * 0.5f,
+                                -damage * sdc * 0.5f),
+                        new Vector2(damage * sdc, damage * sdc),
+                        dir, 0,
+                        TextureHandler.getTexture("explosion"),
+                        0, 0.5f, multiHitChance, knockback,
+                        false, true));
+                die();
+                return;
+            }
+            else if (explosion) {
+                entity.inflictDamage(damage, knockback,
+                        new Vector2(dir).rotate((float) Math.random() * 180 - 90));
+            }
+            else {
+                entity.inflictDamage(damage, knockback, new Vector2(dir));
+            }
             hitSet.add(entity);
 
             //removing projectile based on multiHitChance
             //-1 means infinite hits allowed
-            if (multiHitChance != -1) {
+            if (multiHitChance != -1 && !explosion) {
                 if (Math.random() <= multiHitChance) {
                     multiHitChance *= 0.5;
+                    knockback = 0;
                 } else {
                     die();
                 }

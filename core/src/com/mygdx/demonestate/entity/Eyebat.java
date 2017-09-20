@@ -41,6 +41,8 @@ public class Eyebat extends Entity {
     }
 
     public void update() {
+        super.update();
+
         float dTime = Gdx.graphics.getDeltaTime();
 
         if (attackTimer > 0) {
@@ -50,6 +52,10 @@ public class Eyebat extends Entity {
         if (immobileTimer > 0) {
             immobileTimer -= dTime;
         }
+
+        //cut update short if knockback
+        if (knockbackDistance > 0)
+            return;
 
         if (animationTimer > 0) {
             animationTimer -= dTime;
@@ -71,7 +77,7 @@ public class Eyebat extends Entity {
                 immobileTimer += ATTACK_DURATION;
             }
         } else if (immobileTimer <= 0) {
-            chase(target, dTime);
+            chase(target, dTime, true);
         }
     }
 
@@ -102,7 +108,8 @@ public class Eyebat extends Entity {
         Vector2 dbSize = new Vector2(dir.len(), size.y * 0.1f);
 
         EntityHandler.addMDamageBox(new DamageBox(DEFAULT_DAMAGE, -1, center, dbSize,
-                new Vector2(0, 0), 0, TextureHandler.getTexture("laser"), rotation, ATTACK_DURATION, -1));
+                new Vector2(0, 0), 0, TextureHandler.getTexture("laser"),
+                rotation, ATTACK_DURATION, -1, 0, false));
     }
 
     private void animate() {

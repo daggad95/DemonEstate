@@ -1,6 +1,7 @@
 package com.mygdx.demonestate;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.MapRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
@@ -25,7 +26,11 @@ public class MapHandler {
 
 
 	public static void init() {
-		map = new TmxMapLoader().load(DEFAULT_MAP_PATH + DEFAULT_MAP);
+		TmxMapLoader.Parameters parameters = new TmxMapLoader.Parameters();
+		parameters.textureMagFilter = Texture.TextureFilter.Nearest;
+		parameters.textureMinFilter = Texture.TextureFilter.Nearest;
+
+		map = new TmxMapLoader().load(DEFAULT_MAP_PATH + DEFAULT_MAP, parameters);
 		mapRenderer = new OrthogonalTiledMapRenderer(MapHandler.getMap(), TILE_PIXEL_RATIO);
 	}
 

@@ -11,6 +11,8 @@ import com.mygdx.demonestate.TextureHandler;
 import com.mygdx.demonestate.damagebox.DamageBox;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 
 /**
  * Created by David on 1/7/2017.
@@ -21,6 +23,7 @@ public class EntityHandler {
     private static ArrayList<PlayerController> playerControllers;
     private static ArrayList<DamageBox> pDBoxes;
     private static ArrayList<DamageBox> mDBoxes;
+    private static HashMap<Entity, ArrayList<Entity>> collisions;
 
 
     public static void init() {
@@ -29,8 +32,8 @@ public class EntityHandler {
 
         //temp creation of players for testing
         Vector2 position = new Vector2(10, 13);
-        Vector2 size = new Vector2(1, 1);
-        Player player = new Player(position, size, TextureHandler.getTexture("bob"));
+        Vector2 size = new Vector2(0.75f, 0.75f);
+        Player player = new Player(position, size, TextureHandler.getTexture("dave"));
         //Player player2 = new Player(new Vector2(position).add(2, 2), new Vector2(size), TextureHandler.getTexture("bob"));
 
         players = new ArrayList<Entity>();
@@ -46,8 +49,9 @@ public class EntityHandler {
 
 
         monsters = new ArrayList<Entity>();
+        collisions = new HashMap<Entity, ArrayList<Entity>>();
 
-       /* for (int i = 0; i < 20; i++) {
+       /*for (int i = 0; i < 20; i++) {
             Vector2 position2 = new Vector2((int) (Math.random() * 20), (int) (Math.random() * 20));
             Vector2 size2 = new Vector2(1, 1);
 
@@ -69,6 +73,7 @@ public class EntityHandler {
     public static void update(SpriteBatch batch) {
         updateDamageBoxes(pDBoxes, monsters, batch);
         updateDamageBoxes(mDBoxes, players, batch);
+        findCollisions();
 
         for (Entity m : monsters) {
             m.draw(batch);
@@ -118,8 +123,6 @@ public class EntityHandler {
                         } else {
                             idx2++;
                         }
-
-                        break;
                     } else {
                         idx2++;
                     }
@@ -129,19 +132,51 @@ public class EntityHandler {
         }
     }
 
-    //returns true if given entity intersects with
+    /*//returns true if given entity intersects with
     //any monster in the monster list.
     public static boolean collideMonster(Entity entity, Vector2 newPos) {
+        Polygon hitBox = new Polygon(new float[]{0, 0, entity.getSize().x, 0,
+                entity.getSize().x, entity.getSize().y, 0, entity.getSize().y});
+        hitBox.setOrigin(entity.getSize().x / 2, entity.getSize().y / 2);
+        hitBox.setPosition(newPos.x, newPos.y);
+
         for (Entity monster : monsters) {
-            if (monster.pos.epsilonEquals(newPos, 0.3f)
+            if (intersects(hitBox, monster.getHitbox())
                     && monster != entity) {
                 return true;
             }
         }
         return false;
-    }
+    }*/
+
 
     public static boolean intersects(Polygon hitBox1, Polygon hitBox2) {
         return Intersector.overlapConvexPolygons(hitBox1, hitBox2);
+    }
+
+    private static void findCollisions() {
+        for (int i = 0; i < monsters.size(); i++) {
+            Entity m1 = monsters.get(i);
+            ArrayList m1Collisions = new ArrayList<Entity>();
+            collisions.put(m1, m1Collisions);
+
+            for (int j = 0; j < monsters.size(); j++) {
+                Entity m2 = monsters.get(j);
+
+                if (intersects(m1.getHitbox(), m2.getHitbox()) && m1 != m2) {
+                    m1Collisions.add(m2);
+                }
+            }
+        }
+    }
+
+    public static ArrayList<Entity> getCollisions(Entity e) {
+        return collisions.get(e);
+    }
+
+    //FOR TESTING
+    public static void addMonster(Vector2 position) {
+        Zombie zombie = new Zombie(position, new Vector2(0.75f, 0.75f));
+        monsters.add(zombie);
     }
 }

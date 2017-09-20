@@ -16,7 +16,7 @@ import java.util.ArrayList;
  */
 public class GameScreen extends ScreenAdapter {
     //width in game units that the camera can see
-    public static final int VIEW_WIDTH = 20;
+    public static final int VIEW_WIDTH = 40;
     
     private SpriteBatch batch;
     private OrthographicCamera camera;
@@ -35,18 +35,17 @@ public class GameScreen extends ScreenAdapter {
     }
 
     public void render(float delta) {
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        positionCamera(EntityHandler.getPlayers());
         camera.update();
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.setProjectionMatrix(camera.combined);
 
         MapHandler.renderGroundLayer(camera);
-        MenuHandler.renderMenus();
         batch.begin();
         EntityHandler.update(batch);
         batch.end();
         MapHandler.renderWallLayer(camera);
-
-        positionCamera(EntityHandler.getPlayers());
+        MenuHandler.renderMenus();
     }
 
     private void positionCamera(ArrayList<Entity> players) {

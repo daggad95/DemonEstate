@@ -3,8 +3,8 @@ package com.mygdx.demonestate.entity;
 import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.ControllerAdapter;
 import com.badlogic.gdx.controllers.PovDirection;
+import com.badlogic.gdx.math.Vector2;
 import com.mygdx.demonestate.LinuxXbox360Pad;
-import com.mygdx.demonestate.menu.Menu;
 import com.mygdx.demonestate.menu.MenuHandler;
 
 /**
@@ -54,14 +54,16 @@ public class PlayerController extends ControllerAdapter {
     }
 
     public boolean buttonDown (Controller controller, int buttonCode) {
-        Menu menu = MenuHandler.getMenu();
 
         if (buttonCode == LinuxXbox360Pad.BUTTON_START) {
-            menu.toggleActive();
+            MenuHandler.getMenu().toggleActive(player);
         }
         if (buttonCode == LinuxXbox360Pad.BUTTON_A) {
-            if (menu.isActive()) {
-                menu.selectItem(player);
+            if (MenuHandler.getMenu().isActive()) {
+                MenuHandler.getMenu().selectItem(player);
+            }
+            else {
+                EntityHandler.addMonster(new Vector2(player.getPos()).add(3, 3));
             }
         }
 
@@ -70,11 +72,20 @@ public class PlayerController extends ControllerAdapter {
 
     public boolean povMoved (Controller controller, int povCode, PovDirection value) {
         if (value == LinuxXbox360Pad.BUTTON_DPAD_DOWN) {
-            MenuHandler.getMenu().changeSelection(1);
+            if (MenuHandler.getMenu().isActive()) {
+                MenuHandler.getMenu().changeSelection(1);
+            }
+            else {
+                player.switchWeapon(player.SIDEARM);
+            }
         }
-
         if (value == LinuxXbox360Pad.BUTTON_DPAD_UP) {
-            MenuHandler.getMenu().changeSelection(-1);
+            if (MenuHandler.getMenu().isActive()) {
+                MenuHandler.getMenu().changeSelection(-1);
+            }
+            else {
+                player.switchWeapon(player.MAIN_GUN);
+            }
         }
 
         return true;

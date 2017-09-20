@@ -1,29 +1,33 @@
 package com.mygdx.demonestate.menu;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.XmlReader;
 import com.mygdx.demonestate.entity.Player;
+import com.mygdx.demonestate.weapon.Weapon;
+import com.mygdx.demonestate.weapon.WeaponFactory;
+import com.mygdx.demonestate.weapon.WeaponType;
 
 import java.util.ArrayList;
 
 /**
  * Created by david on 4/7/17.
  */
-public abstract class Menu {
+public class WeaponMenu {
     private static float FONTSCALE = 0.7f;
 
     private Stage stage;
     private Table table;
     private Skin skin;
     protected boolean active;
-    protected ArrayList<String> items;
-    protected List  menuList;
+    protected ArrayList<WeaponMenuItem> items;
+    protected List menuList;
 
-    public Menu(Stage stage, Skin skin) {
+    public WeaponMenu(Stage stage, Skin skin) {
         this.stage = stage;
         this.skin = skin;
 
@@ -41,6 +45,8 @@ public abstract class Menu {
 
         stage.addActor(table);
         active = false;
+
+        loadMenuItems();
     }
 
     public void resize (int width, int height) {
@@ -62,16 +68,26 @@ public abstract class Menu {
         return active;
     }
 
-    public void toggleActive() {
+    public void toggleActive(Player player) {
         active = !active;
 
         if (active) {
+            updateMenuItems(player);
             openMenu();
         }
     }
 
-    protected abstract void openMenu();
-    public abstract void selectItem(Player player);
+    protected void openMenu() {
+
+    }
+    public void selectItem(Player player) {
+        WeaponMenuItem item = (WeaponMenuItem) menuList.getSelected();
+        if (player.getMoney() >= item.price && !player.hasWeapon(item.type)) {
+            player.setMoney(player.getMoney() - item.price);
+            player.addWeapon(item.slotType, WeaponFactory.makeWeapon(item.type));
+            updateMenuItems(player);
+        }
+    }
 
     public void changeSelection(int dir) {
         if (dir < 0) {
@@ -90,7 +106,36 @@ public abstract class Menu {
 
     }
 
-    protected void updateMenuItems() {
+    private void loadMenuItems() {
+        items = new ArrayList<WeaponMenuItem>();
+        XmlReader reader = new XmlReader();
+
+        try {
+            XmlReader.Element weaponStats = reader.parse(new FileHandle("assets/data/weapon_stats.xml"));
+
+            int count = weaponStats.getChildCount();
+            for (int i = 0; i < count; i++) {
+                int value = Integer.parseInt(weaponStats.getChild(i).get("value"));
+                String name = weaponStats.getChild(i).get("name");
+                WeaponType type = WeaponType.valueOf(weaponStats.getChild(i).getName());
+                int slot = Integer.parseInt(weaponStats.getChild(i).get("slotType"));
+
+                items.add(new WeaponMenuItem(value, name, type, slot));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("weapon stats file not found");
+            System.exit(0);
+        }
+    }
+
+    protected void updateMenuItems(Player player) {
+        for (WeaponMenuItem item : items) {
+            if (player.hasWeapon(item.type))
+                item.owned = true;
+            else
+                item.owned = false;
+        }
 
         menuList.setItems(items.toArray());
     }
