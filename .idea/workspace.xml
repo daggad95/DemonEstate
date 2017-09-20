@@ -2,14 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b639ca53-ff54-4d3e-b736-e079d6678372" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/assets/data/weapon_stats.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/com/mygdx/demonestate/menu/WeaponMenuItem.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/com/mygdx/demonestate/menu/Menu.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/com/mygdx/demonestate/menu/SideArmShopMenu.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/com/mygdx/demonestate/weapon/WeaponFactory$1.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/src/com/mygdx/demonestate/menu/SideArmShopMenu.java" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/core/src/com/mygdx/demonestate/menu/Menu.java" afterPath="$PROJECT_DIR$/core/src/com/mygdx/demonestate/menu/WeaponMenu.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/assets/weapons/bullet.png" afterPath="$PROJECT_DIR$/core/assets/weapons/bullet.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/build/classes/main/com/mygdx/demonestate/GameScreen.class" afterPath="$PROJECT_DIR$/core/build/classes/main/com/mygdx/demonestate/GameScreen.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/build/classes/main/com/mygdx/demonestate/MapHandler.class" afterPath="$PROJECT_DIR$/core/build/classes/main/com/mygdx/demonestate/MapHandler.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/build/classes/main/com/mygdx/demonestate/damagebox/DamageBox.class" afterPath="$PROJECT_DIR$/core/build/classes/main/com/mygdx/demonestate/damagebox/DamageBox.class" />
@@ -25,21 +17,6 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/build/classes/main/com/mygdx/demonestate/weapon/WeaponType.class" afterPath="$PROJECT_DIR$/core/build/classes/main/com/mygdx/demonestate/weapon/WeaponType.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/desktop/build/classes/main/com/mygdx/demonestate/desktop/DesktopLauncher.class" afterPath="$PROJECT_DIR$/desktop/build/classes/main/com/mygdx/demonestate/desktop/DesktopLauncher.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/assets/maps/100test.tmx" afterPath="$PROJECT_DIR$/core/assets/maps/100test.tmx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/com/mygdx/demonestate/GameScreen.java" afterPath="$PROJECT_DIR$/core/src/com/mygdx/demonestate/GameScreen.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/com/mygdx/demonestate/MapHandler.java" afterPath="$PROJECT_DIR$/core/src/com/mygdx/demonestate/MapHandler.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/com/mygdx/demonestate/damagebox/DamageBox.java" afterPath="$PROJECT_DIR$/core/src/com/mygdx/demonestate/damagebox/DamageBox.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/com/mygdx/demonestate/entity/Entity.java" afterPath="$PROJECT_DIR$/core/src/com/mygdx/demonestate/entity/Entity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/com/mygdx/demonestate/entity/EntityHandler.java" afterPath="$PROJECT_DIR$/core/src/com/mygdx/demonestate/entity/EntityHandler.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/com/mygdx/demonestate/entity/Eyebat.java" afterPath="$PROJECT_DIR$/core/src/com/mygdx/demonestate/entity/Eyebat.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/com/mygdx/demonestate/entity/Player.java" afterPath="$PROJECT_DIR$/core/src/com/mygdx/demonestate/entity/Player.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/com/mygdx/demonestate/entity/PlayerController.java" afterPath="$PROJECT_DIR$/core/src/com/mygdx/demonestate/entity/PlayerController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/com/mygdx/demonestate/entity/Zombie.java" afterPath="$PROJECT_DIR$/core/src/com/mygdx/demonestate/entity/Zombie.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/com/mygdx/demonestate/menu/MenuHandler.java" afterPath="$PROJECT_DIR$/core/src/com/mygdx/demonestate/menu/MenuHandler.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/com/mygdx/demonestate/weapon/Weapon.java" afterPath="$PROJECT_DIR$/core/src/com/mygdx/demonestate/weapon/Weapon.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/com/mygdx/demonestate/weapon/WeaponFactory.java" afterPath="$PROJECT_DIR$/core/src/com/mygdx/demonestate/weapon/WeaponFactory.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/com/mygdx/demonestate/weapon/WeaponType.java" afterPath="$PROJECT_DIR$/core/src/com/mygdx/demonestate/weapon/WeaponType.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/desktop/src/com/mygdx/demonestate/desktop/DesktopLauncher.java" afterPath="$PROJECT_DIR$/desktop/src/com/mygdx/demonestate/desktop/DesktopLauncher.java" />
     </list>
     <ignored path="$PROJECT_DIR$/core/.gradle/" />
     <ignored path="$PROJECT_DIR$/core/build/" />
@@ -1670,7 +1647,14 @@
       <option name="project" value="LOCAL" />
       <updated>1490668444394</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Changed hitboxes to polygons, got eybat laser working, adding to weapons and damage boxes">
+      <created>1505869821146</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1505869821146</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1946,6 +1930,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="380">
           <caret line="19" column="27" lean-forward="false" selection-start-line="19" selection-start-column="27" selection-end-line="19" selection-end-column="27" />
+          <folding />
         </state>
       </provider>
     </entry>
