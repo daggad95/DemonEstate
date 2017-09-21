@@ -119,7 +119,7 @@ public class Zombie extends Entity {
 
     private void attack(Vector2 dir) {
         EntityHandler.addMDamageBox( new DamageBox(DEFAULT_DAMAGE, DEFAULT_RANGE, new Vector2(pos), new Vector2(size), dir, 5,
-                null, 0, -1, -1, 1, false, 0, 0));
+                null, 0, -1, -1, 1, 0, 0));
     }
 
     private void animate() {

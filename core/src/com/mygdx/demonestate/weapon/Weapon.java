@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.demonestate.damagebox.DamageBox;
+import com.mygdx.demonestate.damagebox.DamageBoxType;
+import com.mygdx.demonestate.damagebox.Rocket;
 import com.mygdx.demonestate.entity.EntityHandler;
 
 /**
@@ -41,16 +43,16 @@ public class Weapon {
     private Texture projectileSpriteSheet;
     private WeaponType type;
     private boolean reloading;
-    private boolean explosive;
     private float burn_damage;
     private float burnChance;
     private float duration;
+    private DamageBoxType projectileType;
 
     public Weapon(Texture spriteSheet, Vector2 size, float attackDelay, WeaponType type, float spread, int clipSize, float reloadSpeed,
                   int damage, float range, Vector2 projectileSize, float projectileVel,
                   Texture projectileSpriteSheet, float projectileMultiHit, int projectileNum,
-                  Vector2 offset, float knockback, boolean explosive, float burn_damage,
-                  float burnChance, float duration) {
+                  Vector2 offset, float knockback, float burn_damage,
+                  float burnChance, float duration, DamageBoxType projectileType) {
         this.spriteSheet = spriteSheet;
         this.size = size;
         this.attackDelay = attackDelay;
@@ -67,19 +69,18 @@ public class Weapon {
         this.projectileNum = projectileNum;
         this.offset = offset;
         this.knockback = knockback;
-        this.explosive = explosive;
         this.burn_damage = burn_damage;
         this.burnChance = burnChance;
         this.duration = duration;
+        this.projectileType = projectileType;
 
         clip = clipSize;
         attackTimer = 0;
         reloadTimer = 0;
         reloading = false;
 
-        float whratio = size.x / size.y;
         currentTexture = new TextureRegion(spriteSheet,
-                (int) (SIZE_CONV * whratio), SIZE_CONV);
+                spriteSheet.getWidth(), spriteSheet.getHeight());
     }
 
     public void update() {
@@ -108,30 +109,53 @@ public class Weapon {
         if (attackTimer <= 0 && reloadTimer <= 0) {
             if (!reloading) {
                 for (int i = 0; i < projectileNum; i++) {
+                    createProjectile(pos, dir);
 
-                    //rotation of direction vector for projectile
-                    Vector2 rotate = new Vector2(dir).rotate((float) Math.random() * 2 * spread - spread);
-
-                    //projectile texture rotation
-                    float rotation = (float) Math.toDegrees(Math.atan(rotate.y / rotate.x));
-
-                    float velVariance = ((float) Math.random() * 2 * PROJ_VEL_VAR - PROJ_VEL_VAR) * projectileVel;
-
-                    EntityHandler.addPDamageBox(new DamageBox(damage, range, new Vector2(pos), new Vector2(projectileSize),
-                            rotate, projectileVel + velVariance, projectileSpriteSheet,
-                            rotation, duration, projectileMultiHit, knockback, explosive,
-                            burn_damage, burnChance));
-
-                    clip--;
+                    if (clip != -1)
+                        clip--;
                 }
                 attackTimer += attackDelay;
 
-                if (clip < 1) {
+                if (clip < 1 && clip != -1) {
                     reloadTimer = reloadSpeed;
                     reloading = true;
                 }
             }
         }
+    }
+
+    public void createProjectile(Vector2 pos, Vector2 dir) {
+        //rotation of direction vector for projectile
+        Vector2 rotate = new Vector2(dir).rotate((float) Math.random() * 2 * spread - spread);
+
+        //projectile texture rotation
+        float rotation = (float) Math.toDegrees(Math.atan(rotate.y / rotate.x));
+
+        if(rotate.x < 0)
+            rotation = rotation + 180;
+
+        float velVariance = ((float) Math.random() * 2 * PROJ_VEL_VAR - PROJ_VEL_VAR) * projectileVel;
+
+        pos.sub(projectileSize.x / 2, projectileSize.y / 2);
+
+        DamageBox projectile;
+        switch (projectileType) {
+            case STANDARD:
+                projectile = new DamageBox(damage, range, new Vector2(pos), new Vector2(projectileSize),
+                        rotate, projectileVel + velVariance, projectileSpriteSheet,
+                        rotation, duration, projectileMultiHit, knockback,
+                        burn_damage, burnChance);
+                break;
+            case ROCKET:
+                projectile = new Rocket(damage, range, new Vector2(pos), new Vector2(projectileSize),
+                        rotate, projectileVel + velVariance, projectileSpriteSheet,
+                        rotation, duration, projectileMultiHit, knockback,
+                        burn_damage, burnChance);
+                break;
+            default:
+                projectile = null;
+        }
+        EntityHandler.addPDamageBox(projectile);
     }
 
     public boolean isReloading() {

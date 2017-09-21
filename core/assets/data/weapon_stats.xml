@@ -31,6 +31,7 @@
         <explosive>false</explosive>
         <burnDamage>0</burnDamage>
         <burn_chance>0</burn_chance>
+        <projectile_type>STANDARD</projectile_type>
     </SHOTGUN>
     <BASIC_PISTOL>
         <name>Pistol</name>
@@ -64,6 +65,7 @@
         <explosive>false</explosive>
         <burnDamage>0</burnDamage>
         <burn_chance>0</burn_chance>
+        <projectile_type>STANDARD</projectile_type>
     </BASIC_PISTOL>
     <EXPLOSIVE_PISTOL>
         <name>Explosive Pistol</name>
@@ -81,7 +83,7 @@
         <knockback>1</knockback>
         <projectileNum>1</projectileNum>
         <spriteSheet>explosive_pistol</spriteSheet>
-        <projectileSpriteSheet>bullet</projectileSpriteSheet>
+        <projectileSpriteSheet>rocket</projectileSpriteSheet>
         <size>
             <x>0.3</x>
             <y>0.3</y>
@@ -97,6 +99,7 @@
         <explosive>true</explosive>
         <burnDamage>0</burnDamage>
         <burn_chance>0</burn_chance>
+        <projectile_type>ROCKET</projectile_type>
     </EXPLOSIVE_PISTOL>
     <SHURIKEN>
         <name>Shuriken</name>
@@ -130,6 +133,7 @@
         <explosive>false</explosive>
         <burnDamage>5</burnDamage>
         <burn_chance>0.5</burn_chance>
+        <projectile_type>STANDARD</projectile_type>
     </SHURIKEN>L>
     <RIFLE>
         <name>Rifle</name>
@@ -163,6 +167,7 @@
         <explosive>false</explosive>
         <burnDamage>0</burnDamage>
         <burn_chance>0</burn_chance>
+        <projectile_type>STANDARD</projectile_type>
     </RIFLE>
     <ASSAULT_RIFLE>
         <name>Assault Rifle</name>
@@ -196,6 +201,7 @@
         <explosive>false</explosive>
         <burnDamage>0</burnDamage>
         <burn_chance>0</burn_chance>
+        <projectile_type>STANDARD</projectile_type>
     </ASSAULT_RIFLE>
     <DB_SHOTGUN>
         <name>DB Shotgun</name>
@@ -229,6 +235,7 @@
         <explosive>false</explosive>
         <burnDamage>0</burnDamage>
         <burn_chance>0</burn_chance>
+        <projectile_type>STANDARD</projectile_type>
     </DB_SHOTGUN>
     <RAILGUN>
         <name>Railgun</name>
@@ -262,6 +269,7 @@
         <explosive>false</explosive>
         <burnDamage>0</burnDamage>
         <burn_chance>0</burn_chance>
+        <projectile_type>STANDARD</projectile_type>
     </RAILGUN>
     <ROCKET_LAUNCHER>
         <name>Rocket Launcher</name>
@@ -295,5 +303,72 @@
         <explosive>true</explosive>
         <burnDamage>0</burnDamage>
         <burn_chance>0</burn_chance>
+        <projectile_type>ROCKET</projectile_type>
     </ROCKET_LAUNCHER>
+    <FLAME_THROWER>
+        <name>Flame Thrower</name>
+        <value>100</value>
+        <slotType>3</slotType>
+        <attackDelay>0.01</attackDelay>
+        <reloadSpeed>3</reloadSpeed>
+        <projectileMultiHit>0.5</projectileMultiHit>
+        <projectileVel>20</projectileVel>
+        <spread>3</spread>
+        <range>5</range>
+        <duration>-1</duration>
+        <clipSize>50</clipSize>
+        <damage>1</damage>
+        <knockback>0</knockback>
+        <projectileNum>1</projectileNum>
+        <spriteSheet>flamethrower</spriteSheet>
+        <projectileSpriteSheet>flame</projectileSpriteSheet>
+        <size>
+            <x>0.75</x>
+            <y>0.75</y>
+        </size>
+        <offset>
+            <x>-0.5</x>
+            <y>-0.3</y>
+        </offset>
+        <projectileSize>
+            <x>0.3</x>
+            <y>0.3</y>
+        </projectileSize>
+        <burnDamage>20</burnDamage>
+        <burn_chance>.9</burn_chance>
+        <projectile_type>STANDARD</projectile_type>
+    </FLAME_THROWER>
+    <KATANA>
+        <name>Katana</name>
+        <value>100</value>
+        <slotType>2</slotType>
+        <attackDelay>0.5</attackDelay>
+        <reloadSpeed>-1</reloadSpeed>
+        <projectileMultiHit>0</projectileMultiHit>
+        <projectileVel>40</projectileVel>
+        <spread>0</spread>
+        <range>1.5</range>
+        <duration>-1</duration>
+        <clipSize>-1</clipSize>
+        <damage>100</damage>
+        <knockback>0.1</knockback>
+        <projectileNum>1</projectileNum>
+        <spriteSheet>sword</spriteSheet>
+        <projectileSpriteSheet>swoosh</projectileSpriteSheet>
+        <size>
+            <x>1.5</x>
+            <y>0.2</y>
+        </size>
+        <offset>
+            <x>-0.5</x>
+            <y>0.1</y>
+        </offset>
+        <projectileSize>
+            <x>0.3</x>
+            <y>1.5</y>
+        </projectileSize>
+        <burnDamage>0</burnDamage>
+        <burn_chance>0</burn_chance>
+        <projectile_type>STANDARD</projectile_type>
+    </KATANA>
 </guns>

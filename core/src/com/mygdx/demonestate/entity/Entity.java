@@ -101,7 +101,6 @@ public abstract class Entity {
         if (burnTimer > 0) {
             health -= burnDamage * Gdx.graphics.getDeltaTime();
             burnTimer -= Gdx.graphics.getDeltaTime();
-            System.out.println(health);
         }
 
         if (dead()) {

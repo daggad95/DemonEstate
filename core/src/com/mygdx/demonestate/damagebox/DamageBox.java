@@ -20,34 +20,36 @@ public class DamageBox {
     //Conversion between game units and damagebox size
     public static final int SIZE_CONV = 32;
 
-    private int damage;
+    protected int damage;
 
     //chance to hit after the first time
-    private float multiHitChance;
-    private float rotation;
-    private float duration;
-    private float range;
-    private float vel;
-    private float burnDamage;
-    private float burnChance;
-    private boolean explosive;
-    private boolean explosion;
+    protected float multiHitChance;
+    protected float rotation;
+    protected float duration;
+    protected float range;
+    protected float vel;
+    protected float burnDamage;
+    protected float burnChance;
+    protected boolean explosive;
+    protected boolean explosion;
 
     //knockback in meters
-    private float knockback;
-    private Vector2 pos;
-    private Vector2 size;
-    private Vector2 dir;
-    private Texture spriteSheet;
-    private TextureRegion currentTexture;
-    private Polygon hitBox;
+    protected float knockback;
+    protected Vector2 pos;
+    protected Vector2 size;
+    protected Vector2 dir;
+    protected Texture spriteSheet;
+    protected TextureRegion currentTexture;
+    protected Polygon hitBox;
 
     //entities that have been damaged by this box already
-    private HashSet<Entity> hitSet;
+    protected HashSet<Entity> hitSet;
 
+    public DamageBox() {}
+    
     public DamageBox(int damage, float range, Vector2 pos, Vector2 size, Vector2 dir,
                      float vel, Texture spriteSheet, float rotation, float duration, float multiHitChance,
-                     float knockback, boolean explosive, float burnDamage, float burnChance) {
+                     float knockback, float burnDamage, float burnChance) {
         this.damage = damage;
         this.range = range;
         this.pos = pos;
@@ -67,26 +69,14 @@ public class DamageBox {
         hitSet = new HashSet<Entity>();
 
         hitBox = new Polygon(new float[]{0, 0, size.x, 0, size.x, size.y, 0, size.y});
-        hitBox.setOrigin(0, 0);
+        hitBox.setOrigin(size.x / 2, size.y /2);
         hitBox.rotate(rotation);
         hitBox.setPosition(pos.x, pos.y);
 
         if (spriteSheet != null) {
-            float whratio = size.x / size.y;
             currentTexture = new TextureRegion(spriteSheet,
-                    (int) (SIZE_CONV * whratio), SIZE_CONV);
+                    spriteSheet.getWidth(), spriteSheet.getHeight());
         }
-    }
-
-    public DamageBox(int damage, float range, Vector2 pos, Vector2 size, Vector2 dir,
-                     float vel, Texture spriteSheet, float rotation, float duration, float multiHitChance,
-                     float knockback, boolean explosive, float burnDamage, float burnChance,
-                     boolean explosion) {
-        this(damage, range, pos, size, dir,
-            vel, spriteSheet, rotation, duration, multiHitChance,
-            knockback, explosive, burnDamage, burnChance);
-        this.explosion = explosion;
-
     }
 
     public void update() {
@@ -112,32 +102,8 @@ public class DamageBox {
 
     public void applyDamage(Entity entity) {
         if (!hitSet.contains(entity)) {
-            if (explosive) {
-                //creating explosion box
-
-                //size damage conversion
-                float sdc = 0.05f;
-
-                EntityHandler.addPDamageBox(new DamageBox(damage, -1,
-                        new Vector2(pos).add(-damage * sdc * 0.5f,
-                                -damage * sdc * 0.5f),
-                        new Vector2(damage * sdc, damage * sdc),
-                        dir, 0,
-                        TextureHandler.getTexture("explosion"),
-                        0, 0.25f, multiHitChance, knockback,
-                        false, 0, 0,true));
-                die();
-                return;
-            }
-            else if (explosion) {
-                entity.takeDamage(damage, knockback,
-                        new Vector2(dir).rotate((float) Math.random() * 180 - 90),
-                        burnDamage, burnChance);
-            }
-            else {
-                entity.takeDamage(damage, knockback, new Vector2(dir),
-                        burnDamage, burnChance);
-            }
+            entity.takeDamage(damage, knockback, new Vector2(dir),
+                    burnDamage, burnChance);
             hitSet.add(entity);
 
             //removing projectile based on multiHitChance
@@ -159,7 +125,9 @@ public class DamageBox {
             if (rotation == 0) {
                 batch.draw(currentTexture, pos.x, pos.y, size.x, size.y);
             } else {
-                batch.draw(currentTexture, pos.x, pos.y, 0, 0, size.x, size.y, 1, 1, rotation);
+                batch.draw(currentTexture, pos.x, pos.y,
+                        size.x /2, size.y /2,
+                        size.x, size.y, 1, 1, rotation);
             }
 
         }
