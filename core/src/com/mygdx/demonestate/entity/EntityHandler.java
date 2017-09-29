@@ -1,5 +1,6 @@
 package com.mygdx.demonestate.entity;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -24,6 +25,9 @@ public class EntityHandler {
     private static ArrayList<DamageBox> pDBoxes;
     private static ArrayList<DamageBox> mDBoxes;
     private static HashMap<Entity, ArrayList<Entity>> collisions;
+    private static float collisionTimer;
+
+    private static final float COLLISION_CHECK_DELAY = 0.05f;
 
 
     public static void init() {
@@ -32,7 +36,7 @@ public class EntityHandler {
 
         //temp creation of players for testing
         Vector2 position = new Vector2(10, 13);
-        Vector2 size = new Vector2(0.75f, 0.75f);
+        Vector2 size = new Vector2(1, 1);
         Player player = new Player(position, size, TextureHandler.getTexture("dave"));
         //Player player2 = new Player(new Vector2(position).add(2, 2), new Vector2(size), TextureHandler.getTexture("bob"));
 
@@ -68,12 +72,20 @@ public class EntityHandler {
 
         pDBoxes = new ArrayList<DamageBox>();
         mDBoxes = new ArrayList<DamageBox>();
+        collisionTimer = 0;
     }
 
     public static void update(SpriteBatch batch) {
         updateDamageBoxes(pDBoxes, monsters, batch);
         updateDamageBoxes(mDBoxes, players, batch);
-        findCollisions();
+
+        if (collisionTimer <= 0) {
+            findCollisions();
+            collisionTimer = COLLISION_CHECK_DELAY;
+        }
+        else {
+            collisionTimer -= Gdx.graphics.getDeltaTime();
+        }
 
         for (Entity m : monsters) {
             m.draw(batch);
@@ -157,7 +169,7 @@ public class EntityHandler {
     }
 
     private static void findCollisions() {
-        for (int i = 0; i < monsters.size(); i++) {
+       for (int i = 0; i < monsters.size(); i++) {
             Entity m1 = monsters.get(i);
             ArrayList m1Collisions = new ArrayList<Entity>();
             collisions.put(m1, m1Collisions);
@@ -178,7 +190,13 @@ public class EntityHandler {
 
     //FOR TESTING
     public static void addMonster(Vector2 position) {
-        Zombie zombie = new Zombie(position, new Vector2(0.75f, 0.75f));
-        monsters.add(zombie);
+        for (int i = 0; i < 10; i++) {
+            Zombie zombie = new Zombie(
+                    new Vector2(position).add((float) Math.random(), (float) Math.random()),
+                    new Vector2(0.75f, 0.75f));
+            monsters.add(zombie);
+        }
+
+        findCollisions();
     }
 }

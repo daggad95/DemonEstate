@@ -30,6 +30,9 @@ public class Player extends Entity {
     public static float CROSSHAIR_DIST = 2f;
     public static float CROSSHAIR_RATIO = 4f;
 
+    public static float HOP_HEIGHT = 0.1f;
+    public static float HOP_RATE = 1f;
+
     private Weapon[] inventory;
     private Weapon currentWeapon;
     private Vector2 attackDir;
@@ -37,6 +40,10 @@ public class Player extends Entity {
     private Vector2 lastDir;
     private float pathGenTimer;
     private int money;
+    private boolean flipped;
+    private float hopOffset;
+    private boolean hopping;
+    private boolean hoppingUp;
     Vector2 crosshairPos;
     Vector2 crosshairSize;
     Vector2 crosshairDir;
@@ -44,10 +51,10 @@ public class Player extends Entity {
     public Player(Vector2 pos, Vector2 size, Texture spriteSheet) {
         super(pos, size, spriteSheet, DEFAULT_PLAYER_SPEED, DEFAULT_PLAYER_HEALTH);
 
-        Weapon gun = WeaponFactory.makeWeapon(WeaponType.SHOTGUN);
+        Weapon gun = WeaponFactory.makeWeapon(WeaponType.DAGGER);
         inventory = new Weapon[5];
-        inventory [MAIN_GUN] = gun;
-        currentWeapon= inventory[MAIN_GUN];
+        inventory [MELEE] = gun;
+        currentWeapon= inventory[MELEE];
 
         attackDir = new Vector2(1, 1);
         attacking = false;
@@ -59,19 +66,36 @@ public class Player extends Entity {
         crosshairPos = new Vector2(pos);
         //TEMPORARY
         money = 1000;
+        hopOffset = 0;
+        hopping = false;
+        hoppingUp = false;
     }
 
     public void update() {
+
         super.update();
+
+        if (hopping) {
+            if (hoppingUp) {
+                hopOffset += Gdx.graphics.getDeltaTime() * HOP_RATE;
+
+                if (hopOffset >= HOP_HEIGHT) {
+                    hoppingUp = false;
+                }
+            }
+            else {
+                hopOffset -= Gdx.graphics.getDeltaTime() * HOP_RATE;
+
+                if (hopOffset <= 0) {
+                    hopping = false;
+                    hopOffset = 0;
+                }
+            }
+        }
 
         //cut update short if knockback
         if (knockbackDistance > 0)
             return;
-
-        currentWeapon.update();
-        if (attacking) {
-            attack();
-        }
 
         if (!movementVector.epsilonEquals(0, 0, 0.9f)) {
             lastDir= movementVector;
@@ -88,11 +112,38 @@ public class Player extends Entity {
         hitBox.setPosition(pos.x, pos.y);
 
         pathMap = MapHandler.genPathMap(new Vector2(pos));
+
+        currentWeapon.update(movementVector.x < 0, movementVector.x > 0);
+        if (attacking) {
+            attack();
+        }
+
+        if (velVector.len() > 0 & !hopping) {
+            hopping = true;
+            hoppingUp = true;
+        }
+
+        if (velVector.y > 0) {
+            currentTexture.setRegion(SIZE_CONV, 0, SIZE_CONV, SIZE_CONV);
+            flipped = true;
+        }
+        else if (velVector.y < 0) {
+            currentTexture.setRegion(0, 0, SIZE_CONV, SIZE_CONV);
+            flipped = false;
+        }
     }
 
     public void draw(SpriteBatch batch) {
+        pos.add(0, hopOffset);
+
+        if (flipped)
+            currentWeapon.draw(batch, new Vector2(pos), new Vector2(size));
+
         super.draw(batch);
-        currentWeapon.draw(batch, new Vector2(pos));
+
+
+        if (!flipped)
+            currentWeapon.draw(batch, new Vector2(pos), new Vector2(size));
 
         //crosshairs
         crosshairDir = new Vector2(attackDir).scl(0.01f);
@@ -115,6 +166,7 @@ public class Player extends Entity {
             batch.draw(TextureHandler.getTexture("reloadbar"), pos.x, pos.y + size.y,
                     size.x * (currentWeapon.getReloadSpeed() - currentWeapon.getReloadTimer()) / currentWeapon.getReloadSpeed(), size.y / 10);
         }
+        pos.sub(0, hopOffset);
     }
 
     public void setAttacking(boolean attackState) {
@@ -128,6 +180,15 @@ public class Player extends Entity {
     }
 
     public void attack() {
+        if (attackDir.y > 0.5) {
+            flipped = true;
+            currentTexture.setRegion(SIZE_CONV, 0, SIZE_CONV, SIZE_CONV);
+        }
+        if (attackDir.y < 0.5) {
+            flipped = false;
+            currentTexture.setRegion(0, 0, SIZE_CONV, SIZE_CONV);
+        }
+
         currentWeapon.attack(new Vector2(pos.x + size.x / 2, pos.y + size.y / 2), new Vector2(attackDir));
     }
     

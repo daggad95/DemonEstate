@@ -59,7 +59,7 @@ public class Zombie extends Entity {
         }
 
         //cut update short if knockback
-        if (knockbackDistance > 0)
+        if (knockbackDistance > 0 || stunTimer > 0)
             return;
 
         if (animationTimer > 0) {
@@ -119,12 +119,12 @@ public class Zombie extends Entity {
 
     private void attack(Vector2 dir) {
         EntityHandler.addMDamageBox( new DamageBox(DEFAULT_DAMAGE, DEFAULT_RANGE, new Vector2(pos), new Vector2(size), dir, 5,
-                null, 0, -1, -1, 1, 0, 0));
+                null, 0, -1, -1, 1, 0, 0, 0, true));
     }
 
     private void animate() {
         if (frame == 0) {
-            currentTexture = new TextureRegion(spriteSheet, 0, SIZE_CONV, SIZE_CONV, SIZE_CONV);
+            currentTexture = new TextureRegion(spriteSheet, SIZE_CONV, 0, SIZE_CONV, SIZE_CONV);
             frame = 1;
         } else {
             currentTexture = new TextureRegion(spriteSheet, SIZE_CONV, SIZE_CONV);

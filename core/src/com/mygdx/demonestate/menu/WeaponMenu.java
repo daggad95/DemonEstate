@@ -26,6 +26,9 @@ public class WeaponMenu {
     protected boolean active;
     protected ArrayList<WeaponMenuItem> items;
     protected List menuList;
+    private boolean choosingItem;
+    private int slotType;
+    private ArrayList<WeaponMenuItem> validItems;
 
     public WeaponMenu(Stage stage, Skin skin) {
         this.stage = stage;
@@ -45,6 +48,7 @@ public class WeaponMenu {
 
         stage.addActor(table);
         active = false;
+        choosingItem = false;
 
         loadMenuItems();
     }
@@ -75,29 +79,62 @@ public class WeaponMenu {
             updateMenuItems(player);
             openMenu();
         }
+        else {
+            choosingItem = false;
+        }
     }
 
     protected void openMenu() {
 
     }
     public void selectItem(Player player) {
-        WeaponMenuItem item = (WeaponMenuItem) menuList.getSelected();
-        if (player.getMoney() >= item.price && !player.hasWeapon(item.type)) {
-            player.setMoney(player.getMoney() - item.price);
-            player.addWeapon(item.slotType, WeaponFactory.makeWeapon(item.type));
-            updateMenuItems(player);
+        if (choosingItem) {
+            WeaponMenuItem item = (WeaponMenuItem) menuList.getSelected();
+            if (player.getMoney() >= item.price && !player.hasWeapon(item.type)) {
+                player.setMoney(player.getMoney() - item.price);
+                player.addWeapon(item.slotType, WeaponFactory.makeWeapon(item.type));
+                updateMenuItems(player);
+                choosingItem = false;
+            }
         }
+        else {
+            switch ((String) menuList.getSelected()) {
+                case "Melee":
+                    slotType = Player.MELEE;
+                    break;
+                case "Sidearm":
+                    slotType = Player.SIDEARM;
+                    break;
+                case "Main Gun":
+                    slotType = Player.MAIN_GUN;
+                    break;
+                case "Heavy":
+                    slotType = Player.HEAVY;
+                    break;
+                case "Equipment":
+                    slotType = Player.OTHER;
+                    break;
+            }
+            choosingItem = true;
+        }
+        updateMenuItems(player);
     }
 
     public void changeSelection(int dir) {
+        int endIndex;
+        if (choosingItem)
+            endIndex = validItems.size() - 1;
+        else
+            endIndex = 4; //number of slots - 1
+
         if (dir < 0) {
             if (menuList.getSelectedIndex() == 0 ) {
-                menuList.setSelectedIndex(items.size() - 1);
+                menuList.setSelectedIndex(endIndex);
             } else {
                 menuList.setSelectedIndex(menuList.getSelectedIndex() - 1);
             }
         } else {
-            if (menuList.getSelectedIndex() == items.size() - 1 ) {
+            if (menuList.getSelectedIndex() == endIndex ) {
                 menuList.setSelectedIndex(0);
             } else {
                 menuList.setSelectedIndex(menuList.getSelectedIndex() + 1);
@@ -130,13 +167,32 @@ public class WeaponMenu {
     }
 
     protected void updateMenuItems(Player player) {
-        for (WeaponMenuItem item : items) {
-            if (player.hasWeapon(item.type))
-                item.owned = true;
-            else
-                item.owned = false;
-        }
+        if (choosingItem) {
+            validItems = new ArrayList<WeaponMenuItem>();
+            for (WeaponMenuItem item : items) {
+                if (item.slotType == slotType) {
+                    if (player.hasWeapon(item.type))
+                        item.owned = true;
+                    else
+                        item.owned = false;
+                    validItems.add(item);
+                }
+            }
 
-        menuList.setItems(items.toArray());
+            menuList.setItems(validItems.toArray());
+        }
+        else {
+            String categories[] = {"Melee", "Sidearm",
+                    "Main Gun", "Heavy", "Equipment"};
+            menuList.setItems(categories);
+        }
+    }
+
+    public void goBack(Player player) {
+        if (choosingItem)
+            choosingItem = false;
+        else
+            toggleActive(player);
+        updateMenuItems(player);
     }
 }

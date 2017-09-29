@@ -9,6 +9,7 @@ import com.mygdx.demonestate.damagebox.DamageBox;
 import com.mygdx.demonestate.damagebox.DamageBoxType;
 import com.mygdx.demonestate.damagebox.Rocket;
 import com.mygdx.demonestate.entity.EntityHandler;
+import com.mygdx.demonestate.entity.Player;
 
 /**
  * Created by David on 3/11/2017.
@@ -45,14 +46,23 @@ public class Weapon {
     private boolean reloading;
     private float burn_damage;
     private float burnChance;
+    private float shockChance;
     private float duration;
     private DamageBoxType projectileType;
+    private boolean flipped;
+    private float animationDelay;
+    private float animationTimer;
+    private int numFrames;
+    private int currentFrame;
+    private int slotType;
 
     public Weapon(Texture spriteSheet, Vector2 size, float attackDelay, WeaponType type, float spread, int clipSize, float reloadSpeed,
                   int damage, float range, Vector2 projectileSize, float projectileVel,
                   Texture projectileSpriteSheet, float projectileMultiHit, int projectileNum,
                   Vector2 offset, float knockback, float burn_damage,
-                  float burnChance, float duration, DamageBoxType projectileType) {
+                  float burnChance, float duration, DamageBoxType projectileType,
+                  float animationDelay, float shockChance, int slotType) {
+
         this.spriteSheet = spriteSheet;
         this.size = size;
         this.attackDelay = attackDelay;
@@ -73,6 +83,9 @@ public class Weapon {
         this.burnChance = burnChance;
         this.duration = duration;
         this.projectileType = projectileType;
+        this.animationDelay = animationDelay;
+        this.shockChance = shockChance;
+        this.slotType = slotType;
 
         clip = clipSize;
         attackTimer = 0;
@@ -80,15 +93,51 @@ public class Weapon {
         reloading = false;
 
         currentTexture = new TextureRegion(spriteSheet,
-                spriteSheet.getWidth(), spriteSheet.getHeight());
+                SIZE_CONV, SIZE_CONV);
+        numFrames = spriteSheet.getWidth() / SIZE_CONV;
+        animationTimer = 0;
+        currentFrame = 1;
+        flipped = false;
     }
 
-    public void update() {
+    public void update(boolean movingLeft, boolean movingRight) {
         float dTime = Gdx.graphics.getDeltaTime();
+
+        if (animationTimer > 0) {
+            animationTimer -= dTime;
+
+            if (animationTimer <= 0) {
+                if (currentFrame < numFrames) {
+                    currentFrame++;
+                    animationTimer = animationDelay;
+                }
+                else {
+                    currentFrame = 1;
+                }
+                currentTexture = new TextureRegion(spriteSheet,
+                        SIZE_CONV * (currentFrame - 1), 0, SIZE_CONV, SIZE_CONV);
+                if (flipped)
+                    currentTexture.flip(true, false);
+            }
+
+        }
 
         if (attackTimer > 0) {
             attackTimer -= dTime;
         }
+
+        /*if (movingLeft && !flipped) {
+            currentTexture.flip(true, false);
+            flipped = true;
+
+            //used to re-align flipped images
+            offset.x = size.x - 1f;
+        }
+        else if (movingRight && flipped) {
+            currentTexture.flip(true, false);
+            flipped = false;
+            offset.x = 0;
+        }*/
 
         if (reloadTimer > 0) {
             reloadTimer -= dTime;
@@ -100,14 +149,24 @@ public class Weapon {
         }
     }
 
-    public void draw(SpriteBatch batch, Vector2 position) {
-        position.add(offset);
-        batch.draw(currentTexture, position.x + size.x / 2, position.y + size.y / 4, size.x, size.y);
+    public void draw(SpriteBatch batch, Vector2 position, Vector2 size) {
+        batch.draw(currentTexture, position.x - .5f * size.x, position.y - .5f * size.y,
+                size.x * 2, size.y * 2);
     }
 
     public void attack(Vector2 pos, Vector2 dir) {
+
         if (attackTimer <= 0 && reloadTimer <= 0) {
+            animationTimer = animationDelay;
+
             if (!reloading) {
+                if (dir.x > 0) {
+                    flipped = false;
+                }
+                else if (dir.x < 0) {
+                    flipped = true;
+                }
+
                 for (int i = 0; i < projectileNum; i++) {
                     createProjectile(pos, dir);
 
@@ -138,19 +197,21 @@ public class Weapon {
 
         pos.sub(projectileSize.x / 2, projectileSize.y / 2);
 
+        boolean ignoreWall = slotType == Player.MELEE;
+
         DamageBox projectile;
         switch (projectileType) {
             case STANDARD:
                 projectile = new DamageBox(damage, range, new Vector2(pos), new Vector2(projectileSize),
                         rotate, projectileVel + velVariance, projectileSpriteSheet,
                         rotation, duration, projectileMultiHit, knockback,
-                        burn_damage, burnChance);
+                        burn_damage, burnChance, shockChance, ignoreWall);
                 break;
             case ROCKET:
                 projectile = new Rocket(damage, range, new Vector2(pos), new Vector2(projectileSize),
                         rotate, projectileVel + velVariance, projectileSpriteSheet,
                         rotation, duration, projectileMultiHit, knockback,
-                        burn_damage, burnChance);
+                        burn_damage, burnChance, shockChance, ignoreWall);
                 break;
             default:
                 projectile = null;

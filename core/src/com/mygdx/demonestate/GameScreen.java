@@ -17,7 +17,7 @@ import java.util.ArrayList;
  */
 public class GameScreen extends ScreenAdapter {
     //width in game units that the camera can see
-    public static final int VIEW_WIDTH = 40;
+    public static final int VIEW_WIDTH = 32;
     
     private SpriteBatch batch;
     private OrthographicCamera camera;

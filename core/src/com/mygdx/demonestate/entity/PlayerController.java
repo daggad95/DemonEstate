@@ -54,7 +54,6 @@ public class PlayerController extends ControllerAdapter {
     }
 
     public boolean buttonDown (Controller controller, int buttonCode) {
-
         if (buttonCode == LinuxXbox360Pad.BUTTON_START) {
             MenuHandler.getMenu().toggleActive(player);
         }
@@ -64,6 +63,11 @@ public class PlayerController extends ControllerAdapter {
             }
             else {
                 EntityHandler.addMonster(new Vector2(player.getPos()).add(3, 3));
+            }
+        }
+        if (buttonCode == LinuxXbox360Pad.BUTTON_B) {
+            if (MenuHandler.getMenu().isActive()) {
+                MenuHandler.getMenu().goBack(player);
             }
         }
 

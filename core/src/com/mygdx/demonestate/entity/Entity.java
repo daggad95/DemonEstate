@@ -1,6 +1,7 @@
 package com.mygdx.demonestate.entity;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -19,12 +20,24 @@ import java.util.ArrayList;
  */
 public abstract class Entity {
     //Conversion between game units and sprite size
-    public static final int SIZE_CONV = 64;
+    public static final int SIZE_CONV = 16;
     public static final float KNOCKBACK_SPEED = 10;
     public static final float BURN_DURATION = 1f;
 
+    public static final float SHOCK_DURATION = 10f;
+    public static final float SHOCK_PULSE_DELAY = 1f;
+    public static final float SHOCK_STUN_DURATION = 1f;
+    public static final float SHOCK_STUN_CHANCE = 0.5f;
+    public static final float SHOCK_SPREAD_CHANCE = 0.1f;
+    public static final float SHOCK_DAMAGE = 5;
+
+
+
     //how long the body lasts after death
     public static final float DEATH_LINGER = 0.1f;
+
+    //how long the entity is red after taking damage
+    public static final float DAMAGE_TIME = 0.3f;
 
     protected Vector2 pos;
     protected Vector2 size;
@@ -41,7 +54,11 @@ public abstract class Entity {
     protected Vector2[][] pathMap;
     protected boolean flipped;
     protected float deathTimer;
+    protected float damageTimer;
     protected float burnTimer;
+    protected float shockTimer;
+    protected float shockPulseTimer;
+    protected float stunTimer;
     protected float burnDamage;
 
     //determines which way the entity will rotate
@@ -74,6 +91,8 @@ public abstract class Entity {
 
         burnTimer = 0;
         burnDamage = 0;
+        shockTimer = 0;
+        shockPulseTimer = 0;
     }
 
     public void update() {
@@ -89,7 +108,7 @@ public abstract class Entity {
                 if (collisions != null) {
                     for (Entity e : collisions) {
                         e.takeDamage(0, knockbackDistance / 2,
-                                knockbackDir, 0, 0);
+                                knockbackDir, 0, 0, 0);
                     }
                 }
                 pos.add(velVector);
@@ -98,10 +117,37 @@ public abstract class Entity {
             knockbackDistance -= velVector.len();
         }
 
+        if (stunTimer > 0)
+            stunTimer -= Gdx.graphics.getDeltaTime();
+
+        if (shockTimer > 0) {
+            shockTimer -= Gdx.graphics.getDeltaTime();
+
+            if (shockPulseTimer <= 0) {
+                if (Math.random() < SHOCK_STUN_CHANCE) {
+                    stunTimer += SHOCK_STUN_DURATION;
+                    health -= SHOCK_DAMAGE;
+
+                    for (Entity e : EntityHandler.getCollisions(this)) {
+                        if (Math.random() < SHOCK_SPREAD_CHANCE)
+                            e.shockTimer += SHOCK_DURATION;
+                    }
+                }
+                shockPulseTimer += SHOCK_PULSE_DELAY;
+            }
+        }
+
+        if (shockPulseTimer > 0) {
+            shockPulseTimer -= Gdx.graphics.getDeltaTime();
+        }
+
         if (burnTimer > 0) {
             health -= burnDamage * Gdx.graphics.getDeltaTime();
             burnTimer -= Gdx.graphics.getDeltaTime();
         }
+
+        if (damageTimer > 0)
+            damageTimer -= Gdx.graphics.getDeltaTime();
 
         if (dead()) {
             if (deathTimer >= 0) {
@@ -116,7 +162,15 @@ public abstract class Entity {
                     pos.x, pos.y, size.x, size.y);
         }
 
+        if (shockTimer > 0) {
+            batch.draw(TextureHandler.getTexture("shock"),
+                    pos.x, pos.y, size.x, size.y);
+        }
+
+        if (damageTimer > 0)
+          batch.setColor(Color.RED);
         batch.draw(currentTexture, pos.x, pos.y, size.x, size.y);
+        batch.setColor(Color.WHITE);
     }
 
     public void setMovementVector(float x, float y) {
@@ -142,8 +196,17 @@ public abstract class Entity {
 
 
     public void takeDamage(int damage, float knockback, Vector2 knockbackDir,
-                           float burnDamage, float burnChance) {
-        health -= damage;
+                           float burnDamage, float burnChance, float shockChance) {
+
+        if (damage > 0) {
+            damageTimer = DAMAGE_TIME;
+            health -= damage;
+        }
+
+        if (Math.random() <= shockChance && shockTimer <= 0) {
+            shockTimer += SHOCK_DURATION;
+        }
+
         if (knockbackDistance <= 0) {
             knockbackDistance += knockback;
             this.knockbackDir = knockbackDir;
@@ -178,7 +241,7 @@ public abstract class Entity {
 
            if (collisions.size() > 0) {
                Vector2 moveDir = new Vector2(pos).sub(collisions.get(0).pos);
-               move(moveDir, speed * 2, false);
+               move(moveDir, speed, false);
                return;
            }
        }

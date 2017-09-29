@@ -16,10 +16,11 @@ public class Rocket extends DamageBox {
 
     public Rocket(int damage, float range, Vector2 pos, Vector2 size, Vector2 dir,
                   float vel, Texture spriteSheet, float rotation, float duration, float multiHitChance,
-                  float knockback, float burnDamage, float burnChance) {
+                  float knockback, float burnDamage, float burnChance, float shockChance, boolean ignoreWall) {
 
         super(damage, range, pos, size, dir, vel, spriteSheet,
-                rotation, duration, multiHitChance, knockback, burnDamage, burnChance);
+                rotation, duration, multiHitChance, knockback,
+                burnDamage, burnChance, shockChance, ignoreWall);
         explosionSize = new Vector2(damage * DAMAGE_SIZE_SCALE,
                 damage * DAMAGE_SIZE_SCALE);
     }
@@ -28,7 +29,8 @@ public class Rocket extends DamageBox {
         EntityHandler.addPDamageBox(new Explosion(damage, -1,
                 new Vector2(pos).sub(new Vector2(explosionSize).scl(0.5f)),
                 explosionSize, new Vector2(dir), 0, TextureHandler.getTexture("explosion"),
-                0, EXPLOSION_DURATION, -1, knockback, 0, 0));
+                0, EXPLOSION_DURATION, -1, knockback, 0, 0,
+                0, ignoreWall));
         die();
     }
 }

@@ -18,7 +18,7 @@ import java.util.HashSet;
  */
 public class DamageBox {
     //Conversion between game units and damagebox size
-    public static final int SIZE_CONV = 32;
+    public static final int SIZE_CONV = 64;
 
     protected int damage;
 
@@ -30,8 +30,10 @@ public class DamageBox {
     protected float vel;
     protected float burnDamage;
     protected float burnChance;
+    protected float shockChance;
     protected boolean explosive;
     protected boolean explosion;
+    protected boolean ignoreWall;
 
     //knockback in meters
     protected float knockback;
@@ -49,7 +51,7 @@ public class DamageBox {
     
     public DamageBox(int damage, float range, Vector2 pos, Vector2 size, Vector2 dir,
                      float vel, Texture spriteSheet, float rotation, float duration, float multiHitChance,
-                     float knockback, float burnDamage, float burnChance) {
+                     float knockback, float burnDamage, float burnChance, float shockChance, boolean ignoreWall) {
         this.damage = damage;
         this.range = range;
         this.pos = pos;
@@ -61,9 +63,10 @@ public class DamageBox {
         this.duration = duration;
         this.multiHitChance = multiHitChance;
         this.knockback = knockback;
-        this.explosive = explosive;
         this.burnDamage = burnDamage;
         this.burnChance = burnChance;
+        this.shockChance = shockChance;
+        this.ignoreWall = ignoreWall;
         explosion = false;
 
         hitSet = new HashSet<Entity>();
@@ -95,7 +98,7 @@ public class DamageBox {
         pos.add(moveDist);
         hitBox.setPosition(pos.x, pos.y);
 
-        if (MapHandler.wallAt(new Vector2(pos), new Vector2(size))) {
+        if (!ignoreWall && MapHandler.wallAt(new Vector2(pos), new Vector2(size))) {
             range = 0;
         }
     }
@@ -103,7 +106,7 @@ public class DamageBox {
     public void applyDamage(Entity entity) {
         if (!hitSet.contains(entity)) {
             entity.takeDamage(damage, knockback, new Vector2(dir),
-                    burnDamage, burnChance);
+                    burnDamage, burnChance, shockChance);
             hitSet.add(entity);
 
             //removing projectile based on multiHitChance
