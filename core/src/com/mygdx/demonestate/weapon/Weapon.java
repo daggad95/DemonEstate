@@ -53,8 +53,9 @@ public class Weapon {
     private int numFrames;
     private int currentFrame;
     private int slotType;
+    private Player player;
 
-    public Weapon(Texture spriteSheet, Vector2 size, float attackDelay, WeaponType type, float spread, int clipSize, float reloadSpeed,
+    public Weapon(Player player, Texture spriteSheet, Vector2 size, float attackDelay, WeaponType type, float spread, int clipSize, float reloadSpeed,
                   int damage, float range, Vector2 projectileSize, float projectileVel,
                   Texture projectileSpriteSheet, float projectileMultiHit, int projectileNum,
                   Vector2 offset, float knockback, float burn_damage,
@@ -84,6 +85,7 @@ public class Weapon {
         this.animationDelay = animationDelay;
         this.shockChance = shockChance;
         this.slotType = slotType;
+        this.player = player;
 
         clip = clipSize;
         attackTimer = 0;
@@ -219,6 +221,12 @@ public class Weapon {
                 break;
             case STICKY_BOMB:
                 projectile = new StickyBomb(damage, range, new Vector2(pos), new Vector2(projectileSize),
+                        rotate, projectileVel + velVariance, projectileSpriteSheet,
+                        rotation, duration, projectileMultiHit, knockback,
+                        burn_damage, burnChance, shockChance, ignoreWall);
+                break;
+            case BOOMERANG:
+                projectile = new Boomerang(player, damage, range, new Vector2(pos), new Vector2(projectileSize),
                         rotate, projectileVel + velVariance, projectileSpriteSheet,
                         rotation, duration, projectileMultiHit, knockback,
                         burn_damage, burnChance, shockChance, ignoreWall);

@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.XmlReader;
 import com.badlogic.gdx.utils.XmlReader.Element;
 import com.mygdx.demonestate.damagebox.DamageBox;
 import com.mygdx.demonestate.damagebox.DamageBoxType;
+import com.mygdx.demonestate.entity.Player;
 
 import java.util.HashMap;
 
@@ -16,7 +17,7 @@ import java.util.HashMap;
  */
 public class WeaponFactory {
 
-    public static Weapon makeWeapon(WeaponType type) {
+    public static Weapon makeWeapon(WeaponType type, Player player) {
         XmlReader reader = new XmlReader();
 
         try {
@@ -71,7 +72,7 @@ public class WeaponFactory {
             DamageBoxType damageBoxType = DamageBoxType.valueOf(weaponStats.
                     getChildByName(weaponName).get("projectile_type"));
 
-            return new Weapon(spriteSheet, size, attackDelay, type, spread, clipSize, reloadSpeed,
+            return new Weapon(player, spriteSheet, size, attackDelay, type, spread, clipSize, reloadSpeed,
                     damage, range, projectileSize, projectileVel, projectileSpriteSheet, projectileMultiHit,
                     projectileNum, offset, knockback, burn_damage, burnChance, duration, damageBoxType,
                     animationDelay, shockChance, slotType);

@@ -51,7 +51,7 @@ public class Player extends Entity {
     public Player(Vector2 pos, Vector2 size, Texture spriteSheet) {
         super(pos, size, spriteSheet, DEFAULT_PLAYER_SPEED, DEFAULT_PLAYER_HEALTH);
 
-        Weapon gun = WeaponFactory.makeWeapon(WeaponType.DAGGER);
+        Weapon gun = WeaponFactory.makeWeapon(WeaponType.DAGGER, this);
         inventory = new Weapon[5];
         inventory [MELEE] = gun;
         currentWeapon= inventory[MELEE];

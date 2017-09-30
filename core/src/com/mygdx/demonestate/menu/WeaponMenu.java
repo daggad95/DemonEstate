@@ -92,7 +92,7 @@ public class WeaponMenu {
             WeaponMenuItem item = (WeaponMenuItem) menuList.getSelected();
             if (player.getMoney() >= item.price && !player.hasWeapon(item.type)) {
                 player.setMoney(player.getMoney() - item.price);
-                player.addWeapon(item.slotType, WeaponFactory.makeWeapon(item.type));
+                player.addWeapon(item.slotType, WeaponFactory.makeWeapon(item.type, player));
                 updateMenuItems(player);
                 choosingItem = false;
             }

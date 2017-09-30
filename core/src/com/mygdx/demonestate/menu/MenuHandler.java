@@ -17,7 +17,7 @@ public class MenuHandler {
     public static void init() {
         weaponMenus = new ArrayList<>();
         stage = new Stage();
-        skin = new Skin(Gdx.files.internal("assets/skins/gdx-skins/" +
+        skin = new Skin(Gdx.files.internal("assets/skins/" +
                 "commodore64/skin/uiskin.json"));
         Gdx.input.setInputProcessor(stage);
 

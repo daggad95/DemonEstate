@@ -633,4 +633,39 @@
         <projectile_type>STICKY_BOMB</projectile_type>
         <animation_delay>0.1</animation_delay>
     </STICKY_BOMB>
+    <DEATHERANG>
+        <name>Death-erang</name>
+        <value>100</value>
+        <slotType>1</slotType>
+        <attackDelay>1</attackDelay>
+        <reloadSpeed>0</reloadSpeed>
+        <projectileMultiHit>-1</projectileMultiHit>
+        <projectileVel>15</projectileVel>
+        <spread>0</spread>
+        <range>100</range>
+        <duration>-1</duration>
+        <clipSize>-1</clipSize>
+        <damage>50</damage>
+        <knockback>0.5</knockback>
+        <projectileNum>1</projectileNum>
+        <spriteSheet>deatherang</spriteSheet>
+        <projectileSpriteSheet>bullet</projectileSpriteSheet>
+        <size>
+            <x>1.5</x>
+            <y>1</y>
+        </size>
+        <offset>
+            <x>0</x>
+            <y>0</y>
+        </offset>
+        <projectileSize>
+            <x>0.2</x>
+            <y>0.2</y>
+        </projectileSize>
+        <burnDamage>0</burnDamage>
+        <burn_chance>0</burn_chance>
+        <shock_chance>0</shock_chance>
+        <projectile_type>BOOMERANG</projectile_type>
+        <animation_delay>0.1</animation_delay>
+    </DEATHERANG>
 </guns>
