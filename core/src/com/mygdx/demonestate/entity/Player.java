@@ -44,6 +44,7 @@ public class Player extends Entity {
     private float hopOffset;
     private boolean hopping;
     private boolean hoppingUp;
+    private boolean triggerPulled;
     Vector2 crosshairPos;
     Vector2 crosshairSize;
     Vector2 crosshairDir;
@@ -69,6 +70,7 @@ public class Player extends Entity {
         hopOffset = 0;
         hopping = false;
         hoppingUp = false;
+        triggerPulled = false;
     }
 
     public void update() {
@@ -170,6 +172,9 @@ public class Player extends Entity {
     }
 
     public void setAttacking(boolean attackState) {
+        if (attacking == false)
+            triggerPulled = true;
+
         attacking = attackState;
     }
 
@@ -189,7 +194,8 @@ public class Player extends Entity {
             currentTexture.setRegion(0, 0, SIZE_CONV, SIZE_CONV);
         }
 
-        currentWeapon.attack(new Vector2(pos.x + size.x / 2, pos.y + size.y / 2), new Vector2(attackDir));
+        currentWeapon.attack(new Vector2(pos.x + size.x / 2, pos.y + size.y / 2), new Vector2(attackDir), triggerPulled);
+        triggerPulled = false;
     }
     
     public void addWeapon(int slot, Weapon weapon) {

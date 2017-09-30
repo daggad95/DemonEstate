@@ -54,13 +54,14 @@ public class Weapon {
     private int currentFrame;
     private int slotType;
     private Player player;
+    private boolean automatic;
 
     public Weapon(Player player, Texture spriteSheet, Vector2 size, float attackDelay, WeaponType type, float spread, int clipSize, float reloadSpeed,
                   int damage, float range, Vector2 projectileSize, float projectileVel,
                   Texture projectileSpriteSheet, float projectileMultiHit, int projectileNum,
                   Vector2 offset, float knockback, float burn_damage,
                   float burnChance, float duration, DamageBoxType projectileType,
-                  float animationDelay, float shockChance, int slotType) {
+                  float animationDelay, float shockChance, int slotType, boolean automatic) {
 
         this.spriteSheet = spriteSheet;
         this.size = size;
@@ -86,6 +87,7 @@ public class Weapon {
         this.shockChance = shockChance;
         this.slotType = slotType;
         this.player = player;
+        this.automatic = automatic;
 
         clip = clipSize;
         attackTimer = 0;
@@ -154,7 +156,9 @@ public class Weapon {
                 size.x * 2, size.y * 2);
     }
 
-    public void attack(Vector2 pos, Vector2 dir) {
+    public void attack(Vector2 pos, Vector2 dir, boolean triggerPulled) {
+        if (automatic & !triggerPulled)
+            return;
 
         if (attackTimer <= 0 && reloadTimer <= 0) {
             animationTimer = animationDelay;
@@ -184,6 +188,7 @@ public class Weapon {
     }
 
     public void createProjectile(Vector2 pos, Vector2 dir) {
+
         //rotation of direction vector for projectile
         Vector2 rotate = new Vector2(dir).rotate((float) Math.random() * 2 * spread - spread);
 
@@ -227,6 +232,12 @@ public class Weapon {
                 break;
             case BOOMERANG:
                 projectile = new Boomerang(player, damage, range, new Vector2(pos), new Vector2(projectileSize),
+                        rotate, projectileVel + velVariance, projectileSpriteSheet,
+                        rotation, duration, projectileMultiHit, knockback,
+                        burn_damage, burnChance, shockChance, ignoreWall);
+                break;
+            case AIMBOT:
+                projectile = new Aimbot(damage, range, new Vector2(pos), new Vector2(projectileSize),
                         rotate, projectileVel + velVariance, projectileSpriteSheet,
                         rotation, duration, projectileMultiHit, knockback,
                         burn_damage, burnChance, shockChance, ignoreWall);

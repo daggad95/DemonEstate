@@ -34,6 +34,7 @@
         <shock_chance>0</shock_chance>
         <projectile_type>STANDARD</projectile_type>
         <animation_delay>0.1</animation_delay>
+        <automatic>false</automatic>
     </DAGGER>
     <SWORD>
         <name>Sword</name>
@@ -69,6 +70,7 @@
         <shock_chance>0</shock_chance>
         <projectile_type>STANDARD</projectile_type>
         <animation_delay>0.1</animation_delay>
+        <automatic>false</automatic>
     </SWORD>
     <SPEAR>
         <name>Spear</name>
@@ -104,6 +106,7 @@
         <shock_chance>0</shock_chance>
         <projectile_type>STANDARD</projectile_type>
         <animation_delay>0.1</animation_delay>
+        <automatic>false</automatic>
     </SPEAR>
     <BAT>
         <name>Baseball Bat</name>
@@ -139,6 +142,7 @@
         <shock_chance>0</shock_chance>
         <projectile_type>STANDARD</projectile_type>
         <animation_delay>0.075</animation_delay>
+        <automatic>false</automatic>
     </BAT>
     <KATANA>
         <name>Katana</name>
@@ -174,6 +178,7 @@
         <shock_chance>0</shock_chance>
         <projectile_type>STANDARD</projectile_type>
         <animation_delay>0.1</animation_delay>
+        <automatic>false</automatic>
     </KATANA>
     <HALBERD>
         <name>Halberd</name>
@@ -209,6 +214,7 @@
         <shock_chance>0</shock_chance>
         <projectile_type>STANDARD</projectile_type>
         <animation_delay>0.1</animation_delay>
+        <automatic>false</automatic>
     </HALBERD>
     <LIGHTSABER>
         <name>Lightsaber</name>
@@ -244,6 +250,7 @@
         <shock_chance>0</shock_chance>
         <projectile_type>STANDARD</projectile_type>
         <animation_delay>0.1</animation_delay>
+        <automatic>false</automatic>
     </LIGHTSABER>
     <GRAVHAMMER>
         <name>Gravity Hammer</name>
@@ -279,6 +286,7 @@
         <shock_chance>0</shock_chance>
         <projectile_type>STANDARD</projectile_type>
         <animation_delay>0.1</animation_delay>
+        <automatic>false</automatic>
     </GRAVHAMMER>
     <KUSANAGI>
         <name>Kusanagi</name>
@@ -314,6 +322,7 @@
         <shock_chance>0</shock_chance>
         <projectile_type>STANDARD</projectile_type>
         <animation_delay>0.1</animation_delay>
+        <automatic>false</automatic>
     </KUSANAGI>
     <THORS_HAMMER>
         <name>Thor's Hammer</name>
@@ -349,6 +358,7 @@
         <shock_chance>1</shock_chance>
         <projectile_type>STANDARD</projectile_type>
         <animation_delay>0.1</animation_delay>
+        <automatic>false</automatic>
     </THORS_HAMMER>
 
 
@@ -387,6 +397,7 @@
         <shock_chance>0</shock_chance>
         <projectile_type>STANDARD</projectile_type>
         <animation_delay>0.1</animation_delay>
+        <automatic>false</automatic>
     </PISTOL>
     <SHURIKEN>
         <name>Shuriken</name>
@@ -422,6 +433,7 @@
         <shock_chance>0</shock_chance>
         <projectile_type>STANDARD</projectile_type>
         <animation_delay>0.1</animation_delay>
+        <automatic>false</automatic>
     </SHURIKEN>
     <STUN_GUN>
         <name>Stun Gun</name>
@@ -457,6 +469,7 @@
         <shock_chance>1</shock_chance>
         <projectile_type>STANDARD</projectile_type>
         <animation_delay>0.1</animation_delay>
+        <automatic>false</automatic>
     </STUN_GUN>
     <DEAGLE>
         <name>Deagle</name>
@@ -492,6 +505,7 @@
         <shock_chance>0</shock_chance>
         <projectile_type>STANDARD</projectile_type>
         <animation_delay>0.1</animation_delay>
+        <automatic>false</automatic>
     </DEAGLE>
     <UZI>
         <name>Uzi</name>
@@ -527,6 +541,7 @@
         <shock_chance>0</shock_chance>
         <projectile_type>STANDARD</projectile_type>
         <animation_delay>0.1</animation_delay>
+        <automatic>false</automatic>
     </UZI>
     <LASER_PISTOL>
         <name>Laser Pistol</name>
@@ -562,6 +577,7 @@
         <shock_chance>0</shock_chance>
         <projectile_type>STANDARD</projectile_type>
         <animation_delay>0.1</animation_delay>
+        <automatic>false</automatic>
     </LASER_PISTOL>
     <HOMING_SHURIKEN>
         <name>Homing Shuriken</name>
@@ -597,6 +613,7 @@
         <shock_chance>0</shock_chance>
         <projectile_type>HOMING</projectile_type>
         <animation_delay>0.1</animation_delay>
+        <automatic>false</automatic>
     </HOMING_SHURIKEN>
     <STICKY_BOMB>
         <name>Sticky Bomb</name>
@@ -632,6 +649,7 @@
         <shock_chance>0</shock_chance>
         <projectile_type>STICKY_BOMB</projectile_type>
         <animation_delay>0.1</animation_delay>
+        <automatic>false</automatic>
     </STICKY_BOMB>
     <DEATHERANG>
         <name>Death-erang</name>
@@ -667,14 +685,15 @@
         <shock_chance>0</shock_chance>
         <projectile_type>BOOMERANG</projectile_type>
         <animation_delay>0.1</animation_delay>
+        <automatic>false</automatic>
     </DEATHERANG>
     <QUICKSHOT>
         <name>Quickshot</name>
         <value>100</value>
         <slotType>1</slotType>
-        <attackDelay>1</attackDelay>
-        <reloadSpeed>0</reloadSpeed>
-        <projectileMultiHit>-1</projectileMultiHit>
+        <attackDelay>0.1</attackDelay>
+        <reloadSpeed>2</reloadSpeed>
+        <projectileMultiHit>0.2</projectileMultiHit>
         <projectileVel>40</projectileVel>
         <spread>0</spread>
         <range>30</range>
@@ -702,5 +721,6 @@
         <shock_chance>0</shock_chance>
         <projectile_type>AIMBOT</projectile_type>
         <animation_delay>0.1</animation_delay>
+        <automatic>false</automatic>
     </QUICKSHOT>
 </guns>

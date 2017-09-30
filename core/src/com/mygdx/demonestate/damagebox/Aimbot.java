@@ -34,6 +34,12 @@ public class Aimbot extends DamageBox {
             }
         }
 
-        dir = new Vector2(pos).sub(target.getPos());
+        if (target != null) {
+            this.dir = target.getPos().sub(pos).nor();
+
+            Vector2 rotate = new Vector2(this.dir);
+            //projectile texture rotation
+            this.rotation = (float) Math.toDegrees(Math.atan(rotate.y / rotate.x));
+        }
     }
 }
