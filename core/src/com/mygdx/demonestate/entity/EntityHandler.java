@@ -96,7 +96,7 @@ public class EntityHandler {
             }
         }
     }
-
+    //testeringo
     public static void addPDamageBox(DamageBox db) {
         pDBoxes.add(db);
     }
