@@ -75,7 +75,7 @@ public class Player extends Entity {
 
         super.update();
 
-        if (hopping) {
+        /*if (hopping) {
             if (hoppingUp) {
                 hopOffset += Gdx.graphics.getDeltaTime() * HOP_RATE;
 
@@ -91,7 +91,7 @@ public class Player extends Entity {
                     hopOffset = 0;
                 }
             }
-        }
+        }*/
 
         //cut update short if knockback
         if (knockbackDistance > 0)

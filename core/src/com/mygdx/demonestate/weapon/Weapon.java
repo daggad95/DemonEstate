@@ -5,9 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.mygdx.demonestate.damagebox.DamageBox;
-import com.mygdx.demonestate.damagebox.DamageBoxType;
-import com.mygdx.demonestate.damagebox.Rocket;
+import com.mygdx.demonestate.damagebox.*;
 import com.mygdx.demonestate.entity.EntityHandler;
 import com.mygdx.demonestate.entity.Player;
 
@@ -168,7 +166,7 @@ public class Weapon {
                 }
 
                 for (int i = 0; i < projectileNum; i++) {
-                    createProjectile(pos, dir);
+                    createProjectile(new Vector2(pos), dir);
 
                     if (clip != -1)
                         clip--;
@@ -209,6 +207,18 @@ public class Weapon {
                 break;
             case ROCKET:
                 projectile = new Rocket(damage, range, new Vector2(pos), new Vector2(projectileSize),
+                        rotate, projectileVel + velVariance, projectileSpriteSheet,
+                        rotation, duration, projectileMultiHit, knockback,
+                        burn_damage, burnChance, shockChance, ignoreWall);
+                break;
+            case HOMING:
+                projectile = new Homing(damage, range, new Vector2(pos), new Vector2(projectileSize),
+                        rotate, projectileVel + velVariance, projectileSpriteSheet,
+                        rotation, duration, projectileMultiHit, knockback,
+                        burn_damage, burnChance, shockChance, ignoreWall);
+                break;
+            case STICKY_BOMB:
+                projectile = new StickyBomb(damage, range, new Vector2(pos), new Vector2(projectileSize),
                         rotate, projectileVel + velVariance, projectileSpriteSheet,
                         rotation, duration, projectileMultiHit, knockback,
                         burn_damage, burnChance, shockChance, ignoreWall);

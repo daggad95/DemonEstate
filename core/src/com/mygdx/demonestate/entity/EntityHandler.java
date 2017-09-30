@@ -25,10 +25,6 @@ public class EntityHandler {
     private static ArrayList<DamageBox> pDBoxes;
     private static ArrayList<DamageBox> mDBoxes;
     private static HashMap<Entity, ArrayList<Entity>> collisions;
-    private static float collisionTimer;
-
-    private static final float COLLISION_CHECK_DELAY = 0.05f;
-
 
     public static void init() {
         TextureHandler.loadTextures();
@@ -72,20 +68,13 @@ public class EntityHandler {
 
         pDBoxes = new ArrayList<DamageBox>();
         mDBoxes = new ArrayList<DamageBox>();
-        collisionTimer = 0;
     }
 
     public static void update(SpriteBatch batch) {
         updateDamageBoxes(pDBoxes, monsters, batch);
         updateDamageBoxes(mDBoxes, players, batch);
+        findCollisions();
 
-        if (collisionTimer <= 0) {
-            findCollisions();
-            collisionTimer = COLLISION_CHECK_DELAY;
-        }
-        else {
-            collisionTimer -= Gdx.graphics.getDeltaTime();
-        }
 
         for (Entity m : monsters) {
             m.draw(batch);
@@ -120,6 +109,8 @@ public class EntityHandler {
     public static ArrayList<Entity> getPlayers() {
         return players;
     }
+
+    public static ArrayList<Entity> getMonsters() { return  monsters; }
 
     private static void updateDamageBoxes(ArrayList<DamageBox> dBoxes, ArrayList<Entity> entities, SpriteBatch batch) {
         int idx = 0;
@@ -190,7 +181,7 @@ public class EntityHandler {
 
     //FOR TESTING
     public static void addMonster(Vector2 position) {
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 1; i++) {
             Zombie zombie = new Zombie(
                     new Vector2(position).add((float) Math.random(), (float) Math.random()),
                     new Vector2(0.75f, 0.75f));
