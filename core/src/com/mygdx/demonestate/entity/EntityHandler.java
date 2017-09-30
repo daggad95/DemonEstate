@@ -41,11 +41,13 @@ public class EntityHandler {
         //players.add(player2);
 
         //temp creation of player controller for testing
-        Controller c = Controllers.getControllers().get(0);
-        PlayerController pc = new PlayerController((Player) players.get(0), c);
+        if (Controllers.getControllers().size > 0) {
+            Controller c = Controllers.getControllers().get(0);
+            PlayerController pc = new PlayerController((Player) players.get(0), c);
 
-        playerControllers = new ArrayList<PlayerController>();
-        playerControllers.add(pc);
+            playerControllers = new ArrayList<PlayerController>();
+            playerControllers.add(pc);
+        }
 
 
         monsters = new ArrayList<Entity>();

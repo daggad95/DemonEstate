@@ -15,9 +15,12 @@ import java.util.ArrayList;
  */
 public class Boomerang extends DamageBox {
     //rate of acceleration
-    public static final float RR = 200;
+    public static final float RR = 300;
+    public static final float ROTATE_DELAY = 0.4f;
     private Vector2 target;
     private boolean starting;
+    private boolean clockwise;
+    private float startRotateTimer;
 
     public Boomerang(Entity player, int damage, float range, Vector2 pos, Vector2 size, Vector2 dir,
                      float vel, Texture spriteSheet, float rotation, float duration, float multiHitChance,
@@ -28,8 +31,23 @@ public class Boomerang extends DamageBox {
                 burnDamage, burnChance, shockChance, ignoreWall);
 
 
-        target = player.getPos();
+        target = player.getPos().add(player.getSize().scl(0.5f));
         starting = true;
+
+        if (dir.y < 0) {
+            if (dir.x > 0)
+                clockwise = false;
+            else
+                clockwise = true;
+        }
+        else {
+            if (dir.x > 0)
+                clockwise = true;
+            else
+                clockwise = false;
+        }
+
+        startRotateTimer = ROTATE_DELAY;
     }
 
     public void update() {
@@ -43,13 +61,17 @@ public class Boomerang extends DamageBox {
 
         float dTime = Gdx.graphics.getDeltaTime();
 
-        if (target != null) {
+        if (startRotateTimer > 0) {
+            startRotateTimer -= dTime;
+        }
+
+        if (target != null && startRotateTimer <= 0) {
             float angle = dir.angle(new Vector2(target).sub(pos));
 
-            if (angle < 0) {
+            if (clockwise && Math.abs(angle) > 10) {
                 dir.rotate(-RR * Gdx.graphics.getDeltaTime());
             }
-            if (angle > 0) {
+            else if (Math.abs(angle) > 10) {
                 dir.rotate(RR * Gdx.graphics.getDeltaTime());
             }
         }
