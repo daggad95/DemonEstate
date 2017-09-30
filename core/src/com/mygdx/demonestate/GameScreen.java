@@ -26,6 +26,7 @@ public class GameScreen extends ScreenAdapter {
 
 
     public GameScreen() {
+        // test
         batch = new SpriteBatch();
 
         float w = Gdx.graphics.getWidth();
