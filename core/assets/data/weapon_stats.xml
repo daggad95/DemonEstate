@@ -541,7 +541,7 @@
         <shock_chance>0</shock_chance>
         <projectile_type>STANDARD</projectile_type>
         <animation_delay>0.1</animation_delay>
-        <automatic>false</automatic>
+        <automatic>true</automatic>
     </UZI>
     <LASER_PISTOL>
         <name>Laser Pistol</name>
@@ -723,4 +723,78 @@
         <animation_delay>0.1</animation_delay>
         <automatic>false</automatic>
     </QUICKSHOT>
+
+    <!-- MAIN GUNS -->
+    <RIFLE>
+        <name>Rifle</name>
+        <value>100</value>
+        <slotType>0</slotType>
+        <attackDelay>0.5</attackDelay>
+        <reloadSpeed>4</reloadSpeed>
+        <projectileMultiHit>0.25</projectileMultiHit>
+        <projectileVel>30</projectileVel>
+        <spread>0</spread>
+        <range>30</range>
+        <duration>-1</duration>
+        <clipSize>10</clipSize>
+        <damage>35</damage>
+        <knockback>0.5</knockback>
+        <projectileNum>1</projectileNum>
+        <spriteSheet>rifle</spriteSheet>
+        <projectileSpriteSheet>bullet</projectileSpriteSheet>
+        <size>
+            <x>1.5</x>
+            <y>1</y>
+        </size>
+        <offset>
+            <x>0</x>
+            <y>0</y>
+        </offset>
+        <projectileSize>
+            <x>0.3</x>
+            <y>0.05</y>
+        </projectileSize>
+        <burnDamage>0</burnDamage>
+        <burn_chance>0</burn_chance>
+        <shock_chance>0</shock_chance>
+        <projectile_type>STANDARD</projectile_type>
+        <animation_delay>0.1</animation_delay>
+        <automatic>false</automatic>
+    </RIFLE>
+    <DBSHOTGUN>
+        <name>DB Shotgun</name>
+        <value>100</value>
+        <slotType>0</slotType>
+        <attackDelay>0.5</attackDelay>
+        <reloadSpeed>2</reloadSpeed>
+        <projectileMultiHit>0.25</projectileMultiHit>
+        <projectileVel>30</projectileVel>
+        <spread>5</spread>
+        <range>10</range>
+        <duration>-1</duration>
+        <clipSize>2</clipSize>
+        <damage>50</damage>
+        <knockback>1</knockback>
+        <projectileNum>2</projectileNum>
+        <spriteSheet>dbshotgun</spriteSheet>
+        <projectileSpriteSheet>bullet</projectileSpriteSheet>
+        <size>
+            <x>1.5</x>
+            <y>1</y>
+        </size>
+        <offset>
+            <x>0</x>
+            <y>0</y>
+        </offset>
+        <projectileSize>
+            <x>0.3</x>
+            <y>0.05</y>
+        </projectileSize>
+        <burnDamage>0</burnDamage>
+        <burn_chance>0</burn_chance>
+        <shock_chance>0</shock_chance>
+        <projectile_type>STANDARD</projectile_type>
+        <animation_delay>0.1</animation_delay>
+        <automatic>false</automatic>
+    </DBSHOTGUN>
 </guns>
