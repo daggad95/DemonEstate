@@ -157,7 +157,7 @@ public class Weapon {
     }
 
     public void attack(Vector2 pos, Vector2 dir, boolean triggerPulled) {
-        if (automatic & !triggerPulled)
+        if (!automatic & !triggerPulled)
             return;
 
         if (attackTimer <= 0 && reloadTimer <= 0) {
