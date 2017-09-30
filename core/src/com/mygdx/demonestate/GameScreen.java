@@ -16,6 +16,7 @@ import java.util.ArrayList;
  * Created by David on 1/7/2017.
  */
 public class GameScreen extends ScreenAdapter {
+	// this is a test hello
     //width in game units that the camera can see
     public static final int VIEW_WIDTH = 32;
     
