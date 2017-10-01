@@ -55,13 +55,16 @@ public class Weapon {
     private int slotType;
     private Player player;
     private boolean automatic;
+    private int maxClips;
+    private int clips;
 
     public Weapon(Player player, Texture spriteSheet, Vector2 size, float attackDelay, WeaponType type, float spread, int clipSize, float reloadSpeed,
                   int damage, float range, Vector2 projectileSize, float projectileVel,
                   Texture projectileSpriteSheet, float projectileMultiHit, int projectileNum,
                   Vector2 offset, float knockback, float burn_damage,
                   float burnChance, float duration, DamageBoxType projectileType,
-                  float animationDelay, float shockChance, int slotType, boolean automatic) {
+                  float animationDelay, float shockChance, int slotType, boolean automatic,
+                  int maxClips) {
 
         this.spriteSheet = spriteSheet;
         this.size = size;
@@ -88,6 +91,7 @@ public class Weapon {
         this.slotType = slotType;
         this.player = player;
         this.automatic = automatic;
+        this.maxClips = maxClips;
 
         clip = clipSize;
         attackTimer = 0;
@@ -100,6 +104,7 @@ public class Weapon {
         animationTimer = 0;
         currentFrame = 1;
         flipped = false;
+        clips = maxClips;
     }
 
     public void update(boolean movingLeft, boolean movingRight) {
@@ -160,6 +165,10 @@ public class Weapon {
         if (!automatic & !triggerPulled)
             return;
 
+        if (clips == 0 && clip == 0) {
+            return;
+        }
+
         if (attackTimer <= 0 && reloadTimer <= 0) {
             animationTimer = animationDelay;
 
@@ -178,10 +187,13 @@ public class Weapon {
                         clip--;
                 }
                 attackTimer += attackDelay;
+            }
 
-                if (clip < 1 && clip != -1) {
+            if (clip < 1 && clip != -1) {
+                if (clips > 0) {
                     reloadTimer = reloadSpeed;
                     reloading = true;
+                    clips--;
                 }
             }
         }
@@ -238,6 +250,12 @@ public class Weapon {
                 break;
             case AIMBOT:
                 projectile = new Aimbot(damage, range, new Vector2(pos), new Vector2(projectileSize),
+                        rotate, projectileVel + velVariance, projectileSpriteSheet,
+                        rotation, duration, projectileMultiHit, knockback,
+                        burn_damage, burnChance, shockChance, ignoreWall);
+                break;
+            case PARTICLE:
+                projectile = new Particle(damage, range, new Vector2(pos), new Vector2(projectileSize),
                         rotate, projectileVel + velVariance, projectileSpriteSheet,
                         rotation, duration, projectileMultiHit, knockback,
                         burn_damage, burnChance, shockChance, ignoreWall);
