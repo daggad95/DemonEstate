@@ -51,7 +51,9 @@ public class GameScreen extends ScreenAdapter {
         batch.end();
         MapHandler.renderWallLayer(camera);
         MenuHandler.renderMenus();
-        logger.log();
+        //logger.log();
+        //int fps = (int) (1 / Gdx.graphics.getDeltaTime());
+        //System.out.println(fps);
     }
 
     private void positionCamera(ArrayList<Entity> players) {

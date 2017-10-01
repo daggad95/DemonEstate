@@ -279,4 +279,10 @@ public class Weapon {
     }
 
     public WeaponType getType() { return type; }
+
+    public int getClip() { return  clip; }
+
+    public int getClips() { return  clips; }
+
+    public int getClipSize() { return  clipSize; }
 }

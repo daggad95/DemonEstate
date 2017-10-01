@@ -40,6 +40,8 @@ public class Player extends Entity {
     private Vector2 lastDir;
     private float pathGenTimer;
     private int money;
+    private float actionValue;
+    private float superValue;
     private boolean flipped;
     private float hopOffset;
     private boolean hopping;
@@ -67,6 +69,8 @@ public class Player extends Entity {
         crosshairPos = new Vector2(pos);
         //TEMPORARY
         money = 1000;
+        actionValue = 50f;
+        superValue = 50f;
         hopOffset = 0;
         hopping = false;
         hoppingUp = false;
@@ -219,9 +223,25 @@ public class Player extends Entity {
         return false;
     }
 
+    public int getClipSize() {
+        return currentWeapon.getClipSize();
+    }
+
+    public int getClip() {
+        return currentWeapon.getClip();
+    }
+
+    public int getClips() {
+        return  currentWeapon.getClips();
+    }
+
     public int getMoney() {
         return money;
     }
+
+    public float getActionValue() { return actionValue; }
+
+    public float getSuperValue() { return  superValue; }
 
     public void setMoney(int newMoney) {
         money = newMoney;
