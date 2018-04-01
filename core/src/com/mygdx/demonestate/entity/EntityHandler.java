@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.demonestate.HUD;
 import com.mygdx.demonestate.MapHandler;
 import com.mygdx.demonestate.TextureHandler;
 import com.mygdx.demonestate.damagebox.DamageBox;
@@ -96,7 +97,7 @@ public class EntityHandler {
             }
         }
     }
-
+    //testeringo
     public static void addPDamageBox(DamageBox db) {
         pDBoxes.add(db);
     }
@@ -191,5 +192,14 @@ public class EntityHandler {
         }
 
         findCollisions();
+    }
+
+    public static void renderPlayerHUDs(SpriteBatch batch) {
+        for (Entity player : players) {
+            player = (Player) player;
+            HUD hud = ((Player) player).getHud();
+
+            hud.draw(batch);
+        }
     }
 }

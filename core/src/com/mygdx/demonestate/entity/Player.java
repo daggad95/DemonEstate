@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.demonestate.HUD;
 import com.mygdx.demonestate.MapHandler;
 import com.mygdx.demonestate.TextureHandler;
 import com.mygdx.demonestate.weapon.WeaponFactory;
@@ -29,9 +30,10 @@ public class Player extends Entity {
     public static int   DEFAULT_PLAYER_HEALTH = 100;
     public static float CROSSHAIR_DIST = 2f;
     public static float CROSSHAIR_RATIO = 4f;
-
     public static float HOP_HEIGHT = 0.1f;
     public static float HOP_RATE = 1f;
+
+    private static int lastId = 0;
 
     private Weapon[] inventory;
     private Weapon currentWeapon;
@@ -40,16 +42,16 @@ public class Player extends Entity {
     private Vector2 lastDir;
     private float pathGenTimer;
     private int money;
-    private float actionValue;
-    private float superValue;
     private boolean flipped;
     private float hopOffset;
     private boolean hopping;
     private boolean hoppingUp;
     private boolean triggerPulled;
+    private int id;
     Vector2 crosshairPos;
     Vector2 crosshairSize;
     Vector2 crosshairDir;
+    private HUD hud;
 
     public Player(Vector2 pos, Vector2 size, Texture spriteSheet) {
         super(pos, size, spriteSheet, DEFAULT_PLAYER_SPEED, DEFAULT_PLAYER_HEALTH);
@@ -69,12 +71,13 @@ public class Player extends Entity {
         crosshairPos = new Vector2(pos);
         //TEMPORARY
         money = 1000;
-        actionValue = 50f;
-        superValue = 50f;
         hopOffset = 0;
         hopping = false;
         hoppingUp = false;
         triggerPulled = false;
+        id = lastId;
+        lastId += 1;
+        hud = new HUD(this);
     }
 
     public void update() {
@@ -223,27 +226,21 @@ public class Player extends Entity {
         return false;
     }
 
-    public int getClipSize() {
-        return currentWeapon.getClipSize();
-    }
-
-    public int getClip() {
-        return currentWeapon.getClip();
-    }
-
-    public int getClips() {
-        return  currentWeapon.getClips();
-    }
-
     public int getMoney() {
         return money;
     }
 
-    public float getActionValue() { return actionValue; }
-
-    public float getSuperValue() { return  superValue; }
-
     public void setMoney(int newMoney) {
         money = newMoney;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public HUD getHud() { return hud; }
+
+    public float getHealth() { return health; }
+    public float getMaxHealth() { return maxHealth; }
+    public Weapon getCurrentWeapon() { return currentWeapon; }
 }

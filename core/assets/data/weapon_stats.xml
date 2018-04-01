@@ -721,7 +721,7 @@
         <damage>200</damage>
         <knockback>0.5</knockback>
         <projectileNum>1</projectileNum>
-        <spriteSheet>quickshot</spriteSheet>
+        <spriteSheet>gun</spriteSheet>
         <projectileSpriteSheet>bullet</projectileSpriteSheet>
         <size>
             <x>1.5</x>
@@ -797,7 +797,7 @@
         <damage>50</damage>
         <knockback>1</knockback>
         <projectileNum>2</projectileNum>
-        <spriteSheet>dbshotgun</spriteSheet>
+        <spriteSheet>dbs</spriteSheet>
         <projectileSpriteSheet>bullet</projectileSpriteSheet>
         <size>
             <x>1.5</x>
@@ -1167,8 +1167,8 @@
         <damage>15</damage>
         <knockback>0</knockback>
         <projectileNum>1</projectileNum>
-        <spriteSheet>rifle</spriteSheet>
-        <projectileSpriteSheet>particle</projectileSpriteSheet>
+        <spriteSheet>pistol</spriteSheet>
+        <projectileSpriteSheet>railbullet</projectileSpriteSheet>
         <size>
             <x>1.5</x>
             <y>1</y>

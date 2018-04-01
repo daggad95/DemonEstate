@@ -16,22 +16,24 @@ import java.util.ArrayList;
  * Created by David on 1/7/2017.
  */
 public class GameScreen extends ScreenAdapter {
-	// this is a test hello
-    //width in game units that the camera can see
+    //width in game units that the playerCamera can see
     public static final int VIEW_WIDTH = 32;
     
     private SpriteBatch batch;
-    private OrthographicCamera camera;
+    private OrthographicCamera playerCamera;
+    private OrthographicCamera hudCamera;
     FPSLogger logger;
 
 
     public GameScreen() {
-        // test
         batch = new SpriteBatch();
 
         float w = Gdx.graphics.getWidth();
         float h = Gdx.graphics.getHeight();
-        camera = new OrthographicCamera(VIEW_WIDTH, VIEW_WIDTH * (h/w));
+        playerCamera = new OrthographicCamera(VIEW_WIDTH, VIEW_WIDTH * (h/w));
+        hudCamera = new OrthographicCamera(w , h);
+        hudCamera.position.x = w / 2;
+        hudCamera.position.y = h / 2;
 
         MapHandler.init();
         EntityHandler.init();
@@ -41,19 +43,26 @@ public class GameScreen extends ScreenAdapter {
 
     public void render(float delta) {
         positionCamera(EntityHandler.getPlayers());
-        camera.update();
+        playerCamera.update();
+        hudCamera.update();
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        batch.setProjectionMatrix(camera.combined);
 
-        MapHandler.renderGroundLayer(camera);
+        MapHandler.renderGroundLayer(playerCamera);
+
+        batch.setProjectionMatrix(playerCamera.combined);
         batch.begin();
         EntityHandler.update(batch);
         batch.end();
-        MapHandler.renderWallLayer(camera);
+
+        MapHandler.renderWallLayer(playerCamera);
         MenuHandler.renderMenus();
-        //logger.log();
-        //int fps = (int) (1 / Gdx.graphics.getDeltaTime());
-        //System.out.println(fps);
+
+        batch.setProjectionMatrix(hudCamera.combined);
+        batch.begin();
+        EntityHandler.renderPlayerHUDs(batch);
+        batch.end();
+
+        logger.log();
     }
 
     private void positionCamera(ArrayList<Entity> players) {
@@ -68,7 +77,7 @@ public class GameScreen extends ScreenAdapter {
         centerX /= players.size();
         centerY /= players.size();
 
-        camera.position.x = centerX;
-        camera.position.y = centerY;
+        playerCamera.position.x = centerX;
+        playerCamera.position.y = centerY;
     }
 }

@@ -69,7 +69,6 @@ public class WeaponFactory {
             float animationDelay = Float.parseFloat(weaponStats.getChildByName(weaponName).get("animation_delay"));
             int slotType = Integer.parseInt(weaponStats.getChildByName(weaponName).get("slotType"));
             boolean automatic = Boolean.parseBoolean(weaponStats.getChildByName(weaponName).get("automatic"));
-            int maxClips = Integer.parseInt(weaponStats.getChildByName(weaponName).get("max_clips"));
 
             DamageBoxType damageBoxType = DamageBoxType.valueOf(weaponStats.
                     getChildByName(weaponName).get("projectile_type"));
@@ -77,7 +76,7 @@ public class WeaponFactory {
             return new Weapon(player, spriteSheet, size, attackDelay, type, spread, clipSize, reloadSpeed,
                     damage, range, projectileSize, projectileVel, projectileSpriteSheet, projectileMultiHit,
                     projectileNum, offset, knockback, burn_damage, burnChance, duration, damageBoxType,
-                    animationDelay, shockChance, slotType, automatic, maxClips);
+                    animationDelay, shockChance, slotType, automatic);
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("weapon stats file not found");
