@@ -8,7 +8,7 @@ public class DesktopLauncher {
 	public static void main(String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.width = 1600;
-		config.height = 901;
+		config.height = 902;
 		config.title = "Demon Estate";
 		config.vSyncEnabled = true;
 		config.fullscreen = true;
