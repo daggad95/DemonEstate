@@ -16,5 +16,3 @@ public class DesktopLauncher {
 		new LwjglApplication(new DemonEstate(), config);
 	}
 }
-
-// remote skeleton branch test
