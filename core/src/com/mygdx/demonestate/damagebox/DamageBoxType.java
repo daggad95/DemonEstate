@@ -5,5 +5,5 @@ package com.mygdx.demonestate.damagebox;
  */
 public enum DamageBoxType {
     STANDARD, ROCKET, HOMING, STICKY_BOMB,
-    BOOMERANG, AIMBOT
+    BOOMERANG, AIMBOT, PARTICLE
 }

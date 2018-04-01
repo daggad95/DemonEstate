@@ -35,6 +35,7 @@
         <projectile_type>STANDARD</projectile_type>
         <animation_delay>0.1</animation_delay>
         <automatic>false</automatic>
+        <max_clips>-1</max_clips>
     </DAGGER>
     <SWORD>
         <name>Sword</name>
@@ -71,6 +72,7 @@
         <projectile_type>STANDARD</projectile_type>
         <animation_delay>0.1</animation_delay>
         <automatic>false</automatic>
+        <max_clips>-1</max_clips>
     </SWORD>
     <SPEAR>
         <name>Spear</name>
@@ -107,6 +109,7 @@
         <projectile_type>STANDARD</projectile_type>
         <animation_delay>0.1</animation_delay>
         <automatic>false</automatic>
+        <max_clips>-1</max_clips>
     </SPEAR>
     <BAT>
         <name>Baseball Bat</name>
@@ -143,6 +146,7 @@
         <projectile_type>STANDARD</projectile_type>
         <animation_delay>0.075</animation_delay>
         <automatic>false</automatic>
+        <max_clips>-1</max_clips>
     </BAT>
     <KATANA>
         <name>Katana</name>
@@ -179,6 +183,7 @@
         <projectile_type>STANDARD</projectile_type>
         <animation_delay>0.1</animation_delay>
         <automatic>false</automatic>
+        <max_clips>-1</max_clips>
     </KATANA>
     <HALBERD>
         <name>Halberd</name>
@@ -215,6 +220,7 @@
         <projectile_type>STANDARD</projectile_type>
         <animation_delay>0.1</animation_delay>
         <automatic>false</automatic>
+        <max_clips>-1</max_clips>
     </HALBERD>
     <LIGHTSABER>
         <name>Lightsaber</name>
@@ -251,6 +257,7 @@
         <projectile_type>STANDARD</projectile_type>
         <animation_delay>0.1</animation_delay>
         <automatic>false</automatic>
+        <max_clips>-1</max_clips>
     </LIGHTSABER>
     <GRAVHAMMER>
         <name>Gravity Hammer</name>
@@ -287,6 +294,7 @@
         <projectile_type>STANDARD</projectile_type>
         <animation_delay>0.1</animation_delay>
         <automatic>false</automatic>
+        <max_clips>-1</max_clips>
     </GRAVHAMMER>
     <KUSANAGI>
         <name>Kusanagi</name>
@@ -323,6 +331,7 @@
         <projectile_type>STANDARD</projectile_type>
         <animation_delay>0.1</animation_delay>
         <automatic>false</automatic>
+        <max_clips>-1</max_clips>
     </KUSANAGI>
     <THORS_HAMMER>
         <name>Thor's Hammer</name>
@@ -359,6 +368,7 @@
         <projectile_type>STANDARD</projectile_type>
         <animation_delay>0.1</animation_delay>
         <automatic>false</automatic>
+        <max_clips>-1</max_clips>
     </THORS_HAMMER>
 
 
@@ -398,6 +408,7 @@
         <projectile_type>STANDARD</projectile_type>
         <animation_delay>0.1</animation_delay>
         <automatic>false</automatic>
+        <max_clips>2</max_clips>
     </PISTOL>
     <SHURIKEN>
         <name>Shuriken</name>
@@ -434,6 +445,7 @@
         <projectile_type>STANDARD</projectile_type>
         <animation_delay>0.1</animation_delay>
         <automatic>false</automatic>
+        <max_clips>2</max_clips>
     </SHURIKEN>
     <STUN_GUN>
         <name>Stun Gun</name>
@@ -470,6 +482,7 @@
         <projectile_type>STANDARD</projectile_type>
         <animation_delay>0.1</animation_delay>
         <automatic>false</automatic>
+        <max_clips>2</max_clips>
     </STUN_GUN>
     <DEAGLE>
         <name>Deagle</name>
@@ -506,6 +519,7 @@
         <projectile_type>STANDARD</projectile_type>
         <animation_delay>0.1</animation_delay>
         <automatic>false</automatic>
+        <max_clips>2</max_clips>
     </DEAGLE>
     <UZI>
         <name>Uzi</name>
@@ -541,7 +555,8 @@
         <shock_chance>0</shock_chance>
         <projectile_type>STANDARD</projectile_type>
         <animation_delay>0.1</animation_delay>
-        <automatic>false</automatic>
+        <automatic>true</automatic>
+        <max_clips>2</max_clips>
     </UZI>
     <LASER_PISTOL>
         <name>Laser Pistol</name>
@@ -578,6 +593,7 @@
         <projectile_type>STANDARD</projectile_type>
         <animation_delay>0.1</animation_delay>
         <automatic>false</automatic>
+        <max_clips>2</max_clips>
     </LASER_PISTOL>
     <HOMING_SHURIKEN>
         <name>Homing Shuriken</name>
@@ -614,6 +630,7 @@
         <projectile_type>HOMING</projectile_type>
         <animation_delay>0.1</animation_delay>
         <automatic>false</automatic>
+        <max_clips>2</max_clips>
     </HOMING_SHURIKEN>
     <STICKY_BOMB>
         <name>Sticky Bomb</name>
@@ -650,6 +667,7 @@
         <projectile_type>STICKY_BOMB</projectile_type>
         <animation_delay>0.1</animation_delay>
         <automatic>false</automatic>
+        <max_clips>2</max_clips>
     </STICKY_BOMB>
     <DEATHERANG>
         <name>Death-erang</name>
@@ -686,6 +704,7 @@
         <projectile_type>BOOMERANG</projectile_type>
         <animation_delay>0.1</animation_delay>
         <automatic>false</automatic>
+        <max_clips>2</max_clips>
     </DEATHERANG>
     <QUICKSHOT>
         <name>Quickshot</name>
@@ -702,7 +721,7 @@
         <damage>200</damage>
         <knockback>0.5</knockback>
         <projectileNum>1</projectileNum>
-        <spriteSheet>quickshot</spriteSheet>
+        <spriteSheet>gun</spriteSheet>
         <projectileSpriteSheet>bullet</projectileSpriteSheet>
         <size>
             <x>1.5</x>
@@ -722,5 +741,452 @@
         <projectile_type>AIMBOT</projectile_type>
         <animation_delay>0.1</animation_delay>
         <automatic>false</automatic>
+        <max_clips>2</max_clips>
     </QUICKSHOT>
+
+    <!-- MAIN GUNS -->
+    <RIFLE>
+        <name>Rifle</name>
+        <value>100</value>
+        <slotType>0</slotType>
+        <attackDelay>0.5</attackDelay>
+        <reloadSpeed>4</reloadSpeed>
+        <projectileMultiHit>0.25</projectileMultiHit>
+        <projectileVel>30</projectileVel>
+        <spread>0</spread>
+        <range>30</range>
+        <duration>-1</duration>
+        <clipSize>10</clipSize>
+        <damage>35</damage>
+        <knockback>0.5</knockback>
+        <projectileNum>1</projectileNum>
+        <spriteSheet>rifle</spriteSheet>
+        <projectileSpriteSheet>bullet</projectileSpriteSheet>
+        <size>
+            <x>1.5</x>
+            <y>1</y>
+        </size>
+        <offset>
+            <x>0</x>
+            <y>0</y>
+        </offset>
+        <projectileSize>
+            <x>0.3</x>
+            <y>0.05</y>
+        </projectileSize>
+        <burnDamage>0</burnDamage>
+        <burn_chance>0</burn_chance>
+        <shock_chance>0</shock_chance>
+        <projectile_type>STANDARD</projectile_type>
+        <animation_delay>0.1</animation_delay>
+        <automatic>false</automatic>
+        <max_clips>2</max_clips>
+    </RIFLE>
+    <DBSHOTGUN>
+        <name>DB Shotgun</name>
+        <value>100</value>
+        <slotType>0</slotType>
+        <attackDelay>0.5</attackDelay>
+        <reloadSpeed>2</reloadSpeed>
+        <projectileMultiHit>0.25</projectileMultiHit>
+        <projectileVel>30</projectileVel>
+        <spread>5</spread>
+        <range>10</range>
+        <duration>-1</duration>
+        <clipSize>2</clipSize>
+        <damage>50</damage>
+        <knockback>1</knockback>
+        <projectileNum>2</projectileNum>
+        <spriteSheet>dbs</spriteSheet>
+        <projectileSpriteSheet>bullet</projectileSpriteSheet>
+        <size>
+            <x>1.5</x>
+            <y>1</y>
+        </size>
+        <offset>
+            <x>0</x>
+            <y>0</y>
+        </offset>
+        <projectileSize>
+            <x>0.3</x>
+            <y>0.05</y>
+        </projectileSize>
+        <burnDamage>0</burnDamage>
+        <burn_chance>0</burn_chance>
+        <shock_chance>0</shock_chance>
+        <projectile_type>STANDARD</projectile_type>
+        <animation_delay>0.1</animation_delay>
+        <automatic>false</automatic>
+        <max_clips>2</max_clips>
+    </DBSHOTGUN>
+    <SMG>
+        <name>SMG</name>
+        <value>100</value>
+        <slotType>0</slotType>
+        <attackDelay>0.1</attackDelay>
+        <reloadSpeed>2</reloadSpeed>
+        <projectileMultiHit>0</projectileMultiHit>
+        <projectileVel>30</projectileVel>
+        <spread>10</spread>
+        <range>15</range>
+        <duration>-1</duration>
+        <clipSize>24</clipSize>
+        <damage>10</damage>
+        <knockback>0.1</knockback>
+        <projectileNum>1</projectileNum>
+        <spriteSheet>smg</spriteSheet>
+        <projectileSpriteSheet>bullet</projectileSpriteSheet>
+        <size>
+            <x>1.5</x>
+            <y>1</y>
+        </size>
+        <offset>
+            <x>0</x>
+            <y>0</y>
+        </offset>
+        <projectileSize>
+            <x>0.1</x>
+            <y>0.05</y>
+        </projectileSize>
+        <burnDamage>0</burnDamage>
+        <burn_chance>0</burn_chance>
+        <shock_chance>0</shock_chance>
+        <projectile_type>STANDARD</projectile_type>
+        <animation_delay>0.1</animation_delay>
+        <automatic>true</automatic>
+        <max_clips>2</max_clips>
+    </SMG>
+    <SNIPER>
+        <name>Sniper</name>
+        <value>100</value>
+        <slotType>0</slotType>
+        <attackDelay>0</attackDelay>
+        <reloadSpeed>1</reloadSpeed>
+        <projectileMultiHit>0.5</projectileMultiHit>
+        <projectileVel>40</projectileVel>
+        <spread>0</spread>
+        <range>30</range>
+        <duration>-1</duration>
+        <clipSize>1</clipSize>
+        <damage>100</damage>
+        <knockback>0.25</knockback>
+        <projectileNum>1</projectileNum>
+        <spriteSheet>sniper</spriteSheet>
+        <projectileSpriteSheet>bullet</projectileSpriteSheet>
+        <size>
+            <x>1.5</x>
+            <y>1</y>
+        </size>
+        <offset>
+            <x>0</x>
+            <y>0</y>
+        </offset>
+        <projectileSize>
+            <x>0.2</x>
+            <y>0.05</y>
+        </projectileSize>
+        <burnDamage>0</burnDamage>
+        <burn_chance>0</burn_chance>
+        <shock_chance>0</shock_chance>
+        <projectile_type>STANDARD</projectile_type>
+        <animation_delay>0.1</animation_delay>
+        <automatic>false</automatic>
+        <max_clips>2</max_clips>
+    </SNIPER>
+    <ASSAULT_RIFLE>
+        <name>Assault Rifle</name>
+        <value>100</value>
+        <slotType>0</slotType>
+        <attackDelay>0.2</attackDelay>
+        <reloadSpeed>3</reloadSpeed>
+        <projectileMultiHit>0.2</projectileMultiHit>
+        <projectileVel>30</projectileVel>
+        <spread>3</spread>
+        <range>30</range>
+        <duration>-1</duration>
+        <clipSize>20</clipSize>
+        <damage>20</damage>
+        <knockback>0.2</knockback>
+        <projectileNum>1</projectileNum>
+        <spriteSheet>ar</spriteSheet>
+        <projectileSpriteSheet>bullet</projectileSpriteSheet>
+        <size>
+            <x>1.5</x>
+            <y>1</y>
+        </size>
+        <offset>
+            <x>0</x>
+            <y>0</y>
+        </offset>
+        <projectileSize>
+            <x>0.2</x>
+            <y>0.1</y>
+        </projectileSize>
+        <burnDamage>0</burnDamage>
+        <burn_chance>0</burn_chance>
+        <shock_chance>0</shock_chance>
+        <projectile_type>STANDARD</projectile_type>
+        <animation_delay>0.1</animation_delay>
+        <automatic>true</automatic>
+        <max_clips>2</max_clips>
+    </ASSAULT_RIFLE>
+    <SHOTGUN>
+        <name>Shotgun</name>
+        <value>100</value>
+        <slotType>0</slotType>
+        <attackDelay>1</attackDelay>
+        <reloadSpeed>4</reloadSpeed>
+        <projectileMultiHit>0.25</projectileMultiHit>
+        <projectileVel>30</projectileVel>
+        <spread>20</spread>
+        <range>10</range>
+        <duration>-1</duration>
+        <clipSize>50</clipSize>
+        <damage>20</damage>
+        <knockback>1</knockback>
+        <projectileNum>10</projectileNum>
+        <spriteSheet>shotgun</spriteSheet>
+        <projectileSpriteSheet>bullet</projectileSpriteSheet>
+        <size>
+            <x>1.5</x>
+            <y>1</y>
+        </size>
+        <offset>
+            <x>0</x>
+            <y>0</y>
+        </offset>
+        <projectileSize>
+            <x>0.3</x>
+            <y>0.05</y>
+        </projectileSize>
+        <burnDamage>0</burnDamage>
+        <burn_chance>0</burn_chance>
+        <shock_chance>0</shock_chance>
+        <projectile_type>STANDARD</projectile_type>
+        <animation_delay>0.1</animation_delay>
+        <automatic>false</automatic>
+        <max_clips>2</max_clips>
+    </SHOTGUN>
+    <FLAMETHROWER>
+        <name>Flamethrower</name>
+        <value>100</value>
+        <slotType>0</slotType>
+        <attackDelay>0.01</attackDelay>
+        <reloadSpeed>4</reloadSpeed>
+        <projectileMultiHit>0.25</projectileMultiHit>
+        <projectileVel>20</projectileVel>
+        <spread>5</spread>
+        <range>5</range>
+        <duration>-1</duration>
+        <clipSize>100</clipSize>
+        <damage>1</damage>
+        <knockback>0.025</knockback>
+        <projectileNum>1</projectileNum>
+        <spriteSheet>flamethrower</spriteSheet>
+        <projectileSpriteSheet>flame</projectileSpriteSheet>
+        <size>
+            <x>1.5</x>
+            <y>1</y>
+        </size>
+        <offset>
+            <x>0</x>
+            <y>0</y>
+        </offset>
+        <projectileSize>
+            <x>0.2</x>
+            <y>0.2</y>
+        </projectileSize>
+        <burnDamage>10</burnDamage>
+        <burn_chance>1</burn_chance>
+        <shock_chance>0</shock_chance>
+        <projectile_type>STANDARD</projectile_type>
+        <animation_delay>0.1</animation_delay>
+        <automatic>true</automatic>
+        <max_clips>2</max_clips>
+    </FLAMETHROWER>
+    <HELLFIRE>
+        <name>Hellfire</name>
+        <value>100</value>
+        <slotType>0</slotType>
+        <attackDelay>0.1</attackDelay>
+        <reloadSpeed>3</reloadSpeed>
+        <projectileMultiHit>0.2</projectileMultiHit>
+        <projectileVel>30</projectileVel>
+        <spread>3</spread>
+        <range>30</range>
+        <duration>-1</duration>
+        <clipSize>30</clipSize>
+        <damage>20</damage>
+        <knockback>0.1</knockback>
+        <projectileNum>1</projectileNum>
+        <spriteSheet>hellfire</spriteSheet>
+        <projectileSpriteSheet>bullet</projectileSpriteSheet>
+        <size>
+            <x>1.5</x>
+            <y>1</y>
+        </size>
+        <offset>
+            <x>0</x>
+            <y>0</y>
+        </offset>
+        <projectileSize>
+            <x>0.2</x>
+            <y>0.1</y>
+        </projectileSize>
+        <burnDamage>25</burnDamage>
+        <burn_chance>0.5</burn_chance>
+        <shock_chance>0</shock_chance>
+        <projectile_type>STANDARD</projectile_type>
+        <animation_delay>0.1</animation_delay>
+        <automatic>true</automatic>
+        <max_clips>2</max_clips>
+    </HELLFIRE>
+    <LASER_SNIPER>
+        <name>Laser Sniper</name>
+        <value>100</value>
+        <slotType>0</slotType>
+        <attackDelay>0</attackDelay>
+        <reloadSpeed>1</reloadSpeed>
+        <projectileMultiHit>2</projectileMultiHit>
+        <projectileVel>40</projectileVel>
+        <spread>0</spread>
+        <range>30</range>
+        <duration>-1</duration>
+        <clipSize>1</clipSize>
+        <damage>100</damage>
+        <knockback>0.25</knockback>
+        <projectileNum>1</projectileNum>
+        <spriteSheet>lasersniper</spriteSheet>
+        <projectileSpriteSheet>laser</projectileSpriteSheet>
+        <size>
+            <x>1.5</x>
+            <y>1</y>
+        </size>
+        <offset>
+            <x>0</x>
+            <y>0</y>
+        </offset>
+        <projectileSize>
+            <x>0.2</x>
+            <y>0.05</y>
+        </projectileSize>
+        <burnDamage>10</burnDamage>
+        <burn_chance>0.3</burn_chance>
+        <shock_chance>0</shock_chance>
+        <projectile_type>STANDARD</projectile_type>
+        <animation_delay>0.1</animation_delay>
+        <automatic>false</automatic>
+        <max_clips>2</max_clips>
+    </LASER_SNIPER>
+    <SUPER_SHOTGUN>
+        <name>Super Shotgun</name>
+        <value>100</value>
+        <slotType>0</slotType>
+        <attackDelay>1</attackDelay>
+        <reloadSpeed>4</reloadSpeed>
+        <projectileMultiHit>0.25</projectileMultiHit>
+        <projectileVel>30</projectileVel>
+        <spread>20</spread>
+        <range>10</range>
+        <duration>-1</duration>
+        <clipSize>200</clipSize>
+        <damage>20</damage>
+        <knockback>1.5</knockback>
+        <projectileNum>50</projectileNum>
+        <spriteSheet>supershotgun</spriteSheet>
+        <projectileSpriteSheet>bullet</projectileSpriteSheet>
+        <size>
+            <x>1.5</x>
+            <y>1</y>
+        </size>
+        <offset>
+            <x>0</x>
+            <y>0</y>
+        </offset>
+        <projectileSize>
+            <x>0.3</x>
+            <y>0.05</y>
+        </projectileSize>
+        <burnDamage>0</burnDamage>
+        <burn_chance>0</burn_chance>
+        <shock_chance>0</shock_chance>
+        <projectile_type>STANDARD</projectile_type>
+        <animation_delay>0.1</animation_delay>
+        <automatic>false</automatic>
+        <max_clips>2</max_clips>
+    </SUPER_SHOTGUN>
+    <HOSE>
+        <name>Hose</name>
+        <value>100</value>
+        <slotType>0</slotType>
+        <attackDelay>0.01</attackDelay>
+        <reloadSpeed>3</reloadSpeed>
+        <projectileMultiHit>0.2</projectileMultiHit>
+        <projectileVel>30</projectileVel>
+        <spread>3</spread>
+        <range>30</range>
+        <duration>-1</duration>
+        <clipSize>1000</clipSize>
+        <damage>1</damage>
+        <knockback>1</knockback>
+        <projectileNum>1</projectileNum>
+        <spriteSheet>hose</spriteSheet>
+        <projectileSpriteSheet>water</projectileSpriteSheet>
+        <size>
+            <x>1.5</x>
+            <y>1</y>
+        </size>
+        <offset>
+            <x>0</x>
+            <y>0</y>
+        </offset>
+        <projectileSize>
+            <x>0.3</x>
+            <y>0.3</y>
+        </projectileSize>
+        <burnDamage>0</burnDamage>
+        <burn_chance>0</burn_chance>
+        <shock_chance>0</shock_chance>
+        <projectile_type>STANDARD</projectile_type>
+        <animation_delay>0.1</animation_delay>
+        <automatic>true</automatic>
+        <max_clips>2</max_clips>
+    </HOSE>
+    <PARTICLE_GUN>
+        <name>Particle Gun</name>
+        <value>100</value>
+        <slotType>0</slotType>
+        <attackDelay>0.01</attackDelay>
+        <reloadSpeed>3</reloadSpeed>
+        <projectileMultiHit>0</projectileMultiHit>
+        <projectileVel>10</projectileVel>
+        <spread>60</spread>
+        <range>-1</range>
+        <duration>5</duration>
+        <clipSize>400</clipSize>
+        <damage>15</damage>
+        <knockback>0</knockback>
+        <projectileNum>1</projectileNum>
+        <spriteSheet>pistol</spriteSheet>
+        <projectileSpriteSheet>railbullet</projectileSpriteSheet>
+        <size>
+            <x>1.5</x>
+            <y>1</y>
+        </size>
+        <offset>
+            <x>0</x>
+            <y>0</y>
+        </offset>
+        <projectileSize>
+            <x>0.05</x>
+            <y>0.05</y>
+        </projectileSize>
+        <burnDamage>0</burnDamage>
+        <burn_chance>0</burn_chance>
+        <shock_chance>0</shock_chance>
+        <projectile_type>PARTICLE</projectile_type>
+        <animation_delay>0.1</animation_delay>
+        <automatic>true</automatic>
+        <max_clips>2</max_clips>
+    </PARTICLE_GUN>
 </guns>

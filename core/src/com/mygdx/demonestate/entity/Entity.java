@@ -49,6 +49,7 @@ public abstract class Entity {
 
     protected float speed;
     protected float health;
+    protected float maxHealth;
     protected float knockbackDistance;
     protected Vector2 knockbackDir;
     protected Vector2[][] pathMap;
@@ -73,6 +74,7 @@ public abstract class Entity {
         this.spriteSheet = spriteSheet;
         this.speed = speed;
         this.health = health;
+        this.maxHealth = health;
 
         flipped = false;
         movementVector = new Vector2(0, 0);

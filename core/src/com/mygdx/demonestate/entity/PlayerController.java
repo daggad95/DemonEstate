@@ -70,6 +70,9 @@ public class PlayerController extends ControllerAdapter {
                 MenuHandler.getMenu().goBack(player);
             }
         }
+        if (buttonCode == LinuxXbox360Pad.BUTTON_BACK) {
+            System.exit(0);
+        }
 
         return true;
     }
