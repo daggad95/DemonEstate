@@ -32,7 +32,7 @@ public class Weapon {
     private float reloadSpeed;
     private float knockback;
     private int clipSize;
-    private int clip;
+    private int clip; // current num of bullets in clip
     private float projectileMultiHit;
     private int damage;
     private float range;
@@ -145,7 +145,15 @@ public class Weapon {
             reloadTimer -= dTime;
 
             if (reloadTimer <= 0) {
-                clip = clipSize;
+                if (player.getCurrentAmmo() < clipSize) {
+                    clip = player.getCurrentAmmo();
+                    player.setCurrentAmmo(0);
+                }
+                else {
+                    clip = clipSize;
+                    player.setCurrentAmmo(player.getCurrentAmmo() - clipSize);
+                }
+
                 reloading = false;
             }
         }
@@ -163,7 +171,7 @@ public class Weapon {
         if (attackTimer <= 0 && reloadTimer <= 0) {
             animationTimer = animationDelay;
 
-            if (!reloading) {
+            if (!reloading && clip > 0) {
                 if (dir.x > 0) {
                     flipped = false;
                 }
@@ -179,7 +187,7 @@ public class Weapon {
                 }
                 attackTimer += attackDelay;
 
-                if (clip < 1 && clip != -1) {
+                if (clip < 1 && clip != -1 && player.getCurrentAmmo() > 0) {
                     reloadTimer = reloadSpeed;
                     reloading = true;
                 }
@@ -265,5 +273,7 @@ public class Weapon {
     public int getClipSize() { return clipSize; }
 
     public int getClip() { return clip; }
+
+    public int getSlotType() { return slotType; }
 
 }

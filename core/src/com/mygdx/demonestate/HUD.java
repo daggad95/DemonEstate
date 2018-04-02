@@ -1,20 +1,25 @@
 package com.mygdx.demonestate;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.demonestate.entity.Player;
 
 public class HUD {
     private final int TOP_LEFT = 0;
-    private final float HB_WIDTH = 9f;
-    private final float HB_HEIGHT = 1f;
+    private final float HB_WIDTH = 8.6f;
+    private final float HB_HEIGHT = 2f;
     private final float BOX_WIDTH = 10f;
-    private final float BOX_HEIGHT = 5f;
-    private final float BOX_BORDER = 1f;
-    private final float AMMO_WIDTH = 2.5f;
+    private final float BOX_HEIGHT = 10f;
+    private final float BOX_BORDER_WIDTH = 0.7f;
+    private final float BOX_BORDER_HEIGHT = 1.5f;
+    private final float AMMO_WIDTH = 5f;
     private final float FONT_SCALE = 0.1f;
+    private final float FONT_OFFSET_X = 0.5f;
+    private final float FONT_OFFSET_Y = -0.25f;
 
     private Player player;
     private Vector2 hbPosition;
@@ -32,55 +37,87 @@ public class HUD {
     }
 
     private void setPosition() {
-        float graphicsWidth = Gdx.graphics.getWidth();
-        float graphicsHeight = Gdx.graphics.getHeight();
-        float boxAbsHeight = (graphicsHeight * (BOX_HEIGHT / 100f));
-        float hbAbsHeight = (graphicsHeight * (HB_HEIGHT / 100f));
-
         switch (player.getId()) {
             case TOP_LEFT:
                 boxPosition.x = 0;
-                boxPosition.y = graphicsHeight - boxAbsHeight;
-                hbPosition.x = BOX_BORDER;
-                hbPosition.y = graphicsHeight - hbAbsHeight - BOX_BORDER;
+                boxPosition.y = 100 - BOX_HEIGHT;
+                hbPosition.x = BOX_BORDER_WIDTH;
+                hbPosition.y = 100 - HB_HEIGHT - BOX_BORDER_HEIGHT;
                 break;
         }
     }
 
     public void draw(SpriteBatch batch) {
-        float graphicsWidth = Gdx.graphics.getWidth();
-        float graphicsHeight = Gdx.graphics.getHeight();
-        float boxAbsHeight = (graphicsHeight * (BOX_HEIGHT / 100f));
-        float boxAbsWidth = (graphicsWidth * (BOX_WIDTH / 100f));
-        float hbAbsHeight = (graphicsHeight * (HB_HEIGHT / 100f));
-        float hbAbsWidth = (graphicsHeight * (HB_WIDTH / 100f));
-
         float health = player.getHealth();
         float maxHealth = player.getMaxHealth();
         int maxClip = player.getCurrentWeapon().getClipSize();
         int currentClip = player.getCurrentWeapon().getClip();
-        CharSequence clipNum = "x2";
+        int numClips = player.getCurrentAmmo() / maxClip;
 
-        batch.draw(TextureHandler.getTexture("box"),
-                boxPosition.x, boxPosition.y, boxAbsWidth, boxAbsHeight);
-        batch.draw(TextureHandler.getTexture("health_bg"),
-                hbPosition.x, hbPosition.y, hbAbsWidth, hbAbsHeight);
-        batch.draw(TextureHandler.getTexture("health_fg"),
-                hbPosition.x, hbPosition.y, HB_WIDTH * (health / maxHealth), HB_HEIGHT);
+        if (player.getCurrentAmmo() % maxClip != 0) {
+            numClips += 1;
+        }
+        System.out.printf("current: %d max: %d \n", player.getCurrentAmmo(), maxClip);
+        String clipNum = "x" + Integer.toString(numClips);
 
-        /*
+        drawAbsolute(batch,
+                TextureHandler.getTexture("box"),
+                boxPosition.x,
+                boxPosition.y,
+                BOX_WIDTH,
+                BOX_HEIGHT);
+
+        drawAbsolute(batch,
+                TextureHandler.getTexture("health_bg"),
+                hbPosition.x,
+                hbPosition.y,
+                HB_WIDTH,
+                HB_HEIGHT);
+
+        drawAbsolute(batch,
+                TextureHandler.getTexture("health_fg"),
+                hbPosition.x,
+                hbPosition.y,
+                HB_WIDTH * (health / maxHealth),
+                HB_HEIGHT);
+
+
         for (int i = 0; i < maxClip; i++) {
             if (i < currentClip) {
-                batch.draw(TextureHandler.getTexture("ammo"),
+                drawAbsolute(batch,
+                        TextureHandler.getTexture("ammo"),
                         hbPosition.x + (AMMO_WIDTH / maxClip) * i,
                         hbPosition.y - HB_HEIGHT,
-                        AMMO_WIDTH/ maxClip,
+                        AMMO_WIDTH / maxClip,
                         HB_HEIGHT);
             }
         }
 
-        font.draw(batch, clipNum, hbPosition.x + AMMO_WIDTH, hbPosition.y - HB_HEIGHT);
-        */
+        drawAbsolute(batch,
+                font,
+                clipNum,
+                hbPosition.x + AMMO_WIDTH + FONT_OFFSET_X,
+                hbPosition.y + FONT_OFFSET_Y);
+    }
+
+    public void drawAbsolute(SpriteBatch batch, Texture texture, float relX, float relY, float relW, float relH) {
+        float graphicsWidth = Gdx.graphics.getWidth();
+        float graphicsHeight = Gdx.graphics.getHeight();
+        float absX = graphicsWidth * (relX / 100f);
+        float absY = graphicsHeight * (relY / 100f);
+        float absW = graphicsWidth * (relW / 100f);
+        float absH = graphicsHeight * (relH / 100f);
+
+        batch.draw(texture, absX, absY, absW, absH);
+    }
+
+    public void drawAbsolute(SpriteBatch batch, BitmapFont font, String text, float relX, float relY) {
+        float graphicsWidth = Gdx.graphics.getWidth();
+        float graphicsHeight = Gdx.graphics.getHeight();
+        float absX = graphicsWidth * (relX / 100f);
+        float absY = graphicsHeight * (relY / 100f);
+
+        font.draw(batch, text, absX, absY);
     }
 
 }

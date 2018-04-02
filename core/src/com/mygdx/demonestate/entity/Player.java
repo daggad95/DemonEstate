@@ -24,6 +24,9 @@ public class Player extends Entity {
     public static int MELEE = 2;
     public static int HEAVY = 3;
     public static int OTHER = 4;
+    public static int MAX_MAIN_AMMO = 512;
+    public static int MAX_SIDEARM_AMMO = 32;
+    public static int MAX_HEAVY_AMMO = 128;
     
     //Default speed for player in game units/s
     public static float DEFAULT_PLAYER_SPEED = 5f;
@@ -36,6 +39,7 @@ public class Player extends Entity {
     private static int lastId = 0;
 
     private Weapon[] inventory;
+    private int[] ammo;
     private Weapon currentWeapon;
     private Vector2 attackDir;
     private boolean attacking;
@@ -56,10 +60,13 @@ public class Player extends Entity {
     public Player(Vector2 pos, Vector2 size, Texture spriteSheet) {
         super(pos, size, spriteSheet, DEFAULT_PLAYER_SPEED, DEFAULT_PLAYER_HEALTH);
 
-        Weapon gun = WeaponFactory.makeWeapon(WeaponType.DAGGER, this);
+        Weapon gun = WeaponFactory.makeWeapon(WeaponType.UZI, this);
         inventory = new Weapon[5];
-        inventory [MELEE] = gun;
-        currentWeapon= inventory[MELEE];
+        inventory [SIDEARM] = gun;
+        currentWeapon= inventory[SIDEARM];
+
+        ammo = new int[5];
+        ammo [SIDEARM] = MAX_SIDEARM_AMMO;
 
         attackDir = new Vector2(1, 1);
         attacking = false;
@@ -243,4 +250,7 @@ public class Player extends Entity {
     public float getHealth() { return health; }
     public float getMaxHealth() { return maxHealth; }
     public Weapon getCurrentWeapon() { return currentWeapon; }
+    public int getAmmo(int weaponSlot) { return ammo[weaponSlot]; }
+    public int getCurrentAmmo() { return ammo[currentWeapon.getSlotType()]; }
+    public void setCurrentAmmo(int newAmmo) {ammo[currentWeapon.getSlotType()] = newAmmo; }
 }

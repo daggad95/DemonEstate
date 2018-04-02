@@ -28,7 +28,6 @@ public class TextureHandler {
         folder = new FileHandle("assets/hud");
         for (FileHandle f : folder.list()) {
             textures.put(f.name().split("\\.")[0], new Texture(f.path()));
-            System.out.println(f.name().split("\\.")[0]);
         }
     }
 

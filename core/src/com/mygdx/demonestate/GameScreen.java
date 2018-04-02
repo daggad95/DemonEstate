@@ -77,7 +77,10 @@ public class GameScreen extends ScreenAdapter {
         centerX /= players.size();
         centerY /= players.size();
 
-        playerCamera.position.x = centerX;
-        playerCamera.position.y = centerY;
+        float w = Gdx.graphics.getWidth();
+        float h = Gdx.graphics.getHeight();
+        float VIEW_HEIGHT = VIEW_WIDTH * (h/w);
+        playerCamera.position.x = (float) Math.round(centerX * VIEW_WIDTH) / VIEW_WIDTH;
+        playerCamera.position.y = (float) Math.round(centerY * VIEW_HEIGHT) / VIEW_HEIGHT;
     }
 }
