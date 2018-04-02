@@ -46,6 +46,7 @@ public class Player extends Entity {
     private Vector2 lastDir;
     private float pathGenTimer;
     private int money;
+    private int score;
     private boolean flipped;
     private float hopOffset;
     private boolean hopping;
@@ -85,6 +86,7 @@ public class Player extends Entity {
         id = lastId;
         lastId += 1;
         hud = new HUD(this);
+        score = 42;
     }
 
     public void update() {
@@ -253,4 +255,5 @@ public class Player extends Entity {
     public int getAmmo(int weaponSlot) { return ammo[weaponSlot]; }
     public int getCurrentAmmo() { return ammo[currentWeapon.getSlotType()]; }
     public void setCurrentAmmo(int newAmmo) {ammo[currentWeapon.getSlotType()] = newAmmo; }
+    public int getScore() { return score; }
 }

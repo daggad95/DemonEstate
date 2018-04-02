@@ -3,7 +3,6 @@ package com.mygdx.demonestate;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.demonestate.entity.Player;
@@ -19,7 +18,8 @@ public class HUD {
     private final float AMMO_WIDTH = 5f;
     private final float FONT_SCALE = 0.1f;
     private final float FONT_OFFSET_X = 0.5f;
-    private final float FONT_OFFSET_Y = -0.25f;
+    private final float CLIP_FONT_OFFSET_Y = -0.4f;
+    private final float MONEY_FONT_OFFSET_Y = -2.5f;
 
     private Player player;
     private Vector2 hbPosition;
@@ -53,6 +53,7 @@ public class HUD {
         int maxClip = player.getCurrentWeapon().getClipSize();
         int currentClip = player.getCurrentWeapon().getClip();
         int numClips = player.getCurrentAmmo() / maxClip;
+        String money = Integer.toString(player.getMoney());
 
         if (player.getCurrentAmmo() % maxClip != 0) {
             numClips += 1;
@@ -97,7 +98,13 @@ public class HUD {
                 font,
                 clipNum,
                 hbPosition.x + AMMO_WIDTH + FONT_OFFSET_X,
-                hbPosition.y + FONT_OFFSET_Y);
+                hbPosition.y + CLIP_FONT_OFFSET_Y);
+
+        drawAbsolute(batch,
+                font,
+                money,
+                hbPosition.x,
+                hbPosition.y + MONEY_FONT_OFFSET_Y);
     }
 
     public void drawAbsolute(SpriteBatch batch, Texture texture, float relX, float relY, float relW, float relH) {
