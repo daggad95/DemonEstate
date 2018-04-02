@@ -20,7 +20,7 @@ import java.util.ArrayList;
  */
 public abstract class Entity {
     //Conversion between game units and sprite size
-    public static final int SIZE_CONV = 16;
+    public static final int SIZE_CONV = 64;
     public static final float KNOCKBACK_SPEED = 10;
     public static final float BURN_DURATION = 1f;
 
@@ -44,7 +44,6 @@ public abstract class Entity {
     protected Vector2 movementVector;
     protected Polygon hitBox;
 
-    protected Texture spriteSheet;
     protected TextureRegion currentTexture;
 
     protected float speed;
@@ -53,7 +52,7 @@ public abstract class Entity {
     protected float knockbackDistance;
     protected Vector2 knockbackDir;
     protected Vector2[][] pathMap;
-    protected boolean flipped;
+    protected boolean facingRight;
     protected float deathTimer;
     protected float damageTimer;
     protected float burnTimer;
@@ -71,12 +70,11 @@ public abstract class Entity {
     public Entity(Vector2 pos, Vector2 size, Texture spriteSheet, float speed, float health) {
         this.pos = pos;
         this.size = size;
-        this.spriteSheet = spriteSheet;
         this.speed = speed;
         this.health = health;
         this.maxHealth = health;
 
-        flipped = false;
+        facingRight = true;
         movementVector = new Vector2(0, 0);
         currentTexture = new TextureRegion(spriteSheet, SIZE_CONV, SIZE_CONV);
 
@@ -97,7 +95,7 @@ public abstract class Entity {
         shockPulseTimer = 0;
     }
 
-    public void update() {
+    public boolean update() {
         hitBox.setPosition(pos.x, pos.y);
 
         if (knockbackDistance > 0) {
@@ -156,6 +154,12 @@ public abstract class Entity {
                 deathTimer -= Gdx.graphics.getDeltaTime();
             }
         }
+
+        //cut update short if knockback
+        if (knockbackDistance > 0 || stunTimer > 0 || dead())
+            return false;
+
+        return true;
     }
 
     public void draw(SpriteBatch batch) {
@@ -222,8 +226,9 @@ public abstract class Entity {
     }
 
     public void die() {
-        //System.out.print("DEAD!");
+        EntityHandler.killMonster(this);
     }
+
 
     public float getDeathTimer() {
         return deathTimer;
@@ -263,7 +268,6 @@ public abstract class Entity {
            Vector2 velTopLeft = new Vector2(dirTopLeft).scl(speed * dTime).rotate(rotation);
            Vector2 velTopRight = new Vector2(dirTopRight).scl(speed * dTime).rotate(rotation);
 
-
            Vector2 posBotLeft = new Vector2(pos).add(velBotLeft);
            Vector2 posBotRight = new Vector2(pos).add(velBotRight);
            Vector2 posTopLeft = new Vector2(pos).add(velTopLeft);
@@ -295,13 +299,14 @@ public abstract class Entity {
                continue;
            }
 
-           if (vel.x > 0 && flipped && rotation == 0) {
-               flipped = false;
-               currentTexture.flip(false, false);
-           } else if (vel.x < 0 && !flipped && rotation == 0) {
-               flipped = true;
+           if (vel.x > 0 && !facingRight && rotation == 0) {
                currentTexture.flip(true, false);
+               facingRight = true;
+           } else if (vel.x < 0 && facingRight && rotation == 0) {
+               currentTexture.flip(true, false);
+               facingRight = false;
            }
+
            pos = newPos;
        }
    }
@@ -312,18 +317,17 @@ public abstract class Entity {
             pos.add(moveVector);
 
             if (allowFlip) {
-                if (moveDir.x > 0 && flipped) {
-                    flipped = false;
+                if (moveDir.x > 0 && facingRight) {
+                    facingRight = false;
                     currentTexture.flip(false, false);
-                } else if (moveDir.x < 0 && !flipped) {
-                    flipped = true;
+                } else if (moveDir.x < 0 && !facingRight) {
+                    facingRight = true;
                     currentTexture.flip(true, false);
                 }
             }
             hitBox.setPosition(pos.x, pos.y);
             return true;
         }
-
         return false;
     }
 

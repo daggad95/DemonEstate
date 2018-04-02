@@ -13,59 +13,48 @@ import java.util.ArrayList;
  * Created by David on 3/11/2017.
  */
 public class Zombie extends Entity {
+    
     //Default speed for zombie in game units/s
-    public static final float DEFAULT_SPEED = 0.5f;
-    public static final float CHASE_SPEED = 1f;
-    public static final int DEFAULT_HEALTH = 100;
-    public static final int DEFAULT_DAMAGE = 10;
-    public static final int DEFAULT_RANGE = 1;
-    public static final float ATTACK_RANGE = 1.2f;
-    public static final float CHASE_RANGE = 10f;
-    public static final float ATTACK_DELAY = 0.5f;
-    public static final float ANIMATION_DELAY = 0.25f;
-    public static final float WANDER_TIME = 1;
-    public static final float CHASE_TIME = 1;
-    public static final float WANDER_ODDS = 0.7f;
-    public static final String TEXTURE_NAME = "zombie";
+    private static final float DEFAULT_SPEED = 0.5f;
+    private static final float CHASE_SPEED = 1f;
+    private static final int DEFAULT_HEALTH = 100;
+    private static final int DEFAULT_DAMAGE = 10;
+    private static final int DEFAULT_RANGE = 1;
+    private static final float ATTACK_RANGE = 1.2f;
+    private static final float CHASE_RANGE = 10f;
+    private static final float ATTACK_DELAY = 0.5f;
+    private static final float ANIMATION_DELAY = 0.25f;
+    private static final float WANDER_TIME = 1;
+    private static final float CHASE_TIME = 1;
+    private static final float WANDER_ODDS = 0.7f;
+    private static final String ZOMBIE_RIGHT = "Zambie_Right";
+    
     private Entity target;
     private float attackTimer;
     private float animationTimer;
     private float wanderTimer;
     private float chaseTimer;
     private Vector2 wanderDir;
-    private int frame;
 
     public Zombie(Vector2 pos, Vector2 size) {
-        super(pos, size, TextureHandler.getTexture(TEXTURE_NAME), DEFAULT_SPEED + (float) Math.random() * DEFAULT_SPEED / 2, DEFAULT_HEALTH);
+        super(pos, size, TextureHandler.getTexture(ZOMBIE_RIGHT), DEFAULT_SPEED + (float) Math.random() * DEFAULT_SPEED / 2, DEFAULT_HEALTH);
 
         target = null;
-        attackTimer = ANIMATION_DELAY;
+        attackTimer = ATTACK_DELAY;
         animationTimer = 0;
-        frame = 0;
         wanderTimer = WANDER_TIME;
         wanderDir = new Vector2(1, 1).rotate((float)Math.random() * 360);
     }
 
-    public void update() {
-        super.update();
-
-        if (dead())
-            return;
+    // return false if entity should not be updated
+    public boolean update() {
+        if (!super.update())
+            return false;
 
         float dTime = Gdx.graphics.getDeltaTime();
 
         if (attackTimer > 0) {
             attackTimer -= dTime;
-        }
-
-        //cut update short if knockback
-        if (knockbackDistance > 0 || stunTimer > 0)
-            return;
-
-        if (animationTimer > 0) {
-            animationTimer -= dTime;
-        } else {
-            animate();
         }
 
         //selecting closest player as target
@@ -111,10 +100,7 @@ public class Zombie extends Entity {
                 }
             }
         }
-    }
-
-    public void die() {
-        EntityHandler.killMonster(this);
+        return true;
     }
 
     private void attack(Vector2 dir) {
@@ -122,19 +108,5 @@ public class Zombie extends Entity {
                 null, 0, -1, -1, 1, 0, 0, 0, true));
     }
 
-    private void animate() {
-        if (frame == 0) {
-            currentTexture = new TextureRegion(spriteSheet, SIZE_CONV, 0, SIZE_CONV, SIZE_CONV);
-            frame = 1;
-        } else {
-            currentTexture = new TextureRegion(spriteSheet, SIZE_CONV, SIZE_CONV);
-            frame = 0;
-        }
-
-        if (flipped) {
-            currentTexture.flip(true, false);
-        }
-        animationTimer = ANIMATION_DELAY;
-    }
 
 }
