@@ -58,7 +58,6 @@ public class HUD {
         if (player.getCurrentAmmo() % maxClip != 0) {
             numClips += 1;
         }
-        System.out.printf("current: %d max: %d \n", player.getCurrentAmmo(), maxClip);
         String clipNum = "x" + Integer.toString(numClips);
 
         drawAbsolute(batch,
