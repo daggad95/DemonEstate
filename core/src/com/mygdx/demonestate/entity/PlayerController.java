@@ -58,19 +58,19 @@ public class PlayerController extends ControllerAdapter {
 
     public boolean buttonDown (Controller controller, int buttonCode) {
         if (buttonCode == gamepad.buttonStart()) {
-            MenuHandler.getMenu().toggleActive(player);
+            MenuHandler.getMenu(player.getId()).toggleActive(player);
         }
         if (buttonCode == gamepad.buttonA()) {
-            if (MenuHandler.getMenu().isActive()) {
-                MenuHandler.getMenu().selectItem(player);
+            if (MenuHandler.getMenu(player.getId()).isActive()) {
+                MenuHandler.getMenu(player.getId()).selectItem(player);
             }
             else {
                 EntityHandler.addMonster(new Vector2(player.getPos()).add(3, 3));
             }
         }
         if (buttonCode == gamepad.buttonB()) {
-            if (MenuHandler.getMenu().isActive()) {
-                MenuHandler.getMenu().goBack(player);
+            if (MenuHandler.getMenu(player.getId()).isActive()) {
+                MenuHandler.getMenu(player.getId()).goBack(player);
             }
         }
         if (buttonCode == gamepad.buttonBack()) {
@@ -82,16 +82,16 @@ public class PlayerController extends ControllerAdapter {
 
     public boolean povMoved (Controller controller, int povCode, PovDirection value) {
         if (value == gamepad.buttonDpadDown()) {
-            if (MenuHandler.getMenu().isActive()) {
-                MenuHandler.getMenu().changeSelection(1);
+            if (MenuHandler.getMenu(player.getId()).isActive()) {
+                MenuHandler.getMenu(player.getId()).changeSelection(1);
             }
             else {
                 player.switchWeapon(player.SIDEARM);
             }
         }
         if (value == gamepad.buttonDpadUp()) {
-            if (MenuHandler.getMenu().isActive()) {
-                MenuHandler.getMenu().changeSelection(-1);
+            if (MenuHandler.getMenu(player.getId()).isActive()) {
+                MenuHandler.getMenu(player.getId()).changeSelection(-1);
             }
             else {
                 player.switchWeapon(player.MAIN_GUN);

@@ -3,9 +3,8 @@ package com.mygdx.demonestate.menu;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.List;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.XmlReader;
 import com.mygdx.demonestate.entity.Player;
 import com.mygdx.demonestate.weapon.Weapon;
@@ -19,6 +18,8 @@ import java.util.ArrayList;
  */
 public class WeaponMenu {
     private static float FONTSCALE = 0.7f;
+    private static float WIDTH = 25f;
+    private static float ITEM_HEIGHT = 5f;
 
     private Stage stage;
     private Table table;
@@ -26,25 +27,38 @@ public class WeaponMenu {
     protected boolean active;
     protected ArrayList<WeaponMenuItem> items;
     protected List menuList;
+    protected Label moneyLabel;
     private boolean choosingItem;
     private int slotType;
     private ArrayList<WeaponMenuItem> validItems;
+    private int id;
 
-    public WeaponMenu(Stage stage, Skin skin) {
+    public WeaponMenu(Stage stage, Skin skin, int id) {
         this.stage = stage;
         this.skin = skin;
+        this.id = id;
 
-        skin.getFont("commodore-64").getData().setScale(FONTSCALE);
+        skin.getFont("small-font").getData().setScale(FONTSCALE);
 
         table = new Table();
-        table.setSize(Gdx.graphics.getWidth() / 5,
+        table.setSize(Gdx.graphics.getWidth() * (WIDTH / 100),
                 Gdx.graphics.getHeight() / 4);
-        table.setPosition(0, Gdx.graphics.getHeight() - table.getHeight());
+        table.setPosition(Gdx.graphics.getWidth() * (WIDTH / 100) * id,
+                Gdx.graphics.getHeight() - table.getHeight());
         table.setSkin(skin);
         table.background("window");
 
         menuList = new List(skin);
         table.add(menuList);
+        table.row();
+
+
+        VerticalGroup moneyLabelGroup = new VerticalGroup();
+        table.add(moneyLabelGroup);
+
+        moneyLabel = new Label("", skin);
+        moneyLabelGroup.addActor(moneyLabel);
+        moneyLabelGroup.padLeft(Gdx.graphics.getWidth() * (WIDTH / 100) / 2);
 
         stage.addActor(table);
         active = false;
@@ -77,16 +91,12 @@ public class WeaponMenu {
 
         if (active) {
             updateMenuItems(player);
-            openMenu();
         }
         else {
             choosingItem = false;
         }
     }
 
-    protected void openMenu() {
-
-    }
     public void selectItem(Player player) {
         if (choosingItem) {
             WeaponMenuItem item = (WeaponMenuItem) menuList.getSelected();
@@ -164,6 +174,7 @@ public class WeaponMenu {
             System.out.println("weapon stats file not found");
             System.exit(0);
         }
+
     }
 
     protected void updateMenuItems(Player player) {
@@ -186,6 +197,12 @@ public class WeaponMenu {
                     "Main Gun", "Heavy", "Equipment"};
             menuList.setItems(categories);
         }
+
+        table.setSize(Gdx.graphics.getWidth() * (WIDTH / 100),
+                Gdx.graphics.getHeight() * (ITEM_HEIGHT / 100) * menuList.getItems().size);
+        table.setPosition(Gdx.graphics.getWidth() * (WIDTH / 100) * id,
+                Gdx.graphics.getHeight() - table.getHeight());
+        moneyLabel.setText("$" + Integer.toString(player.getMoney()));
     }
 
     public void goBack(Player player) {
