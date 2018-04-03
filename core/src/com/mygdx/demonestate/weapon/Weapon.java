@@ -128,16 +128,16 @@ public class Weapon {
             attackTimer -= dTime;
         }
 
-        /*if (movingLeft && !flipped) {
+        /*if (movingLeft && !facingRight) {
             currentTexture.flip(true, false);
-            flipped = true;
+            facingRight = true;
 
-            //used to re-align flipped images
+            //used to re-align facingRight images
             offset.x = size.x - 1f;
         }
-        else if (movingRight && flipped) {
+        else if (movingRight && facingRight) {
             currentTexture.flip(true, false);
-            flipped = false;
+            facingRight = false;
             offset.x = 0;
         }*/
 
