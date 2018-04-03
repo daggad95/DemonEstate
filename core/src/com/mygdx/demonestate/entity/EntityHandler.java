@@ -178,10 +178,6 @@ public class EntityHandler {
         return collisions.get(e);
     }
 
-
-
-
-
     /////////////////////
 
     // FOR TESTING! Spawns a zombie when A is pressed
@@ -189,7 +185,7 @@ public class EntityHandler {
         for (int i = 0; i < 1; i++) {
             Zombie zombie = new Zombie(
                     new Vector2(position).add((float) Math.random(), (float) Math.random()),
-                    new Vector2(0.75f, 0.75f));
+                    new Vector2(1.5f, 1.5f));
             monsters.add(zombie);
         }
 

@@ -65,6 +65,7 @@ public class WeaponMenu {
         choosingItem = false;
 
         loadMenuItems();
+        table.setVisible(false);
     }
 
     public void resize (int width, int height) {
@@ -91,9 +92,11 @@ public class WeaponMenu {
 
         if (active) {
             updateMenuItems(player);
+            table.setVisible(true);
         }
         else {
             choosingItem = false;
+            table.setVisible(false);
         }
     }
 
