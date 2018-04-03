@@ -62,7 +62,7 @@ public class GameScreen extends ScreenAdapter {
         EntityHandler.renderPlayerHUDs(batch);
         batch.end();
 
-        logger.log();
+        // logger.log();
     }
 
     private void positionCamera(ArrayList<Entity> players) {

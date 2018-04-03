@@ -5,7 +5,6 @@ import com.badlogic.gdx.controllers.ControllerAdapter;
 import com.badlogic.gdx.controllers.PovDirection;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.demonestate.gamepad.EvanTestPad;
-import com.mygdx.demonestate.gamepad.LinuxXbox360Pad;
 import com.mygdx.demonestate.gamepad.Xbox360Pad;
 import com.mygdx.demonestate.menu.MenuHandler;
 
@@ -65,13 +64,19 @@ public class PlayerController extends ControllerAdapter {
         if (buttonCode == gamepad.buttonA()) {
             if (MenuHandler.getMenu().isActive()) {
                 MenuHandler.getMenu().selectItem(player);
+
+            // FOR TESTING!
             } else {
-                EntityHandler.addMonster(new Vector2(player.getPos()).add(3, 3));
+                EntityHandler.addZombie(new Vector2(player.getPos()).add(3, 3));
             }
         }
         if (buttonCode == gamepad.buttonB()) {
             if (MenuHandler.getMenu().isActive()) {
                 MenuHandler.getMenu().goBack(player);
+
+            // FOR TESTING!
+            } else {
+                EntityHandler.addSkeleton(new Vector2(player.getPos()).add(3, 3));
             }
         }
 

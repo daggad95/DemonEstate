@@ -200,7 +200,6 @@ public abstract class Entity {
         return hitBox;
     }
 
-
     public void takeDamage(int damage, float knockback, Vector2 knockbackDir,
                            float burnDamage, float burnChance, float shockChance) {
 
@@ -221,7 +220,6 @@ public abstract class Entity {
                 this.burnDamage = burnDamage;
                 this.burnTimer += BURN_DURATION;
             }
-
         }
     }
 
@@ -329,6 +327,23 @@ public abstract class Entity {
             return true;
         }
         return false;
+    }
+
+    // gives a unit vector from current entity in the direction of target entity
+    protected Vector2 getDirectionTo(Entity target) {
+
+        // center of the target entity minus the center of the current entity
+        Vector2 dir = target.getPos().add(target.getSize().scl(0.5f))
+                .sub(getPos().add(getSize().scl(0.5f))).nor();
+        return dir;
+    }
+
+    // gives a distance vector from center of current entity to center of target entity
+    protected Vector2 getDistanceTo(Entity target) {
+
+        Vector2 dist = target.getPos().add(target.getSize().scl(0.5f))
+                .sub(getPos().add(getSize().scl(0.5f)));
+        return dist;
     }
 
 }
