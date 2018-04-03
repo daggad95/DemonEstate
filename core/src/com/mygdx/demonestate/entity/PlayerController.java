@@ -4,7 +4,8 @@ import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.ControllerAdapter;
 import com.badlogic.gdx.controllers.PovDirection;
 import com.badlogic.gdx.math.Vector2;
-import com.mygdx.demonestate.Xbox360Pad;
+import com.mygdx.demonestate.gamepad.LinuxXbox360Pad;
+import com.mygdx.demonestate.gamepad.Xbox360Pad;
 import com.mygdx.demonestate.menu.MenuHandler;
 
 /**
@@ -16,19 +17,22 @@ public class PlayerController extends ControllerAdapter {
 
     private Player player;
     private Controller controller;
+    private Xbox360Pad gamepad;
 
     public PlayerController(Player player, Controller controller) {
         this.player = player;
         this.controller = controller;
+        this.gamepad = new LinuxXbox360Pad();
 
         controller.addListener(this);
     }
 
     public boolean axisMoved(Controller controller, int axisCode, float value) {
-        float xLeft = controller.getAxis(Xbox360Pad.AXIS_LEFT_X);
-        float yLeft = -controller.getAxis(Xbox360Pad.AXIS_LEFT_Y);
-        float xRight = controller.getAxis(Xbox360Pad.AXIS_RIGHT_X);
-        float yRight = -controller.getAxis(Xbox360Pad.AXIS_RIGHT_Y);
+
+        float xLeft = controller.getAxis(gamepad.axisLeftX());
+        float yLeft = -controller.getAxis(gamepad.axisLeftY());
+        float xRight = controller.getAxis(gamepad.axisRightX());
+        float yRight = -controller.getAxis(gamepad.axisRightY());
 
         if (Math.abs(xLeft) > JOYSTICK_THRESHOLD && Math.abs(yLeft) > JOYSTICK_THRESHOLD) {
             player.setMovementVector(xLeft, yLeft);
@@ -44,7 +48,7 @@ public class PlayerController extends ControllerAdapter {
             player.setAttackDir(xRight, yRight);
         }
 
-        if (controller.getAxis(Xbox360Pad.AXIS_RIGHT_TRIGGER) > 0.5f) {
+        if (controller.getAxis(gamepad.axisRightTrigger()) > 0.5f) {
             player.setAttacking(true);
         } else {
             player.setAttacking(false);
@@ -54,23 +58,23 @@ public class PlayerController extends ControllerAdapter {
     }
 
     public boolean buttonDown (Controller controller, int buttonCode) {
-        if (buttonCode == Xbox360Pad.BUTTON_START) {
+        if (buttonCode == gamepad.buttonStart()) {
             MenuHandler.getMenu().toggleActive(player);
         }
-        if (buttonCode == Xbox360Pad.BUTTON_A) {
+        if (buttonCode == gamepad.buttonA()) {
             if (MenuHandler.getMenu().isActive()) {
                 MenuHandler.getMenu().selectItem(player);
-            }
-            else {
+            } else {
                 EntityHandler.addMonster(new Vector2(player.getPos()).add(3, 3));
             }
         }
-        if (buttonCode == Xbox360Pad.BUTTON_B) {
+        if (buttonCode == gamepad.buttonB()) {
             if (MenuHandler.getMenu().isActive()) {
                 MenuHandler.getMenu().goBack(player);
             }
         }
-        if (buttonCode == Xbox360Pad.BUTTON_BACK) {
+
+        if (buttonCode == gamepad.buttonBack()) {
             System.exit(0);
         }
 
@@ -78,7 +82,7 @@ public class PlayerController extends ControllerAdapter {
     }
 
     public boolean povMoved (Controller controller, int povCode, PovDirection value) {
-        if (value == Xbox360Pad.BUTTON_DPAD_DOWN) {
+        if (value == gamepad.buttonDpadDown()) {
             if (MenuHandler.getMenu().isActive()) {
                 MenuHandler.getMenu().changeSelection(1);
             }
@@ -86,7 +90,8 @@ public class PlayerController extends ControllerAdapter {
                 player.switchWeapon(player.SIDEARM);
             }
         }
-        if (value == Xbox360Pad.BUTTON_DPAD_UP) {
+
+        if (value == gamepad.buttonDpadUp()) {
             if (MenuHandler.getMenu().isActive()) {
                 MenuHandler.getMenu().changeSelection(-1);
             }
