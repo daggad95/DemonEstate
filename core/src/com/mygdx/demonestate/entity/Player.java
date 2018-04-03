@@ -89,9 +89,9 @@ public class Player extends Entity {
         score = 42;
     }
 
-    public void update() {
-
-        super.update();
+    public boolean update() {
+        if (!super.update())
+            return false;
 
         /*if (hopping) {
             if (hoppingUp) {
@@ -110,10 +110,6 @@ public class Player extends Entity {
                 }
             }
         }*/
-
-        //cut update short if knockback
-        if (knockbackDistance > 0)
-            return;
 
         if (!movementVector.epsilonEquals(0, 0, 0.9f)) {
             lastDir= movementVector;
@@ -149,6 +145,7 @@ public class Player extends Entity {
             currentTexture.setRegion(0, 0, SIZE_CONV, SIZE_CONV);
             flipped = false;
         }
+        return true;
     }
 
     public void draw(SpriteBatch batch) {

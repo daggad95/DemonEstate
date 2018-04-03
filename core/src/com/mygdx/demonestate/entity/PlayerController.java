@@ -4,7 +4,7 @@ import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.ControllerAdapter;
 import com.badlogic.gdx.controllers.PovDirection;
 import com.badlogic.gdx.math.Vector2;
-import com.mygdx.demonestate.gamepad.LinuxXbox360Pad;
+import com.mygdx.demonestate.gamepad.EvanTestPad;
 import com.mygdx.demonestate.gamepad.Xbox360Pad;
 import com.mygdx.demonestate.menu.MenuHandler;
 
@@ -22,12 +22,13 @@ public class PlayerController extends ControllerAdapter {
     public PlayerController(Player player, Controller controller) {
         this.player = player;
         this.controller = controller;
-        this.gamepad = new LinuxXbox360Pad();
+        this.gamepad = new EvanTestPad();
 
         controller.addListener(this);
     }
 
     public boolean axisMoved(Controller controller, int axisCode, float value) {
+
         float xLeft = controller.getAxis(gamepad.axisLeftX());
         float yLeft = -controller.getAxis(gamepad.axisLeftY());
         float xRight = controller.getAxis(gamepad.axisRightX());
@@ -63,16 +64,22 @@ public class PlayerController extends ControllerAdapter {
         if (buttonCode == gamepad.buttonA()) {
             if (MenuHandler.getMenu(player.getId()).isActive()) {
                 MenuHandler.getMenu(player.getId()).selectItem(player);
-            }
-            else {
-                EntityHandler.addMonster(new Vector2(player.getPos()).add(3, 3));
+
+            // FOR TESTING!
+            } else {
+                EntityHandler.addZombie(new Vector2(player.getPos()).add(3, 3));
             }
         }
         if (buttonCode == gamepad.buttonB()) {
             if (MenuHandler.getMenu(player.getId()).isActive()) {
                 MenuHandler.getMenu(player.getId()).goBack(player);
+
+            // FOR TESTING!
+            } else {
+                EntityHandler.addSkeleton(new Vector2(player.getPos()).add(3, 3));
             }
         }
+
         if (buttonCode == gamepad.buttonBack()) {
             System.exit(0);
         }
@@ -89,6 +96,7 @@ public class PlayerController extends ControllerAdapter {
                 player.switchWeapon(player.SIDEARM);
             }
         }
+
         if (value == gamepad.buttonDpadUp()) {
             if (MenuHandler.getMenu(player.getId()).isActive()) {
                 MenuHandler.getMenu(player.getId()).changeSelection(-1);

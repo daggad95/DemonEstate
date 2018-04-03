@@ -63,7 +63,7 @@ public class GameScreen extends ScreenAdapter {
 
         MenuHandler.renderMenus();
 
-        logger.log();
+        // logger.log();
     }
 
     private void positionCamera(ArrayList<Entity> players) {

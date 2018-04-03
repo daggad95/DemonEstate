@@ -178,8 +178,14 @@ public class EntityHandler {
         return collisions.get(e);
     }
 
-    //FOR TESTING
-    public static void addMonster(Vector2 position) {
+
+
+
+
+    /////////////////////
+
+    // FOR TESTING! Spawns a zombie when A is pressed
+    public static void addZombie(Vector2 position) {
         for (int i = 0; i < 1; i++) {
             Zombie zombie = new Zombie(
                     new Vector2(position).add((float) Math.random(), (float) Math.random()),
@@ -189,6 +195,16 @@ public class EntityHandler {
 
         findCollisions();
     }
+
+    // ALSO FOR TESTING! Spawns a skeleton when B is pressed
+    public static void addSkeleton(Vector2 position) {
+        Skeleton skeleton = new Skeleton(position, new Vector2(1.5f,1.5f));
+        monsters.add(skeleton);
+    }
+
+    /////////////////////
+
+
 
     public static void renderPlayerHUDs(SpriteBatch batch) {
         for (Entity player : players) {
