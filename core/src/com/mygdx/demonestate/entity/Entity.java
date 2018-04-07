@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.mygdx.demonestate.MapHandler;
 import com.mygdx.demonestate.TextureHandler;
 
+import javax.xml.bind.annotation.XmlType;
 import java.util.ArrayList;
 
 /**
@@ -30,6 +31,7 @@ public abstract class Entity {
     public static final float SHOCK_STUN_CHANCE = 0.5f;
     public static final float SHOCK_SPREAD_CHANCE = 0.1f;
     public static final float SHOCK_DAMAGE = 5;
+    public static final float DEFAULT_FLIP_TIMER = 0.5f;
 
 
 
@@ -60,6 +62,7 @@ public abstract class Entity {
     protected float shockPulseTimer;
     protected float stunTimer;
     protected float burnDamage;
+    protected float flipTimer;
 
     //determines which way the entity will rotate
     //when handling collision
@@ -93,6 +96,7 @@ public abstract class Entity {
         burnDamage = 0;
         shockTimer = 0;
         shockPulseTimer = 0;
+        flipTimer = 0;
     }
 
     public boolean update() {
@@ -155,8 +159,10 @@ public abstract class Entity {
             }
         }
 
-        //cut update short if knockback
-        if (knockbackDistance > 0 || stunTimer > 0 || dead())
+        flipTimer = flipTimer - Gdx.graphics.getDeltaTime();
+
+        //cut update short if knocked back or stunned
+        if (knockbackDistance > 0 || stunTimer > 0)
             return false;
 
         return true;
@@ -297,12 +303,15 @@ public abstract class Entity {
                continue;
            }
 
-           if (vel.x > 0 && !facingRight && rotation == 0) {
-               currentTexture.flip(true, false);
-               facingRight = true;
-           } else if (vel.x < 0 && facingRight && rotation == 0) {
-               currentTexture.flip(true, false);
-               facingRight = false;
+           if(flipTimer < 0) {
+               if (vel.x > 0 && !facingRight && rotation == 0) {
+                   currentTexture.flip(true, false);
+                   facingRight = true;
+               } else if (vel.x < 0 && facingRight && rotation == 0) {
+                   currentTexture.flip(true, false);
+                   facingRight = false;
+               }
+               flipTimer = DEFAULT_FLIP_TIMER;
            }
 
            pos = newPos;

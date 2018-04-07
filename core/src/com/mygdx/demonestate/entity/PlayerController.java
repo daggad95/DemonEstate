@@ -76,7 +76,7 @@ public class PlayerController extends ControllerAdapter {
 
             // FOR TESTING!
             } else {
-                EntityHandler.addSkeleton(new Vector2(player.getPos()).add(3, 3));
+                EntityHandler.addSkeleton(new Vector2(player.getPos()).add(6, 0));
             }
         }
 
