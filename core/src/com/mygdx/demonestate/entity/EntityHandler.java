@@ -26,9 +26,11 @@ public class EntityHandler {
     private static ArrayList<DamageBox> pDBoxes;
     private static ArrayList<DamageBox> mDBoxes;
     private static HashMap<Entity, ArrayList<Entity>> collisions;
+    private static boolean paused;
 
     public static void init() {
         TextureHandler.loadTextures();
+        paused = false;
 
 
         //temp creation of players for testing
@@ -70,29 +72,37 @@ public class EntityHandler {
     }
 
     public static void update(SpriteBatch batch) {
-        updateDamageBoxes(pDBoxes, monsters, batch);
-        updateDamageBoxes(mDBoxes, players, batch);
-        findCollisions();
-
+        if (!paused) {
+            updateDamageBoxes(pDBoxes, monsters, batch);
+            updateDamageBoxes(mDBoxes, players, batch);
+            findCollisions();
+        }
 
         for (Entity m : monsters) {
             m.draw(batch);
-            m.update();
+
+            if (!paused)
+                m.update();
         }
 
         for (Entity p : players) {
             p.draw(batch);
-            p.update();
+
+            if (!paused)
+                p.update();
         }
 
-        //removing dead entities
-        for (int i = 0; i < monsters.size(); i++) {
-            if (monsters.get(i).dead() &&
-                    monsters.get(i).getDeathTimer() < 0) {
-                monsters.get(i).die();
+        if (!paused) {
+            //removing dead entities
+            for (int i = 0; i < monsters.size(); i++) {
+                if (monsters.get(i).dead() &&
+                        monsters.get(i).getDeathTimer() < 0) {
+                    monsters.get(i).die();
+                }
             }
         }
     }
+
     //testeringo
     public static void addPDamageBox(DamageBox db) {
         pDBoxes.add(db);
@@ -209,5 +219,9 @@ public class EntityHandler {
 
             hud.draw(batch);
         }
+    }
+
+    public static void togglePaused() {
+        paused = !paused;
     }
 }
