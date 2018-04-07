@@ -32,26 +32,19 @@ public class EntityHandler {
 
 
         //temp creation of players for testing
-        Vector2 position = new Vector2(10, 13);
-        Vector2 size = new Vector2(1, 1);
-        Player player = new Player(position, size, TextureHandler.getTexture("dave"));
-        //Player player2 = new Player(new Vector2(position).add(2, 2), new Vector2(size), TextureHandler.getTexture("bob"));
-
         players = new ArrayList<Entity>();
-        players.add(player);
-        //players.add(player2);
+        playerControllers = new ArrayList<PlayerController>();
+        Vector2 position = new Vector2(3, 3);
+        Vector2 size = new Vector2(1, 1);
 
-        //temp creation of player controller for testing
-        if (Controllers.getControllers().size > 0) {
-
-            // because xboxdrv thinks player 1 is occupido.. idk this is not a helpful comment
-            Controller c = Controllers.getControllers().get(2);
-            PlayerController pc = new PlayerController((Player) players.get(0), c);
-
-            playerControllers = new ArrayList<PlayerController>();
+        System.out.println(Controllers.getControllers().size);
+        for (int i = 0; i < 2; i++) {
+            players.add(new Player(new Vector2(position).add(0, 0), size, TextureHandler.getTexture("dave")));
+            Controller c = Controllers.getControllers().get(i);
+            PlayerController pc = new PlayerController((Player) players.get(i), c);
+          
             playerControllers.add(pc);
         }
-
 
         monsters = new ArrayList<Entity>();
         collisions = new HashMap<Entity, ArrayList<Entity>>();
@@ -192,10 +185,6 @@ public class EntityHandler {
         return collisions.get(e);
     }
 
-
-
-
-
     /////////////////////
 
     // FOR TESTING! Spawns a zombie when A is pressed
@@ -203,7 +192,7 @@ public class EntityHandler {
         for (int i = 0; i < 1; i++) {
             Zombie zombie = new Zombie(
                     new Vector2(position).add((float) Math.random(), (float) Math.random()),
-                    new Vector2(0.75f, 0.75f));
+                    new Vector2(1.5f, 1.5f));
             monsters.add(zombie);
         }
 

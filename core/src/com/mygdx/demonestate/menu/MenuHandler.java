@@ -3,6 +3,7 @@ package com.mygdx.demonestate.menu;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.mygdx.demonestate.entity.EntityHandler;
 
 import java.util.ArrayList;
 
@@ -18,10 +19,12 @@ public class MenuHandler {
         weaponMenus = new ArrayList<>();
         stage = new Stage();
         skin = new Skin(Gdx.files.internal("assets/skins/" +
-                "commodore64/skin/uiskin.json"));
+                "visui/uiskin.json"));
         Gdx.input.setInputProcessor(stage);
 
-        weaponMenus.add(new WeaponMenu(stage, skin));
+        for (int i = 0; i < EntityHandler.getPlayers().size(); i++) {
+            weaponMenus.add(new WeaponMenu(stage, skin, i));
+        }
     }
 
     public static void renderMenus() {
@@ -32,7 +35,7 @@ public class MenuHandler {
         }
     }
 
-    public static WeaponMenu getMenu() {
-        return weaponMenus.get(0);
+    public static WeaponMenu getMenu(int id) {
+        return weaponMenus.get(id);
     }
 }

@@ -55,12 +55,13 @@ public class GameScreen extends ScreenAdapter {
         batch.end();
 
         MapHandler.renderWallLayer(playerCamera);
-        MenuHandler.renderMenus();
 
         batch.setProjectionMatrix(hudCamera.combined);
         batch.begin();
         EntityHandler.renderPlayerHUDs(batch);
         batch.end();
+
+        MenuHandler.renderMenus();
 
         // logger.log();
     }
