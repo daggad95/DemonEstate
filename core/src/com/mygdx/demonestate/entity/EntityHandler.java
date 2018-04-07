@@ -43,7 +43,9 @@ public class EntityHandler {
 
         //temp creation of player controller for testing
         if (Controllers.getControllers().size > 0) {
-            Controller c = Controllers.getControllers().get(0);
+
+            // because xboxdrv thinks player 1 is occupido.. idk this is not a helpful comment
+            Controller c = Controllers.getControllers().get(2);
             PlayerController pc = new PlayerController((Player) players.get(0), c);
 
             playerControllers = new ArrayList<PlayerController>();
@@ -53,6 +55,14 @@ public class EntityHandler {
 
         monsters = new ArrayList<Entity>();
         collisions = new HashMap<Entity, ArrayList<Entity>>();
+        
+        // FOR TESTING OF SKELE FIREING SWUADS
+        for(int i = 0; i < 10; i++) {
+            Vector2 pos = new Vector2(23,10 + i);
+            monsters.add(new Skeleton(pos, new Vector2(1.5f,1.5f)));
+        }
+
+
 
        /*for (int i = 0; i < 20; i++) {
             Vector2 position2 = new Vector2((int) (Math.random() * 20), (int) (Math.random() * 20));
@@ -97,7 +107,7 @@ public class EntityHandler {
             }
         }
     }
-    //testeringo
+
     public static void addPDamageBox(DamageBox db) {
         pDBoxes.add(db);
     }

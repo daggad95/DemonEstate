@@ -46,9 +46,9 @@ public class Zombie extends Entity {
     }
 
     // return false if entity should not be updated
-    // i.e. the entity is knock backed, stunned, or dead
+    // i.e. the entity is knock backed, stunned
     public boolean update() {
-        if (!super.update())
+        if (!super.update() || dead())
             return false;
 
         float dTime = Gdx.graphics.getDeltaTime();
