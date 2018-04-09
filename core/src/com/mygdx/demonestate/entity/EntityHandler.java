@@ -53,7 +53,7 @@ public class EntityHandler {
 
         // for evans finicky controller
         players.add(new Player(new Vector2(position).add(0, 0), TextureHandler.getTexture("Missing")));
-        Controller c = Controllers.getControllers().get(3);
+        Controller c = Controllers.getControllers().get(0);
         PlayerController pc = new PlayerController((Player) players.get(0), c);
         playerControllers.add(pc);
 
