@@ -61,8 +61,14 @@ public class PlayerController extends ControllerAdapter {
         if (buttonCode == gamepad.buttonStart()) {
             MenuHandler.getMenu(player.getId()).toggleActive(player);
         }
+        if (buttonCode == gamepad.buttonBack()) {
+            MenuHandler.getPauseMenu().toggle();
+        }
         if (buttonCode == gamepad.buttonA()) {
-            if (MenuHandler.getMenu(player.getId()).isActive()) {
+            if (MenuHandler.getPauseMenu().active()) {
+                MenuHandler.getPauseMenu().selectItem();
+            }
+            else if (MenuHandler.getMenu(player.getId()).isActive()) {
                 MenuHandler.getMenu(player.getId()).selectItem(player);
 
             // FOR TESTING!
@@ -71,7 +77,10 @@ public class PlayerController extends ControllerAdapter {
             }
         }
         if (buttonCode == gamepad.buttonB()) {
-            if (MenuHandler.getMenu(player.getId()).isActive()) {
+            if (MenuHandler.getPauseMenu().active()) {
+                MenuHandler.getPauseMenu().toggle();
+            }
+            else if (MenuHandler.getMenu(player.getId()).isActive()) {
                 MenuHandler.getMenu(player.getId()).goBack(player);
 
             // FOR TESTING!
@@ -80,16 +89,15 @@ public class PlayerController extends ControllerAdapter {
             }
         }
 
-        if (buttonCode == gamepad.buttonBack()) {
-            System.exit(0);
-        }
-
         return true;
     }
 
     public boolean povMoved (Controller controller, int povCode, PovDirection value) {
         if (value == gamepad.buttonDpadDown()) {
-            if (MenuHandler.getMenu(player.getId()).isActive()) {
+            if (MenuHandler.getPauseMenu().active()) {
+                MenuHandler.getPauseMenu().changeSelection(1);
+            }
+            else if (MenuHandler.getMenu(player.getId()).isActive()) {
                 MenuHandler.getMenu(player.getId()).changeSelection(1);
             }
             else {
@@ -98,7 +106,10 @@ public class PlayerController extends ControllerAdapter {
         }
 
         if (value == gamepad.buttonDpadUp()) {
-            if (MenuHandler.getMenu(player.getId()).isActive()) {
+            if (MenuHandler.getPauseMenu().active()) {
+                MenuHandler.getPauseMenu().changeSelection(-1);
+            }
+            else if (MenuHandler.getMenu(player.getId()).isActive()) {
                 MenuHandler.getMenu(player.getId()).changeSelection(-1);
             }
             else {
