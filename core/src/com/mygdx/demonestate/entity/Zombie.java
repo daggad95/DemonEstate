@@ -15,6 +15,7 @@ import java.util.ArrayList;
 public class Zombie extends Entity {
     
     //Default speed for zombie in game units/s
+    public static final float DEFAULT_SIZE = 1.0f;
     private static final float DEFAULT_SPEED = 0.5f;
     private static final float CHASE_SPEED = 1f;
     private static final int DEFAULT_HEALTH = 100;
@@ -27,7 +28,7 @@ public class Zombie extends Entity {
     private static final float CHASE_TIME = 1;
     private static final float WANDER_ODDS = 0.7f;
     private static final String ZOMBIE_RIGHT = "Zambie_Right";
-    
+
     private Entity target;
     private float attackTimer;
     private float animationTimer;
@@ -35,8 +36,11 @@ public class Zombie extends Entity {
     private float chaseTimer;
     private Vector2 wanderDir;
 
-    public Zombie(Vector2 pos, Vector2 size) {
-        super(pos, size, TextureHandler.getTexture(ZOMBIE_RIGHT), DEFAULT_SPEED + (float) Math.random() * DEFAULT_SPEED / 2, DEFAULT_HEALTH);
+    public Zombie(Vector2 pos) {
+        super(pos, TextureHandler.getTexture(ZOMBIE_RIGHT), DEFAULT_SPEED + (float) Math.random() * DEFAULT_SPEED / 2, DEFAULT_HEALTH);
+
+        size = new Vector2(DEFAULT_SIZE, DEFAULT_SIZE);
+        setHitBox(); // must be called AFTER size is set
 
         target = null;
         attackTimer = ATTACK_DELAY;

@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
+import static com.mygdx.demonestate.entity.MonsterType.ZOMBIE;
+
 /**
  * Created by David on 1/7/2017.
  */
@@ -35,25 +37,34 @@ public class EntityHandler {
         players = new ArrayList<Entity>();
         playerControllers = new ArrayList<PlayerController>();
         Vector2 position = new Vector2(3, 3);
-        Vector2 size = new Vector2(1, 1);
 
-        System.out.println(Controllers.getControllers().size);
-        for (int i = 0; i < 2; i++) {
-            players.add(new Player(new Vector2(position).add(0, 0), size, TextureHandler.getTexture("dave")));
-            Controller c = Controllers.getControllers().get(i);
-            PlayerController pc = new PlayerController((Player) players.get(i), c);
-          
-            playerControllers.add(pc);
-        }
+//        System.out.println(Controllers.getControllers().size);
+//        for (int i = 0; i < 2; i++) {
+//            players.add(new Player(new Vector2(position).add(0, 0), TextureHandler.getTexture("Missing")));
+//            Controller c = Controllers.getControllers().get(i);
+//            PlayerController pc = new PlayerController((Player) players.get(i), c);
+//
+//            playerControllers.add(pc);
+//        }
+
+
+
+        // for evans finicky controller
+        players.add(new Player(new Vector2(position).add(0, 0), TextureHandler.getTexture("Missing")));
+        Controller c = Controllers.getControllers().get(3);
+        PlayerController pc = new PlayerController((Player) players.get(0), c);
+        playerControllers.add(pc);
+
+
 
         monsters = new ArrayList<Entity>();
         collisions = new HashMap<Entity, ArrayList<Entity>>();
         
         // FOR TESTING OF SKELE FIREING SWUADS
-        for(int i = 0; i < 10; i++) {
-            Vector2 pos = new Vector2(23,10 + i);
-            monsters.add(new Skeleton(pos, new Vector2(1.5f,1.5f)));
-        }
+//        for(int i = 0; i < 10; i++) {
+//            Vector2 pos = new Vector2(23,10 + i);
+//            monsters.add(new Skeleton(pos));
+//        }
 
 
 
@@ -185,29 +196,24 @@ public class EntityHandler {
         return collisions.get(e);
     }
 
-    /////////////////////
 
-    // FOR TESTING! Spawns a zombie when A is pressed
-    public static void addZombie(Vector2 position) {
-        for (int i = 0; i < 1; i++) {
-            Zombie zombie = new Zombie(
-                    new Vector2(position).add((float) Math.random(), (float) Math.random()),
-                    new Vector2(1.5f, 1.5f));
-            monsters.add(zombie);
+    // TESTING monster spawning using controller. Called from within PlayerController
+    public static void createMonster(MonsterType monsterType, Vector2 pos) {
+
+        switch(monsterType) {
+            case ZOMBIE:
+                if(!MapHandler.wallAt(pos, new Vector2(Zombie.DEFAULT_SIZE, Zombie.DEFAULT_SIZE))) {
+                    monsters.add(new Zombie(pos));
+                }
+                break;
+
+            case SKELETON:
+                if(!MapHandler.wallAt(pos, new Vector2(Skeleton.DEFAULT_SIZE, Skeleton.DEFAULT_SIZE))) {
+                    monsters.add(new Skeleton(pos));
+                }
+                break;
         }
-
-        findCollisions();
     }
-
-    // ALSO FOR TESTING! Spawns a skeleton when B is pressed
-    public static void addSkeleton(Vector2 position) {
-        Skeleton skeleton = new Skeleton(position, new Vector2(1.5f,1.5f));
-        monsters.add(skeleton);
-    }
-
-    /////////////////////
-
-
 
     public static void renderPlayerHUDs(SpriteBatch batch) {
         for (Entity player : players) {

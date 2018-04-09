@@ -11,6 +11,7 @@ import com.mygdx.demonestate.weapon.WeaponFactory;
 import com.mygdx.demonestate.weapon.Weapon;
 import com.mygdx.demonestate.weapon.WeaponType;
 
+import javax.xml.bind.annotation.XmlType;
 import java.util.ArrayList;
 
 
@@ -29,6 +30,7 @@ public class Player extends Entity {
     public static int MAX_HEAVY_AMMO = 128;
     
     //Default speed for player in game units/s
+    public static float DEFAULT_SIZE = 1.0f;
     public static float DEFAULT_PLAYER_SPEED = 5f;
     public static int   DEFAULT_PLAYER_HEALTH = 100;
     public static float CROSSHAIR_DIST = 2f;
@@ -58,8 +60,11 @@ public class Player extends Entity {
     Vector2 crosshairDir;
     private HUD hud;
 
-    public Player(Vector2 pos, Vector2 size, Texture spriteSheet) {
-        super(pos, size, spriteSheet, DEFAULT_PLAYER_SPEED, DEFAULT_PLAYER_HEALTH);
+    public Player(Vector2 pos, Texture spriteSheet) {
+        super(pos, spriteSheet, DEFAULT_PLAYER_SPEED, DEFAULT_PLAYER_HEALTH);
+
+        size = new Vector2(DEFAULT_SIZE, DEFAULT_SIZE);
+        setHitBox(); // must be called AFTER size is set
 
         Weapon gun = WeaponFactory.makeWeapon(WeaponType.UZI, this);
         inventory = new Weapon[5];
@@ -253,4 +258,5 @@ public class Player extends Entity {
     public int getCurrentAmmo() { return ammo[currentWeapon.getSlotType()]; }
     public void setCurrentAmmo(int newAmmo) {ammo[currentWeapon.getSlotType()] = newAmmo; }
     public int getScore() { return score; }
+    public Vector2 getAttackDir() {return attackDir; }
 }

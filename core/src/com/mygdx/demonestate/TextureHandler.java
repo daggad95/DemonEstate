@@ -32,6 +32,11 @@ public class TextureHandler {
     }
 
     public static Texture getTexture(String textureName) {
+
+        // check if the map contains the specified texture, otherwise return a missing-texture texture
+        if(!textures.containsKey(textureName)) {
+            return textures.get("Missing");
+        }
         return textures.get(textureName);
     }
 }

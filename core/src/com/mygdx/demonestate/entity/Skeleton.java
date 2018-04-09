@@ -10,6 +10,7 @@ import com.mygdx.demonestate.damagebox.DamageBox;
 
 public class Skeleton extends Entity {
 
+    public static final float DEFAULT_SIZE = 1.0f; // made public for access in EntityHandler
     private static final float DEFAULT_SPEED = 1.5f; // m/s
     private static final float DEFAULT_RANGE = 10.0f;
     private static final int DEFAULT_HEALTH = 100;
@@ -27,12 +28,14 @@ public class Skeleton extends Entity {
 
     private Entity target;
 
-    public Skeleton(Vector2 pos, Vector2 size) {
-        super(pos, size, TextureHandler.getTexture(SKELETON_RIGHT), DEFAULT_SPEED, DEFAULT_HEALTH);
+    public Skeleton(Vector2 pos) {
+        super(pos, TextureHandler.getTexture(SKELETON_RIGHT), DEFAULT_SPEED, DEFAULT_HEALTH);
 
         // override original deathTimer = DEATH_LINGER = 0.1f from Entity class
         deathTimer = 2;
         target = null;
+        size = new Vector2(DEFAULT_SIZE, DEFAULT_SIZE);
+        setHitBox(); // must be called AFTER size is set
     }
 
     public boolean update() {

@@ -67,7 +67,7 @@ public class PlayerController extends ControllerAdapter {
 
             // FOR TESTING!
             } else {
-                EntityHandler.addZombie(new Vector2(player.getPos()).add(3, 3));
+                EntityHandler.createMonster(MonsterType.ZOMBIE, player.getPos().add(player.getAttackDir().scl(6)));
             }
         }
         if (buttonCode == gamepad.buttonB()) {
@@ -76,7 +76,8 @@ public class PlayerController extends ControllerAdapter {
 
             // FOR TESTING!
             } else {
-                EntityHandler.addSkeleton(new Vector2(player.getPos()).add(6, 0));
+                EntityHandler.createMonster(MonsterType.SKELETON, player.getPos().add(player.getAttackDir().scl(12)));
+                System.out.println("test");
             }
         }
 

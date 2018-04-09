@@ -70,20 +70,17 @@ public abstract class Entity {
 
     public Entity() {}
 
-    public Entity(Vector2 pos, Vector2 size, Texture spriteSheet, float speed, float health) {
+    public Entity(Vector2 pos, Texture spriteSheet, float speed, float health) {
         this.pos = pos;
-        this.size = size;
         this.speed = speed;
         this.health = health;
         this.maxHealth = health;
 
+        // expecting textures to face right by default, flip when entity changes direction
         facingRight = true;
         movementVector = new Vector2(0, 0);
         currentTexture = new TextureRegion(spriteSheet, SIZE_CONV, SIZE_CONV);
 
-        hitBox = new Polygon(new float[]{0, 0, size.x, 0, size.x, size.y, 0, size.y});
-        hitBox.setOrigin(size.x / 2, size.y / 2);
-        hitBox.setPosition(pos.x, pos.y);
         deathTimer = DEATH_LINGER;
 
         if (Math.random() >= 0.5) {
@@ -353,6 +350,14 @@ public abstract class Entity {
         Vector2 dist = target.getPos().add(target.getSize().scl(0.5f))
                 .sub(getPos().add(getSize().scl(0.5f)));
         return dist;
+    }
+
+    protected void setHitBox() {
+
+        // Polygon(4 points, 8 coordinates)
+        hitBox = new Polygon(new float[]{0, 0, size.x, 0, size.x, size.y, 0, size.y});
+        hitBox.setOrigin(size.x / 2, size.y / 2);
+        hitBox.setPosition(pos.x, pos.y);
     }
 
 }
