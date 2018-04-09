@@ -42,15 +42,22 @@ public class EntityHandler {
         System.out.println(Controllers.getControllers().size);
         for (int i = 0; i < 2; i++) {
             players.add(new Player(new Vector2(position).add(0, 0), size, TextureHandler.getTexture("dave")));
-
             Controller c = Controllers.getControllers().get(i);
             PlayerController pc = new PlayerController((Player) players.get(i), c);
-
+          
             playerControllers.add(pc);
         }
 
         monsters = new ArrayList<Entity>();
         collisions = new HashMap<Entity, ArrayList<Entity>>();
+        
+        // FOR TESTING OF SKELE FIREING SWUADS
+        for(int i = 0; i < 10; i++) {
+            Vector2 pos = new Vector2(23,10 + i);
+            monsters.add(new Skeleton(pos, new Vector2(1.5f,1.5f)));
+        }
+
+
 
        /*for (int i = 0; i < 20; i++) {
             Vector2 position2 = new Vector2((int) (Math.random() * 20), (int) (Math.random() * 20));
@@ -103,7 +110,6 @@ public class EntityHandler {
         }
     }
 
-    //testeringo
     public static void addPDamageBox(DamageBox db) {
         pDBoxes.add(db);
     }
