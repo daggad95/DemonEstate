@@ -120,4 +120,8 @@ public class PlayerController extends ControllerAdapter {
 
         return true;
     }
+
+    public Controller getController() {
+        return controller;
+    }
 }

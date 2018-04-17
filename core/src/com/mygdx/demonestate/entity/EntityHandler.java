@@ -28,65 +28,20 @@ public class EntityHandler {
     private static ArrayList<DamageBox> pDBoxes;
     private static ArrayList<DamageBox> mDBoxes;
     private static HashMap<Entity, ArrayList<Entity>> collisions;
+    private static Vector2 playerSpawnPos;
     private static boolean paused;
 
     public static void init() {
-        TextureHandler.loadTextures();
         paused = false;
-
-
-        //temp creation of players for testing
-        players = new ArrayList<Entity>();
-        playerControllers = new ArrayList<PlayerController>();
-        Vector2 position = new Vector2(3, 3);
-
-//        System.out.println(Controllers.getControllers().size);
-//        for (int i = 0; i < 2; i++) {
-//            players.add(new Player(new Vector2(position).add(0, 0), TextureHandler.getTexture("Missing")));
-//            Controller c = Controllers.getControllers().get(i);
-//            PlayerController pc = new PlayerController((Player) players.get(i), c);
-//
-//            playerControllers.add(pc);
-//        }
-
-
-
-        // for evans finicky controller
-        players.add(new Player(new Vector2(position).add(0, 0), TextureHandler.getTexture("Missing")));
-        Controller c = Controllers.getControllers().get(0);
-        PlayerController pc = new PlayerController((Player) players.get(0), c);
-        playerControllers.add(pc);
-
-
-
         monsters = new ArrayList<Entity>();
         collisions = new HashMap<Entity, ArrayList<Entity>>();
-        
-        // FOR TESTING OF SKELE FIREING SWUADS
-//        for(int i = 0; i < 10; i++) {
-//            Vector2 pos = new Vector2(23,10 + i);
-//            monsters.add(new Skeleton(pos));
-//        }
-
-
-
-       /*for (int i = 0; i < 20; i++) {
-            Vector2 position2 = new Vector2((int) (Math.random() * 20), (int) (Math.random() * 20));
-            Vector2 size2 = new Vector2(1, 1);
-
-            if (!MapHandler.wallAt(position2, size2)) {
-                Zombie zombie = new Zombie(position2, size2);
-                monsters.add(zombie);
-            }
-        }
-
-        Vector2 position2 = new Vector2(2, 2);
-        Vector2 size2 = new Vector2(1f,  1f);
-        Eyebat bat = new Eyebat(position2, size2);
-        monsters.add(bat);*/
-
+        playerControllers = new ArrayList<PlayerController>();
+        players = new ArrayList<Entity>();
+        monsters = new ArrayList<Entity>();
         pDBoxes = new ArrayList<DamageBox>();
         mDBoxes = new ArrayList<DamageBox>();
+        playerSpawnPos = new Vector2(1, 1);
+        Player.lastId = 0;
     }
 
     public static void update(SpriteBatch batch) {
@@ -136,7 +91,13 @@ public class EntityHandler {
         return players;
     }
 
+    public static ArrayList<PlayerController> getPlayerControllers() {
+        return playerControllers;
+    }
+
     public static ArrayList<Entity> getMonsters() { return  monsters; }
+
+    public static Vector2 getPlayerSpawnPos() { return new Vector2(playerSpawnPos); }
 
     private static void updateDamageBoxes(ArrayList<DamageBox> dBoxes, ArrayList<Entity> entities, SpriteBatch batch) {
         int idx = 0;

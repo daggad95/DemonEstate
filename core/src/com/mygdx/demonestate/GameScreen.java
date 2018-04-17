@@ -1,5 +1,6 @@
 package com.mygdx.demonestate;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.FPSLogger;
@@ -22,10 +23,13 @@ public class GameScreen extends ScreenAdapter {
     private SpriteBatch batch;
     private OrthographicCamera playerCamera;
     private OrthographicCamera hudCamera;
+    private Game game;
     FPSLogger logger;
 
 
-    public GameScreen() {
+    public GameScreen(Game game) {
+        this.game = game;
+
         batch = new SpriteBatch();
 
         float w = Gdx.graphics.getWidth();
@@ -35,9 +39,6 @@ public class GameScreen extends ScreenAdapter {
         hudCamera.position.x = w / 2;
         hudCamera.position.y = h / 2;
 
-        MapHandler.init();
-        EntityHandler.init();
-        MenuHandler.init();
         logger = new FPSLogger();
     }
 

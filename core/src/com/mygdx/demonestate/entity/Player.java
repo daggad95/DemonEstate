@@ -38,7 +38,7 @@ public class Player extends Entity {
     public static float HOP_HEIGHT = 0.1f;
     public static float HOP_RATE = 1f;
 
-    private static int lastId = 0;
+    protected static int lastId = 0;
 
     private Weapon[] inventory;
     private int[] ammo;

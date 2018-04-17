@@ -10,24 +10,18 @@ import java.util.HashMap;
  */
 public class TextureHandler {
     private static HashMap<String, Texture> textures;
+    private static String[] folders
+            = {"sprites", "hud", "weapons", "UI"};
 
     public static void loadTextures() {
-        FileHandle folder = new FileHandle("assets/sprites");
         textures = new HashMap<String, Texture>();
 
-        for (FileHandle f : folder.list()) {
-            textures.put(f.name().split("\\.")[0], new Texture(f.path()));
-        }
+        for (String folderName  : folders) {
+            FileHandle folder = new FileHandle("assets/" + folderName);
 
-
-        folder = new FileHandle("assets/weapons");
-        for (FileHandle f : folder.list()) {
-            textures.put(f.name().split("\\.")[0], new Texture(f.path()));
-        }
-
-        folder = new FileHandle("assets/hud");
-        for (FileHandle f : folder.list()) {
-            textures.put(f.name().split("\\.")[0], new Texture(f.path()));
+            for (FileHandle f : folder.list()) {
+                textures.put(f.name().split("\\.")[0], new Texture(f.path()));
+            }
         }
     }
 
