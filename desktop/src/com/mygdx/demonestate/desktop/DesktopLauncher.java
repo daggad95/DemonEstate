@@ -11,7 +11,7 @@ public class DesktopLauncher {
 		config.height = 900;
 		config.title = "Demon Estate";
 		config.vSyncEnabled = true;
-		config.fullscreen = false;
+		config.fullscreen = true;
 		config.foregroundFPS = 0; // Setting to 0 disables foreground fps throttling
 		config.backgroundFPS = 0;
 		new LwjglApplication(new DemonEstate(), config);

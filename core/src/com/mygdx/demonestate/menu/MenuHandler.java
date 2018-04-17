@@ -1,9 +1,13 @@
 package com.mygdx.demonestate.menu;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.mygdx.demonestate.TitleController;
+import com.mygdx.demonestate.TitleScreen;
 import com.mygdx.demonestate.entity.EntityHandler;
+import com.mygdx.demonestate.entity.PlayerController;
 import com.mygdx.demonestate.menu.pausemenu.PauseMenu;
 
 import java.util.ArrayList;
@@ -16,8 +20,11 @@ public class MenuHandler {
     private static Skin skin;
     private static PauseMenu pauseMenu;
     private static ArrayList<WeaponMenu> weaponMenus;
+    private static Game game;
 
-    public static void init() {
+    public static void init(Game gameRef) {
+        game = gameRef;
+
         weaponMenus = new ArrayList<>();
         stage = new Stage();
         skin = new Skin(Gdx.files.internal("assets/skins/" +
@@ -45,4 +52,14 @@ public class MenuHandler {
     }
 
     public static PauseMenu getPauseMenu() { return pauseMenu; }
+
+    public static void titleScreen() {
+        TitleScreen ts = new TitleScreen(game);
+        ArrayList<PlayerController> controllers = EntityHandler.getPlayerControllers();
+
+        for (PlayerController controller : controllers) {
+            controller.getController().removeListener(controller);
+        }
+        game.setScreen(ts);
+    }
 }
